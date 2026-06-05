@@ -1,76 +1,167 @@
 # SDD Onboarding Kit for Claude Code
 
-Este kit instala un **harness de Spec Driven Development (SDD)** en un repositorio que vaya a trabajarse con Claude Code.
+This kit installs a **Spec Driven Development (SDD)** harness in any repository you work on with Claude Code.
 
-No es una configuración global de usuario. Es una plantilla reusable para configurar cada proyecto concreto. El resultado final del onboarding debe ser una configuración dentro del repositorio destino: `CLAUDE.md`, `.claude/agents/`, `.claude/skills/`, `.claude/settings.json`, `specs/`, `tasks.json`, `history.md` y scripts de validación.
+It is not a global user configuration. It is a reusable template that produces a project-specific configuration: `CLAUDE.md`, `.claude/agents/`, `.claude/skills/`, `.claude/settings.json`, `specs/`, `tasks.json`, `history.md`, and validation scripts.
 
-## Cuándo usar este kit
+## What SDD does
 
-Úsalo cuando quieras que Claude Code trabaje así:
+When the harness is installed, Claude Code works like this:
 
-1. El desarrollador define o selecciona una tarea.
-2. Claude crea una especificación antes de tocar código.
-3. El humano revisa y aprueba la especificación.
-4. Claude implementa solo contra la spec aprobada.
-5. Claude ejecuta tests y validaciones.
-6. Claude revisa trazabilidad entre requisitos, diseño, tareas, código y tests.
-7. La tarea se marca como completada o se devuelve a corrección.
+1. The developer selects or describes a task.
+2. Claude creates a spec (requirements, design, implementation tasks) before touching any code.
+3. The developer reviews and approves the spec.
+4. Claude implements only against the approved spec.
+5. Claude runs tests and validation.
+6. Claude reviews traceability between requirements, design, tasks, code and tests.
+7. The task is marked done or returned for correction.
 
-## Cómo usarlo desde Claude Code
+## How to use this kit
 
-Copia o añade esta carpeta al proyecto donde quieras instalar SDD, por ejemplo:
+Copy or add this folder to the project where you want to install SDD. For example:
 
 ```text
-mi-proyecto/
+my-project/
 └── sdd-onboarding-kit/
 ```
 
-Después abre Claude Code en `mi-proyecto/` y dile:
+Then open Claude Code in `my-project/` and run:
 
 ```text
-Lee `sdd-onboarding-kit/instructions.md` y configura este repositorio para trabajar con SDD. Hazme todas las preguntas necesarias antes de tomar decisiones específicas del proyecto.
+Read `sdd-onboarding-kit/instructions.md` and configure this repository to use Spec Driven Development. Ask me all necessary questions before making project-specific decisions.
 ```
 
-## Archivos principales
+Claude Code will inspect the repository, ask you the configuration questions from `questions.md`, and generate a complete project-specific SDD harness.
 
-- `instructions.md`: procedimiento que Claude Code debe seguir para instalar el harness.
-- `questions.md`: decisiones que Claude debe preguntar al desarrollador.
-- `reference/`: teoría y fundamentos del flujo SDD.
-- `agents/`: plantillas de subagentes para copiar a `.claude/agents/`.
-- `skills/sdd-workflow/`: skill reusable del flujo SDD.
-- `hooks/`: políticas, snippets y ejemplos de hooks.
-- `mcps/`: criterios para decidir si configurar MCPs.
-- `templates/`: archivos que Claude adaptará al repositorio destino.
-- `scripts/`: scripts base para validar estructura, entorno y tests.
-- `output-project-structure.md`: estructura final esperada tras el onboarding.
+## Key files
 
-## Principio central
+| File | Purpose |
+|---|---|
+| `instructions.md` | Step-by-step procedure Claude Code follows to install the harness |
+| `questions.md` | Project-specific decisions Claude must ask before writing files |
+| `agents/` | Subagent templates: leader, spec-author, implementer, reviewer |
+| `skills/sdd-workflow/` | Full SDD workflow skill (copied to `.claude/skills/`) |
+| `hooks/` | Hook policies, settings snippets and example hook scripts |
+| `mcps/` | Criteria for deciding which MCPs to configure |
+| `templates/` | File templates Claude adapts to the target project |
+| `scripts/` | Base scripts for validating structure, environment and tests |
+| `reference/` | SDD theory, harness engineering, Claude Code primitives |
+| `output-project-structure.md` | Expected structure of the target project after onboarding |
+| `usage-prompts.md` | Ready-to-use prompts for daily SDD use |
 
-El onboarding debe producir una configuración específica del proyecto. No debe copiar reglas genéricas sin adaptarlas. Si falta una decisión, Claude Code debe preguntar.
+## Central principle
 
-## Fuentes conceptuales
+The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.
 
-Este kit está basado en una transcripción sobre un setup de Claude Code para Spec Driven Development y en la documentación pública de Claude Code sobre `CLAUDE.md`, subagentes, skills, hooks y MCPs.
+## Contributing
 
-## Functional document intake
+Contributions are welcome. To propose a change:
 
-The kit supports generating SDD specs from functional documents.
+1. Fork the repository.
+2. Create a branch from `main` with a descriptive name (e.g. `fix/hook-path-filter` or `feat/linear-mcp-notes`).
+3. Make your changes. Keep PRs focused — one concern per PR.
+4. Open a pull request against `main` with a clear description of what the change does and why.
+5. Wait for review. Only the repository owner merges PRs.
 
-Use this when starting from:
+### Guidelines
 
-- PRDs;
-- product briefs;
-- tickets;
-- user stories;
-- informal feature descriptions.
+- Keep all files in English.
+- Do not modify `bugs.md` or `todolist.md` directly — open a PR and let the maintainer triage.
+- Template files under `templates/` use `{{PLACEHOLDER}}` syntax; keep that convention.
+- Hook scripts must be POSIX-compatible bash and degrade gracefully when `jq` is unavailable.
+- Agent files must follow the frontmatter format (`name`, `description`, `tools`).
 
-Claude Code will convert the source document into:
+### Reporting issues
 
-- requirements;
-- design;
-- tasks;
-- assumptions;
-- open questions;
-- acceptance tests.
+Open a GitHub issue with:
+- A short description of the bug or request.
+- Steps to reproduce (if a bug).
+- The expected vs. actual behavior.
 
-It will not implement until the spec is approved.
+---
+
+## Publishing this repository to GitHub (setup guide for the owner)
+
+Follow these steps to publish this kit publicly while keeping control of who can merge changes.
+
+### 1. Create the public repository
+
+```bash
+gh repo create sdd-onboarding-kit --public --description "SDD harness onboarding kit for Claude Code"
+```
+
+Or create it on github.com and then:
+
+```bash
+git remote add origin https://github.com/<your-username>/sdd-onboarding-kit.git
+git branch -M main
+git push -u origin main
+```
+
+### 2. Push the initial commit
+
+```bash
+git add .
+git commit -m "Initial public release of SDD onboarding kit"
+git push
+```
+
+### 3. Protect the main branch
+
+Go to **Settings → Branches → Add rule** (or use the CLI):
+
+```bash
+gh api repos/<your-username>/sdd-onboarding-kit/branches/main/protection \
+  --method PUT \
+  --field required_status_checks=null \
+  --field enforce_admins=true \
+  --field required_pull_request_reviews='{"required_approving_review_count":1,"dismiss_stale_reviews":true}' \
+  --field restrictions=null
+```
+
+This requires at least one approving review before any PR can be merged into `main`.
+
+### 4. Restrict who can approve PRs (only you)
+
+Go to **Settings → Branches → Edit rule for `main`** and under "Restrict who can push to matching branches", add only your GitHub username. This means only you can merge or push directly to `main`.
+
+### 5. Set up a CODEOWNERS file
+
+Create `.github/CODEOWNERS`:
+
+```text
+* @<your-username>
+```
+
+This automatically requests your review on every PR that touches any file.
+
+### 6. Disable force pushes and deletions
+
+In the branch protection rule, check:
+- **Do not allow bypassing the above settings** (applies to admins too, for extra safety)
+- **Allow force pushes** → OFF
+- **Allow deletions** → OFF
+
+### 7. Recommended: add a PR template
+
+Create `.github/pull_request_template.md`:
+
+```markdown
+## What does this PR change?
+
+## Why?
+
+## Checklist
+- [ ] Files are in English
+- [ ] Hook scripts degrade gracefully without jq
+- [ ] Templates preserve {{PLACEHOLDER}} syntax
+- [ ] No unrelated changes included
+```
+
+### 8. Verify the setup
+
+```bash
+gh repo view <your-username>/sdd-onboarding-kit --web
+```
+
+Check that the `main` branch shows "Protected" under **Settings → Branches**.

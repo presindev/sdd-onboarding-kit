@@ -67,8 +67,15 @@ Include:
 
 If approved:
 
-1. Update task status to `done`, if allowed.
-2. Append a summary to `history.md`.
+1. Mark each verified task in `specs/<feature-slug>/tasks.md` as `[x]`.
+2. Update task status to `done`, if allowed.
+3. Append a summary to `history.md`.
+
+If approved with non-blocking findings:
+
+1. Resolve every non-blocking finding before marking `done`. Either fix it directly or record an explicit deferral with justification in `review.md`.
+2. Do not mark the task `done` while unresolved non-blocking findings remain.
+3. After resolving all findings, follow the approved completion steps above.
 
 If rejected:
 
@@ -82,6 +89,6 @@ Return:
 - decision;
 - evidence;
 - blocking issues;
-- non-blocking issues;
+- non-blocking issues (must be resolved before `done`);
 - commands run;
 - next state.

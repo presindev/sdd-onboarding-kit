@@ -3,35 +3,35 @@
 ## Install SDD in a project
 
 ```text
-Lee `sdd-onboarding-kit/instructions.md` y configura este repositorio para trabajar con Spec Driven Development. Hazme todas las preguntas necesarias antes de tomar decisiones específicas del proyecto.
+Read `sdd-onboarding-kit/instructions.md` and configure this repository to use Spec Driven Development. Ask me all necessary questions before making project-specific decisions.
 ```
 
 ## Start the next SDD task
 
 ```text
-Usa el flujo SDD. Revisa `tasks.json`, selecciona la siguiente tarea pendiente marcada con `sdd: true`, genera la spec y detente para aprobación humana.
+Use the SDD workflow. Review `tasks.json`, select the next pending task marked with `sdd: true`, generate the spec and stop for human approval.
 ```
 
 ## Create a new task
 
 ```text
-Crea una nueva tarea SDD para: <descripción>. Primero genera requirements/design/tasks y no implementes nada hasta que yo apruebe la spec.
+Create a new SDD task for: <description>. First generate requirements/design/tasks and do not implement anything until I approve the spec.
 ```
 
 ## Approve a spec
 
 ```text
-He revisado la spec de `<feature-slug>` y la apruebo. Cambia el estado a `human_approved` y prepara la implementación siguiendo `tasks.md`.
+I have reviewed the spec for `<feature-slug>` and I approve it. Change the status to `human_approved` and prepare the implementation following `tasks.md`.
 ```
 
 ## Implement an approved spec
 
 ```text
-Implementa la feature `<feature-slug>` siguiendo estrictamente la spec aprobada. Ejecuta tests y deja trazabilidad de lo que cambiaste.
+Implement feature `<feature-slug>` following the approved spec strictly. Run tests and leave traceability of what you changed.
 ```
 
 ## Review an implementation
 
 ```text
-Usa el reviewer para validar la implementación de `<feature-slug>` contra requirements.md, design.md y tasks.md. Ejecuta tests y dime si se puede marcar como done.
+Use the reviewer to validate the implementation of `<feature-slug>` against requirements.md, design.md and tasks.md. Run tests and tell me if it can be marked as done.
 ```

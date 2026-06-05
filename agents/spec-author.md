@@ -55,6 +55,7 @@ specs/<feature-slug>/review.md
 
 ## Task rules
 
+- Every task in `tasks.md` must use Markdown checkbox format: `- [ ] \`T1\`: description`.
 - Tasks must be small enough for the implementer to execute sequentially.
 - Each task should reference requirements where possible.
 - Include test tasks.

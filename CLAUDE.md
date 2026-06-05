@@ -18,3 +18,4 @@ When the developer asks to make changes in this repository:
 1. Read the todolist.md file. It contains the tasks to be done.
 2. Complete the tasks. You may need to modify some of the hooks, MCPs, templates, etc.
 3. Check that the detected bugs in bugs.md are solved.
+4. Mark with X all the checkboxes of the tasks/bugs you complete.
