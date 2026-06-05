@@ -1,0 +1,42 @@
+# Review — {{FEATURE_TITLE}}
+
+## Metadata
+
+- Task ID: `{{TASK_ID}}`
+- Feature slug: `{{FEATURE_SLUG}}`
+- Reviewer: `reviewer`
+- Review status: `pending`
+
+## Traceability
+
+| Requirement | Implemented? | Tested? | Evidence |
+|---|---:|---:|---|
+| REQ-001 | TODO | TODO | TODO |
+
+## Commands run
+
+```bash
+TODO
+```
+
+## Findings
+
+### Blocking
+
+- TODO or `None`.
+
+### Non-blocking
+
+- TODO or `None`.
+
+## Decision
+
+Choose one:
+
+- `approved`
+- `rejected`
+- `needs_changes`
+
+## Notes
+
+TODO.

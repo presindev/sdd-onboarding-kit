@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Replace this file with the project-specific test command.
+# Examples:
+#   npm test
+#   pnpm test
+#   pytest
+#   cargo test
+#   go test ./...
+#   mvn test
+
+{{TEST_COMMAND}}

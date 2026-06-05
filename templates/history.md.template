@@ -1,0 +1,19 @@
+# SDD history
+
+This file records completed SDD work.
+
+Each entry should include:
+
+- date;
+- task ID;
+- feature slug;
+- spec path;
+- implementation summary;
+- tests run;
+- reviewer result;
+- human approval reference;
+- follow-up tasks.
+
+## Entries
+
+<!-- Append completed task summaries below. -->

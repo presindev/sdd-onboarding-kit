@@ -1,0 +1,20 @@
+# Instructions for Claude Code when working inside this kit
+
+This repository is an SDD onboarding kit. It is not the target project configuration.
+
+When the developer asks to install or configure SDD in another repository:
+
+1. Start by reading `instructions.md`.
+2. Then read `questions.md`.
+3. Then read `output-project-structure.md`.
+4. Use the files under `templates/`, `agents/`, `skills/`, `hooks/`, `mcps/`, and `scripts/` as source material.
+5. Do not treat this kit's root `CLAUDE.md` as the final project `CLAUDE.md`.
+6. Generate or update the target project's own `CLAUDE.md` from `templates/CLAUDE.md.template`.
+7. Ask the developer before enabling hooks, configuring MCPs, changing git policy, or assuming test/lint commands.
+
+The final goal is to create a project-specific SDD harness, not to explain SDD abstractly.
+
+When the developer asks to make changes in this repository:
+1. Read the todolist.md file. It contains the tasks to be done.
+2. Complete the tasks. You may need to modify some of the hooks, MCPs, templates, etc.
+3. Check that the detected bugs in bugs.md are solved.

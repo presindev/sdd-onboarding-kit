@@ -1,0 +1,251 @@
+# Acceptance Tests — {{FEATURE_NAME}}
+
+## Purpose
+
+This document defines acceptance-level test scenarios for the feature.
+
+These are not necessarily final automated test implementations. They describe the observable behavior that must be true for the feature to be accepted.
+
+The implementer should use this file to create or update automated tests.
+
+The reviewer should use this file to verify that the implementation satisfies the approved spec.
+
+---
+
+## Source
+
+- Feature: `{{FEATURE_NAME}}`
+- Feature slug: `{{FEATURE_SLUG}}`
+- Source document: `{{SOURCE_DOCUMENT}}`
+- Task ID: `{{TASK_ID}}`
+- Created: `{{CREATED_DATE}}`
+
+---
+
+## Test strategy
+
+The acceptance tests should verify:
+
+- user-facing behavior;
+- main success scenarios;
+- validation rules;
+- edge cases;
+- error cases;
+- permission/security behavior, if relevant;
+- non-goals that must remain unchanged.
+
+Testing style configured for this project:
+
+```text
+{{TESTING_STYLE}}
+```
+
+Test command:
+
+```text
+{{TEST_COMMAND}}
+```
+
+Related test files or directories:
+
+```text
+{{TEST_LOCATIONS}}
+```
+
+---
+
+## Requirements coverage matrix
+
+| Requirement | Acceptance test(s) | Covered |
+|---|---|---|
+| R1 | AT1 | No |
+| R2 | AT2 | No |
+| R3 | AT3 | No |
+
+---
+
+## Acceptance tests
+
+<!--
+Use this format for each acceptance test:
+
+## AT<number> — <short title>
+
+**Related requirements:**  
+- R<number>
+
+**Scenario:**  
+<Short description of the scenario.>
+
+**Preconditions:**  
+- <condition>
+
+**Action:**  
+<What the user/system does.>
+
+**Expected result:**  
+- <observable result>
+
+**Negative expectations:**  
+- <what must not happen>
+
+**Suggested automated test location:**  
+`<path>`
+
+**Status:**  
+Draft | Approved | Implemented | Passing | Failing
+-->
+
+## AT1 — {{TEST_TITLE}}
+
+**Related requirements:**  
+- {{RELATED_REQUIREMENT}}
+
+**Scenario:**  
+{{SCENARIO}}
+
+**Preconditions:**  
+- {{PRECONDITION}}
+
+**Action:**  
+{{ACTION}}
+
+**Expected result:**  
+- {{EXPECTED_RESULT}}
+
+**Negative expectations:**  
+- {{NEGATIVE_EXPECTATION}}
+
+**Suggested automated test location:**  
+`{{SUGGESTED_TEST_LOCATION}}`
+
+**Status:**  
+Draft
+
+---
+
+## Edge case tests
+
+Use this section for boundary behavior, unusual input, empty states, invalid values, unavailable dependencies, or compatibility cases.
+
+## AT-EDGE-1 — {{EDGE_CASE_TITLE}}
+
+**Related requirements:**  
+- {{RELATED_REQUIREMENT}}
+
+**Scenario:**  
+{{EDGE_SCENARIO}}
+
+**Preconditions:**  
+- {{EDGE_PRECONDITION}}
+
+**Action:**  
+{{EDGE_ACTION}}
+
+**Expected result:**  
+- {{EDGE_EXPECTED_RESULT}}
+
+**Negative expectations:**  
+- {{EDGE_NEGATIVE_EXPECTATION}}
+
+**Suggested automated test location:**  
+`{{SUGGESTED_TEST_LOCATION}}`
+
+**Status:**  
+Draft
+
+---
+
+## Error case tests
+
+Use this section for expected failures.
+
+## AT-ERR-1 — {{ERROR_CASE_TITLE}}
+
+**Related requirements:**  
+- {{RELATED_REQUIREMENT}}
+
+**Scenario:**  
+{{ERROR_SCENARIO}}
+
+**Preconditions:**  
+- {{ERROR_PRECONDITION}}
+
+**Action:**  
+{{ERROR_ACTION}}
+
+**Expected result:**  
+- {{ERROR_EXPECTED_RESULT}}
+
+**Negative expectations:**  
+- {{ERROR_NEGATIVE_EXPECTATION}}
+
+**Suggested automated test location:**  
+`{{SUGGESTED_TEST_LOCATION}}`
+
+**Status:**  
+Draft
+
+---
+
+## Non-regression tests
+
+Use this section to ensure existing behavior is not broken.
+
+## AT-REG-1 — {{REGRESSION_TEST_TITLE}}
+
+**Existing behavior protected:**  
+{{EXISTING_BEHAVIOR}}
+
+**Related requirements:**  
+- {{RELATED_REQUIREMENT}}
+
+**Scenario:**  
+{{REGRESSION_SCENARIO}}
+
+**Preconditions:**  
+- {{REGRESSION_PRECONDITION}}
+
+**Action:**  
+{{REGRESSION_ACTION}}
+
+**Expected result:**  
+- {{REGRESSION_EXPECTED_RESULT}}
+
+**Negative expectations:**  
+- {{REGRESSION_NEGATIVE_EXPECTATION}}
+
+**Suggested automated test location:**  
+`{{SUGGESTED_TEST_LOCATION}}`
+
+**Status:**  
+Draft
+
+---
+
+## Manual acceptance checklist
+
+Use this checklist during human review.
+
+- [ ] All requirements have at least one acceptance test.
+- [ ] Main success path is covered.
+- [ ] Empty state is covered, if relevant.
+- [ ] Invalid input is covered, if relevant.
+- [ ] Permission/security behavior is covered, if relevant.
+- [ ] Non-goals are protected, if relevant.
+- [ ] Tests are feasible with the current project test setup.
+- [ ] No acceptance test depends on hidden assumptions.
+- [ ] Any unresolved behavior is listed in `open-questions.md`.
+
+---
+
+## Notes for Claude Code
+
+Claude Code must follow these rules:
+
+1. Acceptance tests must map back to `requirements.md`.
+2. Do not invent behavior that is absent from the functional brief or approved assumptions.
+3. If a test requires an unresolved decision, add or update `open-questions.md`.
+4. The implementer must create automated tests based on this document where feasible.
+5. The reviewer must verify that implemented tests cover this document.
+6. If an acceptance test cannot be automated, mark it clearly and explain why.

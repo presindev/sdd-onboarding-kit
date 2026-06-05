@@ -1,0 +1,386 @@
+# Functional Brief — {{FEATURE_NAME}}
+
+> This document describes the intended functionality from a product/user perspective.
+> It is not an implementation spec.
+> Claude Code must convert this brief into an SDD spec before writing code.
+
+---
+
+## 1. Summary
+
+Briefly describe the feature, change, or problem to solve.
+
+Example:
+
+> Add a command that allows users to view their most recent notes from the CLI.
+
+---
+
+## 2. Goal
+
+What should this feature achieve?
+
+Describe the desired outcome in business, product, or user terms.
+
+Example:
+
+> Users should be able to quickly see their latest notes without opening the full notes list.
+
+---
+
+## 3. Background / Context
+
+Explain why this change is needed.
+
+Include any relevant context, current limitations, user pain points, or previous behavior.
+
+Example:
+
+> The current CLI allows users to list all notes, but there is no quick way to see only the latest ones.
+
+---
+
+## 4. Users / Actors
+
+Who will use this feature?
+
+- Primary user:
+- Secondary users:
+- Admin/internal users, if any:
+
+Example:
+
+- Primary user: CLI user managing personal notes.
+- Secondary user: none.
+
+---
+
+## 5. User-facing behavior
+
+Describe what the user should experience.
+
+Use natural language. Do not worry yet about implementation details.
+
+Example:
+
+> When the user runs `notes recent`, the system should display the latest notes first.
+> By default, it should show up to five notes.
+> The user should be able to change the number of notes shown with `--limit`.
+
+---
+
+## 6. Main scenarios
+
+List the main scenarios this feature must support.
+
+### Scenario 1 — {{SCENARIO_NAME}}
+
+Description:
+
+Expected result:
+
+### Scenario 2 — {{SCENARIO_NAME}}
+
+Description:
+
+Expected result:
+
+### Scenario 3 — {{SCENARIO_NAME}}
+
+Description:
+
+Expected result:
+
+---
+
+## 7. Inputs
+
+What information, commands, fields, parameters, files, API calls, or user actions trigger this feature?
+
+Examples:
+
+- CLI command:
+- Form fields:
+- API endpoint:
+- Button/action:
+- Configuration value:
+- File input:
+
+Specific inputs for this feature:
+
+{{INPUTS}}
+
+## 8. Outputs
+
+What should the system produce?
+
+Examples:
+
+- CLI output:
+- UI message:
+- API response:
+- Database change:
+- File generated:
+- Notification:
+- Log entry:
+
+Expected outputs for this feature:
+
+{{OUTPUTS}}
+
+## 9. Rules and constraints
+
+List business rules, product rules, validation rules, and restrictions.
+
+Examples:
+
+- The feature must not modify existing records.
+- The user must be authenticated.
+- The limit must be a positive integer.
+- Results must be ordered from newest to oldest.
+- Deleted items must not appear.
+
+Rules for this feature:
+- 
+- 
+- 
+
+## 10. Error cases and edge cases
+
+Describe what should happen when something goes wrong or when unusual input is provided.
+
+Examples:
+
+- No data exists.
+- Invalid parameter.
+- User lacks permission.
+- External service unavailable.
+- Empty response.
+- Duplicate item.
+- Unsupported file type.
+
+Error / edge cases for this feature:
+
+Case	Expected behavior
+	
+	
+	
+## 11. Non-goals
+
+What should this feature explicitly not do?
+
+This section is important because Claude Code must not infer extra functionality.
+
+Examples:
+
+- Do not add a new database table.
+- Do not change the existing authentication flow.
+- Do not redesign the UI.
+- Do not modify existing note content.
+- Do not add synchronization with external services.
+
+Non-goals for this feature:
+- 
+- 
+- 
+
+## 12. Acceptance criteria
+
+Describe how a human will know the feature is correct.
+
+Use concrete, testable criteria.
+
+Example:
+
+- Running notes recent shows at most five notes.
+- Running notes recent --limit 10 shows at most ten notes.
+- Notes are ordered from newest to oldest.
+- If there are no notes, the user sees a clear empty-state message.
+- Existing notes are not modified.
+
+Acceptance criteria:
+- 
+- 
+-
+
+## 13. Suggested requirement format
+
+Choose the format Claude Code should use when converting this brief into requirements.md.
+
+Select one:
+
+[] EARS
+[] User stories
+[] Given / When / Then
+[] Plain requirements
+[] Let Claude Code recommend a format
+
+Notes:
+
+{{REQUIREMENTS_FORMAT_NOTES}}
+
+## 14. Technical hints, if known
+
+Optional.
+
+Add any technical information that may help Claude Code produce a better design.md.
+
+Do not invent details if you are unsure.
+
+Examples:
+
+- Relevant files:
+- Existing modules:
+- Existing commands:
+- Existing tests:
+- Similar features:
+- APIs involved:
+- Database tables:
+- Known constraints:
+
+Technical hints:
+
+{{TECHNICAL_HINTS}}
+
+## 15. Dependencies
+
+List anything this feature depends on.
+
+Examples:
+
+- Existing module:
+- Third-party service:
+- API key:
+- Database migration:
+- Design system component:
+- Another task:
+- External ticket:
+
+Dependencies:
+- 
+- 
+- 
+
+## 16. Security, privacy, and permissions
+
+Does this feature involve sensitive data, authentication, permissions, secrets, logs, or user-generated content?
+
+[] No special security/privacy concerns.
+[] Authentication required.
+[] Authorization/permissions required.
+[] Handles personal data.
+[] Handles secrets or credentials.
+[] Writes logs.
+[] Calls external services.
+
+Details:
+
+{{SECURITY_NOTES}}
+
+## 17. Performance / scalability expectations
+
+Optional.
+
+Describe expected volume, speed, or resource constraints.
+
+Examples:
+
+- Should work with up to 10,000 records.
+- Should return results in less than 500ms.
+- Should avoid loading all records into memory.
+- Should paginate results.
+
+Performance notes:
+
+{{PERFORMANCE_NOTES}}
+
+18. UX / copy requirements
+
+Optional.
+
+Include exact text, labels, messages, or UI/CLI copy if important.
+
+Examples:
+
+- Empty state message:
+- Error message:
+- Button label:
+- CLI help text:
+- Success message:
+
+Required copy:
+
+{{UX_COPY}}
+
+## 19. Open questions
+
+List anything that is still undecided.
+
+Claude Code must ask the developer about these before finalizing the spec, unless explicitly instructed to make assumptions.
+
+Question	Why it matters	Decision
+		
+		
+## 20. Assumptions
+
+If the brief is incomplete, list assumptions Claude Code may use to create a draft spec.
+
+Assumptions must be explicit and reviewable.
+
+Assumption	Impact if wrong
+	
+	
+## 21. Source material
+
+Link or paste any related material.
+
+Examples:
+
+- Product document:
+- Ticket:
+- User interview:
+- Screenshot:
+- API documentation:
+- Existing issue:
+- Previous implementation:
+
+Sources:
+
+{{SOURCES}}
+
+## 22. SDD conversion instructions for Claude Code
+
+Claude Code must follow these rules when using this functional brief:
+
+1. Treat this document as source material, not as an approved implementation spec.
+2. Do not implement code directly from this document.
+3. Create or update a task in tasks.json.
+4. Create a spec folder under specs/{{FEATURE_SLUG}}/.
+5. Generate:
+- requirements.md
+- design.md
+- tasks.md
+- open-questions.md, if needed
+- assumptions.md, if needed
+- acceptance-tests.md, if useful
+6. If important requirements are ambiguous, ask the developer before marking the spec as ready.
+7. If making assumptions, write them explicitly in assumptions.md.
+8. When the draft spec is complete, set the task status to spec_ready.
+9. Stop after generating the spec.
+10. Do not invoke the implementer until the developer approves the spec.
+
+## 23. Desired output location
+
+Claude Code should generate the SDD spec here:
+
+specs/{{FEATURE_SLUG}}/
+
+Expected output:
+
+specs/{{FEATURE_SLUG}}/
+├── requirements.md
+├── design.md
+├── tasks.md
+├── open-questions.md
+├── assumptions.md
+└── acceptance-tests.md

@@ -1,0 +1,20 @@
+# Project hooks
+
+This directory documents project-specific Claude Code hooks for the SDD harness.
+
+Hooks are enabled from `.claude/settings.json`, not by placing scripts here automatically.
+
+## Enabled hooks
+
+TODO: List enabled hooks, event names, matchers and commands.
+
+## Available hook scripts
+
+TODO: List scripts copied into `scripts/` or `.claude/hooks/`.
+
+## Policy
+
+- Do not enable new hooks without developer approval.
+- Prefer warning mode before blocking mode unless the developer approved strict enforcement.
+- Keep hook scripts small and deterministic.
+- Document every hook's purpose and failure mode.

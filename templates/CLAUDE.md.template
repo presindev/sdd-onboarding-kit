@@ -1,0 +1,149 @@
+# {{PROJECT_NAME}} — Claude Code project instructions
+
+This project uses **Spec Driven Development (SDD)** for non-trivial implementation work.
+
+## Project summary
+
+{{PROJECT_SUMMARY}}
+
+## Commands
+
+Use these project commands:
+
+```bash
+# Install or validate environment
+{{INIT_COMMAND}}
+
+# Run all tests
+{{TEST_COMMAND}}
+
+# Run lint
+{{LINT_COMMAND}}
+
+# Run typecheck
+{{TYPECHECK_COMMAND}}
+
+# Format code
+{{FORMAT_COMMAND}}
+```
+
+If any command is unknown, ask the developer before inventing one.
+
+## SDD policy
+
+{{SDD_POLICY}}
+
+Default state machine:
+
+```text
+pending → spec_draft → spec_ready → human_approved → in_progress → review → done
+```
+
+Do not implement an SDD task unless it is in `human_approved` or `in_progress`.
+
+If a task is marked `spec_ready`, stop and ask for human approval.
+
+## Task storage
+
+Task state is stored in:
+
+```text
+{{TASK_STORAGE}}
+```
+
+## Spec storage
+
+Specs are stored in:
+
+```text
+specs/<feature-slug>/
+├── requirements.md
+├── design.md
+├── tasks.md
+└── review.md
+```
+
+## Required SDD workflow
+
+For each SDD task:
+
+1. Read the task.
+2. Create or update the spec.
+3. Stop for human approval.
+4. Implement only after approval.
+5. Run tests and validation.
+6. Run reviewer.
+7. Mark done only if requirements, implementation and tests are aligned.
+8. Append a summary to `history.md`.
+
+## SDD skill
+
+Use the project skill:
+
+```text
+.claude/skills/sdd-workflow/SKILL.md
+```
+
+Invoke it directly when needed:
+
+```text
+/sdd-workflow <task-id-or-feature-description>
+```
+
+## Subagents
+
+Use project subagents when appropriate:
+
+- `leader`: orchestrates task state and flow.
+- `spec-author`: creates requirements, design and implementation tasks.
+- `implementer`: writes code from approved specs.
+- `reviewer`: validates implementation against specs.
+
+## Human approval policy
+
+{{HUMAN_APPROVAL_POLICY}}
+
+## Hooks policy
+
+{{HOOKS_POLICY}}
+
+## MCP policy
+
+{{MCP_POLICY}}
+
+## Git policy
+
+{{GIT_POLICY}}
+
+## Protected areas
+
+{{PROTECTED_AREAS}}
+
+## When SDD may be skipped
+
+{{SDD_SKIP_POLICY}}
+
+## Final rule
+
+Prefer a clear spec over a clever implementation. If the spec is ambiguous, ask or revise the spec before coding.
+
+## Functional documents
+
+Functional documents, PRDs, tickets, user stories, or informal feature descriptions are source material.
+
+They are not approved implementation specs.
+
+When a functional document is provided, Claude Code must first generate an SDD spec under:
+
+specs/<feature-slug>/
+
+Required files:
+
+- requirements.md
+- design.md
+- tasks.md
+- assumptions.md
+- open-questions.md
+- acceptance-tests.md
+
+Claude Code must stop after generating the spec and wait for human approval before implementation.

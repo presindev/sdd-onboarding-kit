@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Replace this file with the project-specific lint/typecheck command.
+# Examples:
+#   npm run lint
+#   pnpm lint
+#   ruff check .
+#   cargo clippy
+#   go vet ./...
+
+{{LINT_COMMAND}}
