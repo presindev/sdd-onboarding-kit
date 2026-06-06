@@ -78,4 +78,8 @@ Open a GitHub issue with:
 - Steps to reproduce (if a bug).
 - The expected vs. actual behavior.
 
+## License
+
+MIT — see [LICENSE](LICENSE)
+
 ---
