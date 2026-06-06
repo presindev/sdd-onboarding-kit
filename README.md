@@ -48,6 +48,7 @@ Claude Code will inspect the repository, ask you the configuration questions fro
 | `reference/` | SDD theory, harness engineering, Claude Code primitives |
 | `output-project-structure.md` | Expected structure of the target project after onboarding |
 | `usage-prompts.md` | Ready-to-use prompts for daily SDD use |
+| `DOCUMENTATION.md` | Full documentation: installation, daily workflow, features |
 
 ## Central principle
 
