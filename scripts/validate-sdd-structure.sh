@@ -36,7 +36,7 @@ check_file ".claude/skills/sdd-workflow/task-state-machine.md"
 check_file ".claude/skills/sdd-workflow/review-checklist.md"
 check_dir "specs"
 check_file "tasks.json"
-check_file "history.md"
+check_file "history.html"
 check_dir "scripts"
 check_file "scripts/run-tests.sh"
 check_file "scripts/run-lint.sh"
@@ -46,8 +46,16 @@ if [[ "$missing" -ne 0 ]]; then
   exit 1
 fi
 
+# Check for unresolved {{PLACEHOLDER}} tokens in CLAUDE.md and .claude/
 if grep -R "{{[A-Z0-9_]*}}" CLAUDE.md .claude 2>/dev/null; then
-  echo "Unresolved template placeholders found." >&2
+  echo "Unresolved template placeholders found in CLAUDE.md or .claude/." >&2
+  exit 1
+fi
+
+# Check for unresolved {{PLACEHOLDER}} tokens in generated HTML spec files
+if find specs -name "*.html" 2>/dev/null | xargs grep -l "{{[A-Z0-9_]*}}" 2>/dev/null | grep -q .; then
+  echo "Unresolved template placeholders found in HTML spec files:" >&2
+  find specs -name "*.html" | xargs grep -l "{{[A-Z0-9_]*}}" 2>/dev/null >&2
   exit 1
 fi
 

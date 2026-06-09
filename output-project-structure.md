@@ -29,15 +29,17 @@ After the onboarding is complete, the target repository should contain a project
 │   └── settings.json
 ├── specs/
 │   └── <feature-slug>/
-│       ├── requirements.md
-│       ├── design.md
-│       ├── tasks.md
-│       ├── assumptions.md
-│       ├── open-questions.md
-│       ├── acceptance-tests.md
-│       └── review.md
+│       ├── requirements.html
+│       ├── design.html
+│       ├── tasks.html
+│       ├── assumptions.html
+│       ├── open-questions.html
+│       ├── acceptance-tests.html
+│       ├── review.html
+│       ├── spec.css
+│       └── spec.js
 ├── tasks.json
-├── history.md
+├── history.html
 └── scripts/
     ├── init.sh
     ├── run-tests.sh
@@ -53,8 +55,8 @@ If the developer selects external task management or knowledge sources, the proj
 <project>/
 ├── .mcp.json
 ├── docs/adr/
-├── docs/architecture.md
-└── docs/conventions.md
+├── docs/architecture.html
+└── docs/conventions.html
 ```
 
 Local files should still exist unless the developer explicitly chooses a fully external tracker.

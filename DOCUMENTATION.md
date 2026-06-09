@@ -128,7 +128,7 @@ Claude generates a summary of files created, hooks enabled, and any open TODOs. 
 │   └── settings.json
 ├── specs/
 ├── tasks.json
-├── history.md
+├── history.html
 └── scripts/
     ├── init.sh
     ├── run-tests.sh
@@ -136,7 +136,7 @@ Claude generates a summary of files created, hooks enabled, and any open TODOs. 
     └── validate-sdd-structure.sh
 ```
 
-If you selected external task management or documentation MCPs, the harness may also create `.mcp.json`, `docs/adr/`, `docs/architecture.md`, and `docs/conventions.md`.
+If you selected external task management or documentation MCPs, the harness may also create `.mcp.json`, `docs/adr/`, `docs/architecture.html`, and `docs/conventions.html`.
 
 ---
 
@@ -152,7 +152,7 @@ Create a new SDD task for: <description>. First generate requirements/design/tas
 
 Claude will:
 1. Create a task entry in `tasks.json`.
-2. Create `specs/<feature-slug>/requirements.md`, `design.md`, and `tasks.md`.
+2. Create `specs/<feature-slug>/requirements.html`, `design.html`, and `tasks.html`.
 3. Stop and present the spec for your review.
 
 ### Review and approve a spec
@@ -160,7 +160,7 @@ Claude will:
 Read the generated spec files under `specs/<feature-slug>/`. When you are satisfied:
 
 ```text
-I have reviewed the spec for `<feature-slug>` and I approve it. Change the status to `human_approved` and prepare the implementation following `tasks.md`.
+I have reviewed the spec for `<feature-slug>` and I approve it. Change the status to `human_approved` and prepare the implementation following `tasks.html`.
 ```
 
 Claude will not write code until it receives this approval.
@@ -171,15 +171,15 @@ Claude will not write code until it receives this approval.
 Implement feature `<feature-slug>` following the approved spec strictly. Run tests and leave traceability of what you changed.
 ```
 
-Claude implements in the order specified by `tasks.md`, runs validation, and moves the task to `review`.
+Claude implements in the order specified by `tasks.html`, runs validation, and moves the task to `review`.
 
 ### Review an implementation
 
 ```text
-Use the reviewer to validate the implementation of `<feature-slug>` against requirements.md, design.md and tasks.md. Run tests and tell me if it can be marked as done.
+Use the reviewer to validate the implementation of `<feature-slug>` against requirements.html, design.html and tasks.html. Run tests and tell me if it can be marked as done.
 ```
 
-The reviewer checks requirement coverage, test coverage, design adherence, and convention compliance, then writes `specs/<feature-slug>/review.md`.
+The reviewer checks requirement coverage, test coverage, design adherence, and convention compliance, then writes `specs/<feature-slug>/review.html`.
 
 ### Resume the next pending task
 
@@ -230,7 +230,7 @@ Optional states: `blocked`, `rejected`.
 - Claude never moves a task from `spec_ready` to `in_progress` directly when human approval is required.
 - Claude never marks a task `done` with failing tests unless you explicitly accept the exception.
 - A task can return to `spec_draft` from any forward state if the spec turns out to be wrong.
-- Completed tasks are archived to `history.md`.
+- Completed tasks are archived to `history.html`.
 
 ---
 
@@ -240,16 +240,16 @@ Each feature gets a directory under `specs/`:
 
 ```text
 specs/<feature-slug>/
-├── requirements.md
-├── design.md
-├── tasks.md
-├── assumptions.md       (when derived from a functional document)
-├── open-questions.md    (when derived from a functional document)
-├── acceptance-tests.md  (when derived from a functional document)
-└── review.md            (written by the reviewer)
+├── requirements.html
+├── design.html
+├── tasks.html
+├── assumptions.html       (when derived from a functional document)
+├── open-questions.html    (when derived from a functional document)
+├── acceptance-tests.html  (when derived from a functional document)
+└── review.html            (written by the reviewer)
 ```
 
-### `requirements.md`
+### `requirements.html`
 
 Defines observable behavior. Supported requirement formats:
 
@@ -260,11 +260,11 @@ Defines observable behavior. Supported requirement formats:
 
 Contains: summary, functional requirements, non-functional requirements, edge cases, error states, acceptance criteria, and a requirement-to-test mapping table.
 
-### `design.md`
+### `design.html`
 
 Translates requirements into a technical plan. Contains: technical summary, files to change, files not to change, interfaces and contracts, data model changes, test design, risks and trade-offs, and a rollback plan.
 
-### `tasks.md`
+### `tasks.html`
 
 An ordered, checkable implementation checklist. Each task references one or more requirements. Test and validation tasks are included.
 
@@ -277,7 +277,7 @@ Example:
 - [ ] T4: Run `scripts/run-tests.sh`.
 ```
 
-### `review.md`
+### `review.html`
 
 Written by the reviewer after implementation. Contains a traceability table, commands run, findings, a pass/fail decision, and follow-up items.
 
@@ -295,11 +295,11 @@ The orchestrator. It reads task state and routes work to the correct specialist.
 - Decides which phase runs based on task status.
 - Invokes spec-author, implementer, or reviewer as appropriate.
 - Stops for human approval when the project requires it.
-- Records progress in `history.md` after completion.
+- Records progress in `history.html` after completion.
 
 ### Spec Author (`spec-author.md`)
 
-Writes and revises specs. It reads requirements, understands the codebase, and produces `requirements.md`, `design.md`, and `tasks.md`. When working from a functional document it also produces `assumptions.md`, `open-questions.md`, and `acceptance-tests.md`.
+Writes and revises specs. It reads requirements, understands the codebase, and produces `requirements.html`, `design.html`, and `tasks.html`. When working from a functional document it also produces `assumptions.html`, `open-questions.html`, and `acceptance-tests.html`.
 
 ### Implementer (`implementer.md`)
 
@@ -307,7 +307,7 @@ The only agent allowed to write production code. It reads the approved spec stri
 
 ### Reviewer (`reviewer.md`)
 
-Validates that the implementation satisfies the spec. It checks requirement coverage, test coverage, design adherence, and convention compliance. It writes `review.md` and decides: approved (→ `done`), corrections required (→ `in_progress`), or spec revision required (→ `spec_draft`).
+Validates that the implementation satisfies the spec. It checks requirement coverage, test coverage, design adherence, and convention compliance. It writes `review.html` and decides: approved (→ `done`), corrections required (→ `in_progress`), or spec revision required (→ `spec_draft`).
 
 ---
 
@@ -323,7 +323,7 @@ Hooks are optional shell scripts that Claude Code executes automatically at defi
 |---|---|---|
 | Block implementation before approval | `PreToolUse` on Edit/Write | Prevents code edits when the task is still `pending`, `spec_draft`, or `spec_ready` |
 | Run tests after edits | `PostToolUse` on Edit/Write | Automatically runs the test suite after any source edit |
-| Validate spec before status change | `PreToolUse` | Ensures `requirements.md`, `design.md`, and `tasks.md` all exist before moving to `spec_ready` |
+| Validate spec before status change | `PreToolUse` | Ensures `requirements.html`, `design.html`, and `tasks.html` all exist before moving to `spec_ready` |
 | Block destructive commands | `PreToolUse` on Bash | Intercepts `rm -rf`, `git reset --hard`, `drop database`, and similar commands |
 | Notify for human approval | `Stop` / `Notification` | Alerts you when Claude stops waiting for spec approval |
 
@@ -368,7 +368,7 @@ Without MCPs, all state lives locally:
 
 - `tasks.json` — task list and status.
 - `specs/<feature-slug>/` — all spec files.
-- `history.md` — completed task archive.
+- `history.html` — completed task archive.
 
 ### Security
 
@@ -412,7 +412,7 @@ Long procedures live in `.claude/skills/sdd-workflow/` rather than in `CLAUDE.md
 }
 ```
 
-### `history.md` entry format
+### `history.html` entry format
 
 ```md
 ## YYYY-MM-DD — TASK-001 — feature-slug
@@ -452,7 +452,7 @@ Long procedures live in `.claude/skills/sdd-workflow/` rather than in `CLAUDE.md
 | `mcps/memory.md` | Memory MCP integration notes |
 | `templates/CLAUDE.md.template` | Template for the project `CLAUDE.md` |
 | `templates/tasks.json.template` | Template for `tasks.json` |
-| `templates/history.md.template` | Template for `history.md` |
+| `templates/history.html.template` | Template for `history.html` |
 | `templates/specs/` | Templates for each spec file |
 | `scripts/init.sh` | Initialization script run after onboarding |
 | `scripts/validate-sdd-structure.sh` | Validates that all required harness files are present |
@@ -486,7 +486,7 @@ Create a new SDD task for: <description>. First generate requirements/design/tas
 ### Approve a spec
 
 ```text
-I have reviewed the spec for `<feature-slug>` and I approve it. Change the status to `human_approved` and prepare the implementation following `tasks.md`.
+I have reviewed the spec for `<feature-slug>` and I approve it. Change the status to `human_approved` and prepare the implementation following `tasks.html`.
 ```
 
 ### Implement an approved spec
@@ -498,7 +498,7 @@ Implement feature `<feature-slug>` following the approved spec strictly. Run tes
 ### Review an implementation
 
 ```text
-Use the reviewer to validate the implementation of `<feature-slug>` against requirements.md, design.md and tasks.md. Run tests and tell me if it can be marked as done.
+Use the reviewer to validate the implementation of `<feature-slug>` against requirements.html, design.html and tasks.html. Run tests and tell me if it can be marked as done.
 ```
 
 ### Convert a functional document to a spec

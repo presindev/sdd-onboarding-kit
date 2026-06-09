@@ -38,9 +38,9 @@ El contexto importante se guarda fuera del chat:
 
 - `tasks.json`: estado de tareas;
 - `specs/<feature>/`: specs versionables;
-- `history.md`: historial de ejecución;
-- `docs/architecture.md`: arquitectura;
-- `docs/conventions.md`: convenciones.
+- `history.html`: historial de ejecución;
+- `docs/architecture.html`: arquitectura;
+- `docs/conventions.html`: convenciones.
 
 ### 4. Skill SDD
 

@@ -30,9 +30,11 @@ If SDD applies, continue.
 For a `pending` task, create:
 
 ```text
-specs/<feature-slug>/requirements.md
-specs/<feature-slug>/design.md
-specs/<feature-slug>/tasks.md
+specs/<feature-slug>/requirements.html
+specs/<feature-slug>/design.html
+specs/<feature-slug>/tasks.html
+specs/<feature-slug>/spec.css
+specs/<feature-slug>/spec.js
 ```
 
 Use `spec-format.md`.
@@ -67,11 +69,11 @@ If the developer asks for changes:
 Only after approval:
 
 1. Set status to `in_progress`.
-2. Read `tasks.md`.
+2. Read `tasks.html`.
 3. Execute tasks sequentially.
 4. Add/update tests.
 5. Run configured validation.
-6. Mark completed tasks in `tasks.md`.
+6. Mark completed tasks in `tasks.html`.
 7. Set status to `review`.
 
 ## 7. Review
@@ -85,14 +87,14 @@ The reviewer validates:
 - validation commands pass;
 - no unauthorized scope creep.
 
-Write `review.md`.
+Write `review.html`.
 
 ## 8. Complete
 
 If reviewer approves:
 
 1. Set task status to `done`.
-2. Append to `history.md`.
+2. Append to `history.html`.
 3. Include changed files and commands run.
 
 If reviewer rejects:
@@ -104,17 +106,7 @@ If reviewer rejects:
 
 Append entries like:
 
-```md
-## YYYY-MM-DD — <TASK-ID> — <feature-slug>
-
-- Status: done
-- Spec: `specs/<feature-slug>/`
-- Summary: ...
-- Files changed: ...
-- Tests run: ...
-- Reviewer decision: approved
-- Follow-ups: ...
-```
+Append to `history.html` using the entry format in `templates/history.html.template` (copy the HTML entry block).
 
 ## Workflow variant: intake from functional document
 
@@ -125,12 +117,12 @@ Flow:
 ```text
 functional document
 → intake analysis
-→ assumptions.md
-→ open-questions.md
-→ requirements.md
-→ design.md
-→ tasks.md
-→ acceptance-tests.md
+→ assumptions.html
+→ open-questions.html
+→ requirements.html
+→ design.html
+→ tasks.html
+→ acceptance-tests.html
 → human approval
 → implementation
 → review

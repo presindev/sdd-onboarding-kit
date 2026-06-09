@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDD Onboarding Kit for Claude Code</title>
+  <style>
+    :root {
+      --c-accent: #2563eb; --c-accent-bg: #eff6ff;
+      --c-ok: #27ae60; --c-ok-bg: #eafaf1;
+      --c-border: #d1d5db; --c-bg-alt: #f9fafb;
+      --c-text: #111827; --c-text-muted: #6b7280;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); font-size: 15px; line-height: 1.65; color: var(--c-text); background: #fff; }
+    .hero { background: #0f172a; color: #f8fafc; padding: 3rem 2rem 2.5rem; }
+    .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .hero p { color: #94a3b8; font-size: 1.05rem; max-width: 620px; }
+    .content { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
+    h2 { font-size: 1.2rem; font-weight: 700; margin: 2.25rem 0 0.75rem; padding-bottom: 0.3rem; border-bottom: 2px solid var(--c-border); }
+    h3 { font-size: 1rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
+    p { margin: 0.65rem 0; }
+    ul, ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+    li { margin: 0.3rem 0; }
+    code { font-family: var(--font-mono); font-size: 0.875em; background: #e5e7eb; padding: 0.15em 0.4em; border-radius: 3px; }
+    pre { background: #1e1e2e; color: #cdd6f4; padding: 1rem 1.25rem; border-radius: 6px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.85rem; margin: 1rem 0; }
+    pre code { background: none; padding: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1rem 0; }
+    th, td { border: 1px solid var(--c-border); padding: 0.5rem 0.75rem; text-align: left; }
+    th { background: var(--c-bg-alt); font-weight: 600; }
+    a { color: var(--c-accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .step-list { list-style: none; padding: 0; counter-reset: steps; }
+    .step-list li {
+      counter-increment: steps;
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .step-list li::before {
+      content: counter(steps);
+      background: var(--c-accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      width: 1.6rem;
+      height: 1.6rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.15rem;
+    }
+    .prompt-box {
+      background: #f0fdf4;
+      border: 1px solid #86efac;
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      margin: 1rem 0;
+      color: #14532d;
+    }
+    .badge { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 9999px; text-transform: uppercase; background: var(--c-ok-bg); color: var(--c-ok); }
+    hr { border: none; border-top: 1px solid var(--c-border); margin: 1.5rem 0; }
+    footer { text-align: center; padding: 2rem; color: var(--c-text-muted); font-size: 0.85rem; border-top: 1px solid var(--c-border); }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <h1>SDD Onboarding Kit for Claude Code</h1>
+    <p>Install a <strong>Spec Driven Development</strong> harness in any repository you work on with Claude Code.</p>
+  </div>
+
+  <div class="content">
+
+    <section id="what-sdd-does">
+      <h2>What SDD does</h2>
+      <p>When the harness is installed, Claude Code works like this:</p>
+      <ol class="step-list">
+        <li>The developer selects or describes a task.</li>
+        <li>Claude creates a spec (requirements, design, implementation tasks) before touching any code.</li>
+        <li>The developer reviews and approves the spec.</li>
+        <li>Claude implements only against the approved spec.</li>
+        <li>Claude runs tests and validation.</li>
+        <li>Claude reviews traceability between requirements, design, tasks, code and tests.</li>
+        <li>The task is marked done or returned for correction.</li>
+      </ol>
+    </section>
+
+    <hr>
+
+    <section id="how-to-use">
+      <h2>How to use this kit</h2>
+      <p>Copy or add this folder to the project where you want to install SDD. For example:</p>
+      <pre><code>my-project/
+└── sdd-onboarding-kit/</code></pre>
+      <p>Then open Claude Code in <code>my-project/</code> and run:</p>
+      <div class="prompt-box">Read `sdd-onboarding-kit/instructions.md` and configure this repository to use Spec Driven Development. Ask me all necessary questions before making project-specific decisions.</div>
+      <p>Claude Code will inspect the repository, ask you the configuration questions from <code>questions.md</code>, and generate a complete project-specific SDD harness.</p>
+    </section>
+
+    <hr>
+
+    <section id="key-files">
+      <h2>Key files</h2>
+      <table>
+        <thead>
+          <tr><th>File</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>instructions.md</code></td><td>Step-by-step procedure Claude Code follows to install the harness</td></tr>
+          <tr><td><code>questions.md</code></td><td>Project-specific decisions Claude must ask before writing files</td></tr>
+          <tr><td><code>agents/</code></td><td>Subagent templates: leader, spec-author, implementer, reviewer</td></tr>
+          <tr><td><code>skills/sdd-workflow/</code></td><td>Full SDD workflow skill (copied to <code>.claude/skills/</code>)</td></tr>
+          <tr><td><code>hooks/</code></td><td>Hook policies, settings snippets and example hook scripts</td></tr>
+          <tr><td><code>mcps/</code></td><td>Criteria for deciding which MCPs to configure</td></tr>
+          <tr><td><code>templates/</code></td><td>File templates Claude adapts to the target project</td></tr>
+          <tr><td><code>scripts/</code></td><td>Base scripts for validating structure, environment and tests</td></tr>
+          <tr><td><code>reference/</code></td><td>SDD theory, harness engineering, Claude Code primitives</td></tr>
+          <tr><td><code>output-project-structure.md</code></td><td>Expected structure of the target project after onboarding</td></tr>
+          <tr><td><code>usage-prompts.md</code></td><td>Ready-to-use prompts for daily SDD use</td></tr>
+          <tr><td><code>DOCUMENTATION.html</code></td><td>Full documentation: installation, daily workflow, features</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr>
+
+    <section id="central-principle">
+      <h2>Central principle</h2>
+      <p>The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.</p>
+    </section>
+
+    <hr>
+
+    <section id="contributing">
+      <h2>Contributing</h2>
+      <p>Contributions are welcome. To propose a change:</p>
+      <ol>
+        <li>Fork the repository.</li>
+        <li>Create a branch from <code>main</code> with a descriptive name (e.g. <code>fix/hook-path-filter</code> or <code>feat/linear-mcp-notes</code>).</li>
+        <li>Make your changes. Keep PRs focused — one concern per PR.</li>
+        <li>Open a pull request against <code>main</code> with a clear description of what the change does and why.</li>
+        <li>Wait for review. Only the repository owner merges PRs.</li>
+      </ol>
+
+      <h3>Guidelines</h3>
+      <ul>
+        <li>Keep all files in English.</li>
+        <li>Template files under <code>templates/</code> use <code>{{PLACEHOLDER}}</code> syntax; keep that convention.</li>
+        <li>Hook scripts must be POSIX-compatible bash and degrade gracefully when <code>jq</code> is unavailable.</li>
+        <li>Agent files must follow the frontmatter format (<code>name</code>, <code>description</code>, <code>tools</code>).</li>
+      </ul>
+
+      <h3>Reporting issues</h3>
+      <p>Open a GitHub issue with a short description of the bug or request, steps to reproduce (if a bug), and the expected vs. actual behavior.</p>
+    </section>
+
+    <hr>
+
+    <section id="license">
+      <h2>License</h2>
+      <p>MIT — see <a href="LICENSE">LICENSE</a></p>
+    </section>
+
+  </div>
+
+  <footer>
+    SDD Onboarding Kit for Claude Code &nbsp;·&nbsp; <span class="badge">MIT</span>
+  </footer>
+
+</body>
+</html>

@@ -14,9 +14,9 @@ You are not the implementer. Your job is to check correctness, traceability, tes
 
 Read:
 
-- `specs/<feature-slug>/requirements.md`;
-- `specs/<feature-slug>/design.md`;
-- `specs/<feature-slug>/tasks.md`;
+- `specs/<feature-slug>/requirements.html`;
+- `specs/<feature-slug>/design.html`;
+- `specs/<feature-slug>/tasks.html`;
 - implementation diff;
 - relevant tests;
 - project `CLAUDE.md`;
@@ -31,7 +31,7 @@ At minimum, verify:
 
 1. Every requirement is implemented or explicitly deferred.
 2. Every requirement has test coverage or a justified exception.
-3. The implementation follows `design.md`.
+3. The implementation follows `design.html`.
 4. Files outside the design were not changed without explanation.
 5. Tests pass or failures are documented.
 6. Lint/typecheck pass if configured.
@@ -52,7 +52,7 @@ Choose one:
 Create or update:
 
 ```text
-specs/<feature-slug>/review.md
+specs/<feature-slug>/review.html
 ```
 
 Include:
@@ -67,13 +67,13 @@ Include:
 
 If approved:
 
-1. Mark each verified task in `specs/<feature-slug>/tasks.md` as `[x]`.
+1. Update each verified task item in `specs/<feature-slug>/tasks.html` to show it as done (add class `done` to the `<li class="task-item">`).
 2. Update task status to `done`, if allowed.
-3. Append a summary to `history.md`.
+3. Append a summary entry to `history.html`.
 
 If approved with non-blocking findings:
 
-1. Resolve every non-blocking finding before marking `done`. Either fix it directly or record an explicit deferral with justification in `review.md`.
+1. Resolve every non-blocking finding before marking `done`. Either fix it directly or record an explicit deferral with justification in `review.html`.
 2. Do not mark the task `done` while unresolved non-blocking findings remain.
 3. After resolving all findings, follow the approved completion steps above.
 

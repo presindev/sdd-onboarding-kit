@@ -17,7 +17,7 @@ Never make silent assumptions.
 If Claude Code needs to infer something that affects product behavior, architecture, data, security, compatibility, or developer workflow, it must either:
 
 1. ask the developer; or
-2. record the assumption explicitly in `assumptions.md`.
+2. record the assumption explicitly in `assumptions.html`.
 
 ---
 
@@ -26,7 +26,7 @@ If Claude Code needs to infer something that affects product behavior, architect
 Assumptions must be written in:
 
 ```text
-specs/<feature-slug>/assumptions.md
+specs/<feature-slug>/assumptions.html
 ```
 
 Do not hide important assumptions only in:
@@ -34,10 +34,10 @@ Do not hide important assumptions only in:
 - chat messages;
 - implementation comments;
 - commit messages;
-- `design.md`;
+- `design.html`;
 - task descriptions.
 
-The dedicated `assumptions.md` file is the source of truth for inferred decisions.
+The dedicated `assumptions.html` file is the source of truth for inferred decisions.
 
 ---
 
@@ -178,7 +178,7 @@ Do not implement based on high-risk assumptions without developer approval.
 
 ## Required assumption format
 
-Each assumption in `assumptions.md` must use this format:
+Each assumption in `assumptions.html` must use this format:
 
 ```md
 ## A<number> — <short title>
@@ -232,16 +232,16 @@ Claude Code may make an assumption when:
 - the assumption is low or medium risk;
 - the assumption is consistent with existing project conventions;
 - the assumption is easy to review and reverse;
-- the assumption is written in `assumptions.md`;
+- the assumption is written in `assumptions.html`;
 - the spec remains understandable without hidden context.
 
 ---
 
 ## Relationship between assumptions and open questions
 
-Use `assumptions.md` when Claude Code can proceed with a reasonable draft.
+Use `assumptions.html` when Claude Code can proceed with a reasonable draft.
 
-Use `open-questions.md` when Claude Code cannot safely proceed.
+Use `open-questions.html` when Claude Code cannot safely proceed.
 
 Example:
 
@@ -279,9 +279,9 @@ After approval, assumptions that remain in the spec are treated as accepted for 
 
 ## Implementation behavior
 
-The `implementer` agent must read `assumptions.md` before implementation.
+The `implementer` agent must read `assumptions.html` before implementation.
 
-If `assumptions.md` contains any item with:
+If `assumptions.html` contains any item with:
 
 ```text
 Blocks implementation: Yes
@@ -289,7 +289,7 @@ Blocks implementation: Yes
 
 the implementer must stop and ask for clarification.
 
-If assumptions contradict `requirements.md`, `design.md`, or developer instructions, the implementer must stop.
+If assumptions contradict `requirements.html`, `design.html`, or developer instructions, the implementer must stop.
 
 ---
 

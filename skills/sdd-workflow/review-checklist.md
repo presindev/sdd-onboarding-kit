@@ -4,9 +4,9 @@ The reviewer must validate the implementation against the approved spec.
 
 ## 1. Spec completeness
 
-- [ ] `requirements.md` exists.
-- [ ] `design.md` exists.
-- [ ] `tasks.md` exists.
+- [ ] `requirements.html` exists.
+- [ ] `design.html` exists.
+- [ ] `tasks.html` exists.
 - [ ] Human approval is recorded if required.
 - [ ] No unresolved TODOs remain in approved requirements unless explicitly accepted.
 
@@ -22,7 +22,7 @@ For every functional requirement:
 
 ## 3. Design conformance
 
-- [ ] The implementation follows `design.md`.
+- [ ] The implementation follows `design.html`.
 - [ ] Files changed are listed in the design or justified.
 - [ ] Public APIs were not changed unexpectedly.
 - [ ] Data/schema changes are documented.

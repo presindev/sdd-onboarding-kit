@@ -1,7 +1,10 @@
 # Manifest
 
 - `CLAUDE.md`
+- `DOCUMENTATION.md`
+- `DOCUMENTATION.html`
 - `README.md`
+- `README.html`
 - `agents/implementer.md`
 - `agents/leader.md`
 - `agents/reviewer.md`
@@ -40,12 +43,18 @@
 - `templates/.claude/settings.json.template`
 - `templates/.mcp.json.template`
 - `templates/CLAUDE.md.template`
-- `templates/architecture.md.template`
-- `templates/conventions.md.template`
-- `templates/history.md.template`
-- `templates/specs/design.md.template`
-- `templates/specs/requirements.md.template`
-- `templates/specs/review.md.template`
-- `templates/specs/tasks.md.template`
+- `templates/architecture.html.template`
+- `templates/functional/functional-brief.html.template`
+- `templates/conventions.html.template`
+- `templates/history.html.template`
+- `templates/specs/acceptance-tests.html.template`
+- `templates/specs/assumptions.html.template`
+- `templates/specs/design.html.template`
+- `templates/specs/open-questions.html.template`
+- `templates/specs/requirements.html.template`
+- `templates/specs/review.html.template`
+- `templates/specs/spec.css`
+- `templates/specs/spec.js`
+- `templates/specs/tasks.html.template`
 - `templates/tasks.json.template`
 - `usage-prompts.md`

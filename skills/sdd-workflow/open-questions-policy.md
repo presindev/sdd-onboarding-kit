@@ -23,7 +23,7 @@ Do not proceed to implementation while blocking questions remain unresolved.
 Open questions must be written in:
 
 ```text
-specs/<feature-slug>/open-questions.md
+specs/<feature-slug>/open-questions.html
 ```
 
 For onboarding-level decisions, use:
@@ -82,7 +82,7 @@ Non-blocking questions should still be recorded.
 
 ## Required question format
 
-Each question in `open-questions.md` must use this format:
+Each question in `open-questions.html` must use this format:
 
 ```md
 ## Q<number> — <short title>
@@ -100,9 +100,9 @@ Yes | No
 <Optional. Only include if safe.>
 
 **Affected files/spec sections:**  
-- `requirements.md`
-- `design.md`
-- `tasks.md`
+- `requirements.html`
+- `design.html`
+- `tasks.html`
 
 **Related requirements:**  
 - R<number>
@@ -188,8 +188,8 @@ Use an assumption when Claude Code can safely proceed with a draft.
 
 Some entries may appear in both files:
 
-- `open-questions.md` records the decision still needed.
-- `assumptions.md` records the temporary assumption used for the draft.
+- `open-questions.html` records the decision still needed.
+- `assumptions.html` records the temporary assumption used for the draft.
 
 Example:
 
@@ -206,7 +206,7 @@ No
 Use "No notes found."
 ```
 
-And in `assumptions.md`:
+And in `assumptions.html`:
 
 ```md
 ## A2 — Empty-state copy
@@ -279,7 +279,7 @@ Claude Code must verify:
 
 ## Implementer behavior
 
-The `implementer` agent must read `open-questions.md`.
+The `implementer` agent must read `open-questions.html`.
 
 If any question has:
 
@@ -299,7 +299,7 @@ The implementer must not answer product, security, architecture, or workflow que
 The `reviewer` agent must check:
 
 - whether implementation proceeded despite unresolved blocking questions;
-- whether decisions in `open-questions.md` were reflected in code and tests;
+- whether decisions in `open-questions.html` were reflected in code and tests;
 - whether new questions emerged during implementation;
 - whether unresolved questions require returning to `spec_draft`.
 
@@ -325,9 +325,9 @@ Yes
 None. This must be decided by the developer.
 
 **Affected files/spec sections:**  
-- `requirements.md`
-- `design.md`
-- `tasks.md`
+- `requirements.html`
+- `design.html`
+- `tasks.html`
 
 **Related requirements:**  
 - R2
@@ -354,8 +354,8 @@ No
 Use "No notes found."
 
 **Affected files/spec sections:**  
-- `requirements.md`
-- `acceptance-tests.md`
+- `requirements.html`
+- `acceptance-tests.html`
 
 **Related requirements:**  
 - R4

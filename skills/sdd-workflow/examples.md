@@ -51,7 +51,7 @@
 - [ ] `T6`: Run validation commands.
 ```
 
-## Example: editing open-questions.md during spec_draft
+## Example: editing open-questions.html during spec_draft
 
 This is a valid and expected operation. The `block-implementation-before-approval` hook must allow it.
 
@@ -75,7 +75,7 @@ The spec-author (or developer) fills in the decision:
 **Decision:** API key for the MVP. OAuth2 will be addressed in a follow-up task.
 ```
 
-After all blocking questions are resolved, the spec-author sets the task status to `spec_ready` and requests human approval. The hook must not block this edit — `open-questions.md` is a spec file, not an implementation file.
+After all blocking questions are resolved, the spec-author sets the task status to `spec_ready` and requests human approval. The hook must not block this edit — `open-questions.html` is a spec file, not an implementation file.
 
 ## Example review traceability
 
