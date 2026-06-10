@@ -59,9 +59,6 @@
 - `specs/example-feature/spec.css`
 - `specs/example-feature/spec.js`
 - `specs/example-feature/tasks.html`
-- `specs/kit-pr-01-documentation-foundation/spec.md`
-- `specs/kit-pr-02-context-economy/spec.md`
-- `specs/kit-pr-03-project-map/spec.md`
 - `templates/.claude/hooks/README.md.template`
 - `templates/.claude/settings.json.template`
 - `templates/.mcp.json.template`
