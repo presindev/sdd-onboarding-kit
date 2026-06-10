@@ -128,6 +128,16 @@ Use project subagents when appropriate:
 
 {{SDD_SKIP_POLICY}}
 
+## Context economy
+
+The context window is a scarce resource. Rules:
+
+- Keep this file short; link to deeper docs instead of duplicating them.
+- Long procedures belong in skills, not here.
+- Use `/context` to inspect usage; use `/compact` between unrelated tasks, with focus instructions to preserve decisions, task status, architecture constraints, and unresolved questions.
+- Delegate noisy, many-file exploration to subagents; keep only conclusions in the main conversation.
+- Durable truth lives in artifacts (`tasks.json`, `specs/`, decision logs, `history.html`), not in chat history.
+
 ## Final rule
 
 Prefer a clear spec over a clever implementation. If the spec is ambiguous, ask or revise the spec before coding.
