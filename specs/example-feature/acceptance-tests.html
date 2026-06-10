@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceptance Tests — Recent notes CLI command</title>
+  <link rel="stylesheet" href="spec.css">
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="sidebar-title">Contents</p>
+    <div id="toc-list"></div>
+  </nav>
+
+  <div class="main-content">
+    <header class="spec-header">
+      <h1>Acceptance Tests — Recent notes CLI command</h1>
+
+      <table class="meta-table">
+        <tbody>
+          <tr><th>Feature</th>          <td><code>Recent notes CLI command</code></td></tr>
+          <tr><th>Feature slug</th>     <td><code>example-feature</code></td></tr>
+          <tr><th>Source document</th>  <td><code>docs/functional/recent-notes.md</code></td></tr>
+          <tr><th>Task ID</th>          <td><code>FEAT-007</code></td></tr>
+          <tr><th>Created</th>          <td><code>2026-06-10</code></td></tr>
+        </tbody>
+      </table>
+    </header>
+
+    <main>
+
+      <section id="purpose">
+        <h2>Purpose</h2>
+        <p>This document defines acceptance-level test scenarios for the feature.</p>
+        <p>These are not necessarily final automated test implementations. They describe the observable behavior that must be true for the feature to be accepted.</p>
+        <ul>
+          <li>The implementer should use this file to create or update automated tests.</li>
+          <li>The reviewer should use this file to verify that the implementation satisfies the approved spec.</li>
+        </ul>
+      </section>
+
+      <hr>
+
+      <section id="test-strategy">
+        <h2>Test strategy</h2>
+        <p>The acceptance tests must verify:</p>
+        <ul>
+          <li>user-facing behavior;</li>
+          <li>main success scenarios;</li>
+          <li>validation rules;</li>
+          <li>edge cases;</li>
+          <li>error cases;</li>
+          <li>non-goals that must remain unchanged.</li>
+        </ul>
+
+        <h3 id="testing-style">Testing style configured for this project</h3>
+        <pre><code>pytest, CLI-level tests through the cli_runner fixture</code></pre>
+
+        <h3 id="test-command">Test command</h3>
+        <pre><code>./scripts/run-tests.sh</code></pre>
+
+        <h3 id="test-locations">Related test files or directories</h3>
+        <pre><code>tests/test_cli_recent.py</code></pre>
+      </section>
+
+      <hr>
+
+      <section id="requirements-coverage-matrix">
+        <h2>Requirements coverage matrix</h2>
+        <table>
+          <thead>
+            <tr><th>Requirement</th><th>Acceptance test(s)</th><th>Covered</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="req-id">REQ-001</span></td>
+              <td>AT1</td>
+              <td class="ok">Yes</td>
+            </tr>
+            <tr>
+              <td><span class="req-id">REQ-002</span></td>
+              <td>AT2</td>
+              <td class="ok">Yes</td>
+            </tr>
+            <tr>
+              <td><span class="req-id">REQ-003</span></td>
+              <td>AT-ERR-1</td>
+              <td class="ok">Yes</td>
+            </tr>
+            <tr>
+              <td><span class="req-id edge">EDGE-001</span></td>
+              <td>AT-EDGE-1</td>
+              <td class="ok">Yes</td>
+            </tr>
+            <tr>
+              <td><span class="req-id err">ERR-001</span></td>
+              <td>AT-ERR-2</td>
+              <td class="warning">Partial (skipped on Windows)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr>
+
+      <section id="acceptance-tests">
+        <h2>Acceptance tests</h2>
+
+        <div class="card" id="at1">
+          <div class="card-header">
+            <span class="req-id">AT1</span>
+            <span class="card-title">Default limit shows five notes, newest first</span>
+            <span class="badge badge-ok">Implemented</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Related requirements</dt>  <dd>REQ-001</dd>
+              <dt>Scenario</dt>              <dd>A user with several notes asks for recent notes without options.</dd>
+              <dt>Preconditions</dt>         <dd>Store contains 8 notes with distinct <code>created_at</code> values.</dd>
+              <dt>Action</dt>                <dd>Run <code>notes recent</code>.</dd>
+              <dt>Expected result</dt>       <dd>Exactly 5 notes printed, ordered newest first; exit code 0.</dd>
+              <dt>Negative expectations</dt> <dd>No note older than the 5 newest appears.</dd>
+              <dt>Suggested test location</dt><dd><code>tests/test_cli_recent.py::test_default_limit</code></dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="card" id="at2">
+          <div class="card-header">
+            <span class="req-id">AT2</span>
+            <span class="card-title">Custom positive limit is respected</span>
+            <span class="badge badge-ok">Implemented</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Related requirements</dt>  <dd>REQ-002</dd>
+              <dt>Scenario</dt>              <dd>A user requests a specific number of recent notes.</dd>
+              <dt>Preconditions</dt>         <dd>Store contains 8 notes.</dd>
+              <dt>Action</dt>                <dd>Run <code>notes recent --limit 2</code> and <code>notes recent --limit 12</code>.</dd>
+              <dt>Expected result</dt>       <dd>2 and 8 notes respectively, newest first; exit code 0.</dd>
+              <dt>Negative expectations</dt> <dd>No duplication or padding when the limit exceeds the store size.</dd>
+              <dt>Suggested test location</dt><dd><code>tests/test_cli_recent.py::test_custom_limit</code></dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <section id="edge-case-tests">
+        <h2>Edge case tests</h2>
+        <p>Use this section for boundary behavior, unusual input, empty states, invalid values, unavailable dependencies, or compatibility cases.</p>
+
+        <div class="card" id="at-edge-1">
+          <div class="card-header">
+            <span class="req-id edge">AT-EDGE-1</span>
+            <span class="card-title">Empty store shows empty-state message</span>
+            <span class="badge badge-ok">Implemented</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Related requirements</dt>  <dd>EDGE-001</dd>
+              <dt>Scenario</dt>              <dd>A new user with no notes runs the command.</dd>
+              <dt>Preconditions</dt>         <dd>Store contains 0 notes.</dd>
+              <dt>Action</dt>                <dd>Run <code>notes recent</code>.</dd>
+              <dt>Expected result</dt>       <dd>Prints <code>No notes found.</code>; exit code 0.</dd>
+              <dt>Negative expectations</dt> <dd>No stack trace, no empty output.</dd>
+              <dt>Suggested test location</dt><dd><code>tests/test_cli_recent.py::test_empty_store</code></dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <section id="error-case-tests">
+        <h2>Error case tests</h2>
+        <p>Use this section for expected failures.</p>
+
+        <div class="card risk-high" id="at-err-1">
+          <div class="card-header">
+            <span class="req-id err">AT-ERR-1</span>
+            <span class="card-title">Invalid limit is rejected</span>
+            <span class="badge badge-ok">Implemented</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Related requirements</dt>  <dd>REQ-003</dd>
+              <dt>Scenario</dt>              <dd>A user passes a non-positive or non-numeric limit.</dd>
+              <dt>Preconditions</dt>         <dd>Store contains at least 1 note.</dd>
+              <dt>Action</dt>                <dd>Run <code>notes recent --limit 0</code> and <code>notes recent --limit abc</code>.</dd>
+              <dt>Expected result</dt>       <dd>Exit code 2 with <code>limit must be a positive integer</code> on stderr.</dd>
+              <dt>Negative expectations</dt> <dd>No notes printed; the store is not read.</dd>
+              <dt>Suggested test location</dt><dd><code>tests/test_cli_recent.py::test_invalid_limit</code></dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="card risk-high" id="at-err-2">
+          <div class="card-header">
+            <span class="req-id err">AT-ERR-2</span>
+            <span class="card-title">Unreadable store fails cleanly</span>
+            <span class="badge badge-warning">Partial</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Related requirements</dt>  <dd>ERR-001</dd>
+              <dt>Scenario</dt>              <dd>The notes store exists but cannot be read.</dd>
+              <dt>Preconditions</dt>         <dd>Store file present with read permission revoked.</dd>
+              <dt>Action</dt>                <dd>Run <code>notes recent</code>.</dd>
+              <dt>Expected result</dt>       <dd>Clear error on stderr; non-zero exit code.</dd>
+              <dt>Negative expectations</dt> <dd>No partial output on stdout.</dd>
+              <dt>Suggested test location</dt><dd><code>tests/test_cli_recent.py::test_store_unreadable</code> (skipped on Windows; see review NBK-1)</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <section id="non-regression-tests">
+        <h2>Non-regression tests</h2>
+        <p>Use this section to ensure existing behavior is not broken.</p>
+
+        <div class="card" id="at-reg-1">
+          <div class="card-header">
+            <span class="req-id">AT-REG-1</span>
+            <span class="card-title">Existing subcommands unaffected</span>
+            <span class="badge badge-ok">Implemented</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Existing behavior protected</dt> <dd><code>notes add</code> and <code>notes list</code> keep their current output and exit codes.</dd>
+              <dt>Related requirements</dt>         <dd>Design §Files not to change</dd>
+              <dt>Scenario</dt>                     <dd>Run the pre-existing CLI test suite unchanged.</dd>
+              <dt>Preconditions</dt>                <dd>None beyond the standard fixtures.</dd>
+              <dt>Action</dt>                       <dd>Run <code>./scripts/run-tests.sh</code>.</dd>
+              <dt>Expected result</dt>              <dd>All pre-existing tests still pass.</dd>
+              <dt>Negative expectations</dt>        <dd>No changes to existing test files were needed.</dd>
+              <dt>Suggested test location</dt>      <dd><code>tests/</code> (existing suite)</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <section id="manual-acceptance-checklist">
+        <h2>Manual acceptance checklist</h2>
+        <p>Use during human review.</p>
+        <ul class="checklist">
+          <li><input type="checkbox" checked disabled> All requirements have at least one acceptance test.</li>
+          <li><input type="checkbox" checked disabled> Main success path is covered.</li>
+          <li><input type="checkbox" checked disabled> Empty state is covered, if relevant.</li>
+          <li><input type="checkbox" checked disabled> Invalid input is covered, if relevant.</li>
+          <li><input type="checkbox" checked disabled> Permission / security behavior is covered, if relevant.</li>
+          <li><input type="checkbox" checked disabled> Non-goals are protected, if relevant.</li>
+          <li><input type="checkbox" checked disabled> Tests are feasible with the current project test setup.</li>
+          <li><input type="checkbox" checked disabled> No acceptance test depends on hidden assumptions.</li>
+          <li><input type="checkbox" checked disabled> Any unresolved behavior is listed in <code>open-questions.html</code>.</li>
+        </ul>
+      </section>
+
+      <hr>
+
+      <section id="notes-for-claude-code">
+        <h2>Notes for Claude Code</h2>
+        <div class="claude-note">
+          <h4>Rules Claude Code must follow</h4>
+          <ol>
+            <li>Acceptance tests must map back to <code>requirements.html</code>.</li>
+            <li>Do not invent behavior that is absent from the functional brief or approved assumptions.</li>
+            <li>If a test requires an unresolved decision, add or update <code>open-questions.html</code>.</li>
+            <li>The implementer must create automated tests based on this document where feasible.</li>
+            <li>The reviewer must verify that implemented tests cover this document.</li>
+            <li>If an acceptance test cannot be automated, mark it clearly and explain why.</li>
+          </ol>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /.main-content -->
+</div><!-- /.page-wrap -->
+<script src="spec.js"></script>
+</body>
+</html>

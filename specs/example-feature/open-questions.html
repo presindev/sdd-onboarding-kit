@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Questions — Recent notes CLI command</title>
+  <link rel="stylesheet" href="spec.css">
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="sidebar-title">Contents</p>
+    <div id="toc-list"></div>
+  </nav>
+
+  <div class="main-content">
+    <header class="spec-header">
+      <h1>Open Questions — Recent notes CLI command</h1>
+
+      <table class="meta-table">
+        <tbody>
+          <tr><th>Feature</th>         <td><code>Recent notes CLI command</code></td></tr>
+          <tr><th>Feature slug</th>    <td><code>example-feature</code></td></tr>
+          <tr><th>Source document</th> <td><code>docs/functional/recent-notes.md</code></td></tr>
+          <tr><th>Task ID</th>         <td><code>FEAT-007</code></td></tr>
+          <tr><th>Created</th>         <td><code>2026-06-10</code></td></tr>
+        </tbody>
+      </table>
+    </header>
+
+    <main>
+
+      <section id="purpose">
+        <h2>Purpose</h2>
+        <p>This document records unresolved questions found while converting the source material into an SDD spec.</p>
+        <p>Blocking questions must be answered before implementation.</p>
+      </section>
+
+      <hr>
+
+      <section id="question-status-summary">
+        <h2>Question status summary</h2>
+
+        <table>
+          <thead>
+            <tr><th>Type</th><th style="text-align:right">Count</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="badge badge-blocking">Blocking</span></td>     <td style="text-align:right">0</td></tr>
+            <tr><td><span class="badge badge-warning">Non-blocking</span></td>  <td style="text-align:right">0</td></tr>
+            <tr><td><span class="badge badge-ok">Resolved</span></td>           <td style="text-align:right">2</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Blocking questions present:</strong></p>
+        <pre><code>No</code></pre>
+      </section>
+
+      <hr>
+
+      <section id="open-questions">
+        <h2>Open questions</h2>
+        <p>None pending. All questions for this feature were resolved before approval; see below.</p>
+      </section>
+
+      <hr>
+
+      <section id="resolved-questions">
+        <h2>Resolved questions</h2>
+
+        <div class="card" id="q1">
+          <div class="card-header">
+            <span class="req-id">Q1</span>
+            <span class="card-title">User visibility scope</span>
+            <span class="badge badge-ok">Resolved</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Question</dt>       <dd>Should <code>notes recent</code> return only notes owned by the current user?</dd>
+              <dt>Why it matters</dt> <dd>This affects authorization and data privacy.</dd>
+              <dt>Blocking</dt>       <dd>Yes</dd>
+              <dt>Decision</dt>       <dd>The CLI is single-user; the store only ever contains the current user's notes. No filtering needed.</dd>
+              <dt>Resolved by</dt>    <dd>developer</dd>
+              <dt>Resolved at</dt>    <dd>2026-06-10</dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="card" id="q2">
+          <div class="card-header">
+            <span class="req-id">Q2</span>
+            <span class="card-title">Empty-state copy</span>
+            <span class="badge badge-ok">Resolved</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Question</dt>       <dd>What exact message should be shown when no notes exist?</dd>
+              <dt>Why it matters</dt> <dd>User-facing copy; non-blocking.</dd>
+              <dt>Blocking</dt>       <dd>No</dd>
+              <dt>Decision</dt>       <dd>Use <code>No notes found.</code> (assumption A2 accepted).</dd>
+              <dt>Resolved by</dt>    <dd>developer</dd>
+              <dt>Resolved at</dt>    <dd>2026-06-10</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <section id="deferred-questions">
+        <h2>Deferred questions</h2>
+        <p>None for this feature.</p>
+      </section>
+
+      <hr>
+
+      <section id="notes-for-claude-code">
+        <h2>Notes for Claude Code</h2>
+        <div class="claude-note">
+          <h4>Rules Claude Code must follow</h4>
+          <ol>
+            <li>If any question has <strong>Blocking: Yes</strong> and <strong>Decision: Pending</strong>, do not implement.</li>
+            <li>If only non-blocking questions remain, the task may be marked <code>spec_ready</code> if all assumptions are explicit.</li>
+            <li>Do not answer product, security, data, billing, or architecture questions silently.</li>
+            <li>When the developer answers a question, update this file and reflect the decision in <code>requirements.html</code>, <code>design.html</code>, <code>tasks.html</code>, or <code>acceptance-tests.html</code>.</li>
+            <li>Before moving a task to <code>human_approved</code>, verify that no blocking question remains pending.</li>
+          </ol>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /.main-content -->
+</div><!-- /.page-wrap -->
+<script src="spec.js"></script>
+</body>
+</html>

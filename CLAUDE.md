@@ -15,7 +15,8 @@ When the developer asks to install or configure SDD in another repository:
 The final goal is to create a project-specific SDD harness, not to explain SDD abstractly.
 
 When the developer asks to make changes in this repository:
-1. Read the todolist.md file. It contains the tasks to be done.
+1. If `todolist.md` exists (it is gitignored and local-only), read it: it contains the tasks to be done. If it does not exist, ask the developer what to change.
 2. Complete the tasks. You may need to modify some of the hooks, MCPs, templates, etc.
-3. Check that the detected bugs in bugs.md are solved.
+3. If `bugs.md` exists (also gitignored and local-only), check that the bugs it describes are solved.
 4. Mark with X all the checkboxes of the tasks/bugs you complete.
+5. After adding, renaming or deleting kit files, run `scripts/update-manifest.sh` to regenerate `manifest.md`.

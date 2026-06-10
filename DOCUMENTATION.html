@@ -185,10 +185,12 @@
 │   │   └── reviewer.md
 │   ├── skills/sdd-workflow/
 │   │   ├── SKILL.md
-│   │   └── … (8 supporting files)
+│   │   ├── … (8 supporting files)
+│   │   └── templates/ (spec HTML templates + spec.css + spec.js)
 │   ├── hooks/README.md
 │   └── settings.json
 ├── specs/
+├── decisions/answers.md
 ├── tasks.json
 ├── history.html
 └── scripts/
@@ -290,7 +292,7 @@
       <p>The harness installs four Claude subagents under <code>.claude/agents/</code>:</p>
 
       <h3>Leader</h3>
-      <p>The orchestrator. Reads task state, routes work to the correct specialist, never writes production code, stops for human approval at <code>spec_ready</code>.</p>
+      <p>The routing advisor. Reads task state and returns which specialist the main conversation should invoke next (subagents cannot invoke other subagents in Claude Code, so orchestration happens in the main conversation, guided by the <code>sdd-workflow</code> skill). Never writes production code, recommends stopping for human approval at <code>spec_ready</code>.</p>
 
       <h3>Spec Author</h3>
       <p>Writes and revises specs. Produces <code>requirements.html</code>, <code>design.html</code>, <code>tasks.html</code>. When working from a functional document also produces <code>assumptions.html</code>, <code>open-questions.html</code>, and <code>acceptance-tests.html</code>.</p>

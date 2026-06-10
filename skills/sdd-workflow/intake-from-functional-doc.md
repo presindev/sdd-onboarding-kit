@@ -96,19 +96,31 @@ Default local task storage:
 tasks.json
 ```
 
-The task should include at least:
+The task must follow the schema of `tasks.json` (see `templates/tasks.json.template` in the kit) and include at least:
 
 ```json
 {
   "id": "TASK-XXX",
   "title": "<feature title>",
   "slug": "<feature-slug>",
+  "description": "<short description>",
   "source": "<path-to-functional-document>",
   "sdd": true,
   "status": "pending",
   "spec_path": "specs/<feature-slug>",
-  "approved_by": null,
-  "approved_at": null
+  "approval": {
+    "required": true,
+    "approved_by": null,
+    "approved_at": null,
+    "notes": null
+  },
+  "links": {
+    "issue": null,
+    "pr": null,
+    "branch": null
+  },
+  "created_at": "YYYY-MM-DD",
+  "updated_at": "YYYY-MM-DD"
 }
 ```
 

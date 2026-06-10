@@ -23,7 +23,17 @@ After the onboarding is complete, the target repository should contain a project
 │   │       ├── intake-from-functional-doc.md
 │   │       ├── assumptions-policy.md
 │   │       ├── open-questions-policy.md
-│   │       └── examples.md
+│   │       ├── examples.md
+│   │       └── templates/
+│   │           ├── requirements.html.template
+│   │           ├── design.html.template
+│   │           ├── tasks.html.template
+│   │           ├── review.html.template
+│   │           ├── acceptance-tests.html.template
+│   │           ├── assumptions.html.template
+│   │           ├── open-questions.html.template
+│   │           ├── spec.css
+│   │           └── spec.js
 │   ├── hooks/
 │   │   └── README.md
 │   └── settings.json
@@ -38,6 +48,8 @@ After the onboarding is complete, the target repository should contain a project
 │       ├── review.html
 │       ├── spec.css
 │       └── spec.js
+├── decisions/
+│   └── answers.md
 ├── tasks.json
 ├── history.html
 └── scripts/
@@ -67,10 +79,12 @@ The onboarding is complete when:
 
 1. `CLAUDE.md` exists and reflects this specific project.
 2. The SDD skill exists under `.claude/skills/sdd-workflow/`.
-3. The four subagents exist under `.claude/agents/`.
-4. There is a task storage mechanism.
-5. There is a spec storage mechanism.
-6. There is a validation command or documented TODO.
-7. Hooks are either explicitly enabled or explicitly left disabled.
-8. MCPs are either explicitly configured or explicitly left unconfigured.
-9. No generated file contains unresolved placeholders without a TODO explaining why.
+3. The HTML spec templates (plus `spec.css` and `spec.js`) exist under `.claude/skills/sdd-workflow/templates/`.
+4. The four subagents exist under `.claude/agents/`.
+5. There is a task storage mechanism.
+6. There is a spec storage mechanism.
+7. `decisions/answers.md` records the developer's onboarding answers.
+8. There is a validation command or documented TODO.
+9. Hooks are either explicitly enabled or explicitly left disabled.
+10. MCPs are either explicitly configured or explicitly left unconfigured.
+11. No generated file contains unresolved placeholders without a TODO explaining why (the `.html.template` files under `.claude/skills/sdd-workflow/templates/` are exempt — their placeholders are instantiated per feature).

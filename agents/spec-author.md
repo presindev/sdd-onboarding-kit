@@ -17,7 +17,7 @@ Read:
 - task description;
 - project `CLAUDE.md`;
 - `.claude/skills/sdd-workflow/spec-format.md`;
-- existing docs such as `docs/architecture.md`, `docs/conventions.md`, `README.md`;
+- existing docs such as `docs/architecture.html`, `docs/conventions.html`, `README.md`;
 - relevant existing code only as needed to understand design constraints.
 
 ## Outputs
@@ -28,8 +28,8 @@ Create or update:
 specs/<feature-slug>/requirements.html
 specs/<feature-slug>/design.html
 specs/<feature-slug>/tasks.html
-specs/<feature-slug>/spec.css   (copy from templates/specs/spec.css)
-specs/<feature-slug>/spec.js    (copy from templates/specs/spec.js)
+specs/<feature-slug>/spec.css   (copy from .claude/skills/sdd-workflow/templates/spec.css)
+specs/<feature-slug>/spec.js    (copy from .claude/skills/sdd-workflow/templates/spec.js)
 ```
 
 Optionally prepare:
@@ -57,7 +57,8 @@ specs/<feature-slug>/review.html
 
 ## Task rules
 
-- Every task in `tasks.html` must use HTML checkbox format: `<input type="checkbox" disabled> T1: description`.
+- Every task in `tasks.html` must be an `<li class="task-item">` inside the `<ol class="task-timeline">`, following the structure in the `tasks.html` template (`.task-item-header` with a `T<n>` ID, plus `.task-item-body`).
+- Subtask progress is tracked by adding a status class to the `<li>`: `done`, `in-progress`, or `blocked`. New tasks carry no status class. The global task status lives in `tasks.json`.
 - Tasks must be small enough for the implementer to execute sequentially.
 - Each task should reference requirements where possible.
 - Include test tasks.
@@ -111,8 +112,8 @@ Before implementation can happen, create:
 - `specs/<feature-slug>/assumptions.html`
 - `specs/<feature-slug>/open-questions.html`
 - `specs/<feature-slug>/acceptance-tests.html`
-- `specs/<feature-slug>/spec.css` (copy from `templates/specs/spec.css`)
-- `specs/<feature-slug>/spec.js` (copy from `templates/specs/spec.js`)
+- `specs/<feature-slug>/spec.css` (copy from `.claude/skills/sdd-workflow/templates/spec.css`)
+- `specs/<feature-slug>/spec.js` (copy from `.claude/skills/sdd-workflow/templates/spec.js`)
 
 If blocking questions remain, set the task status to `spec_draft`.
 If the spec is ready for human review, set the task status to `spec_ready`.

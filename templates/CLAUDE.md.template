@@ -99,7 +99,7 @@ Invoke it directly when needed:
 
 Use project subagents when appropriate:
 
-- `leader`: orchestrates task state and flow.
+- `leader`: inspects task state and recommends which agent to invoke next (subagents cannot invoke each other; the main conversation orchestrates).
 - `spec-author`: creates requirements, design and implementation tasks.
 - `implementer`: writes code from approved specs.
 - `reviewer`: validates implementation against specs.
@@ -150,7 +150,7 @@ Required files:
 - assumptions.html
 - open-questions.html
 - acceptance-tests.html
-- spec.css (copy from kit's templates/specs/spec.css)
-- spec.js (copy from kit's templates/specs/spec.js)
+- spec.css (copy from .claude/skills/sdd-workflow/templates/spec.css)
+- spec.js (copy from .claude/skills/sdd-workflow/templates/spec.js)
 
 Claude Code must stop after generating the spec and wait for human approval before implementation.

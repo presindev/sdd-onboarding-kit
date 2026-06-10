@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assumptions — Recent notes CLI command</title>
+  <link rel="stylesheet" href="spec.css">
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="sidebar-title">Contents</p>
+    <div id="toc-list"></div>
+  </nav>
+
+  <div class="main-content">
+    <header class="spec-header">
+      <h1>Assumptions — Recent notes CLI command</h1>
+
+      <table class="meta-table">
+        <tbody>
+          <tr><th>Feature</th>         <td><code>Recent notes CLI command</code></td></tr>
+          <tr><th>Feature slug</th>    <td><code>example-feature</code></td></tr>
+          <tr><th>Source document</th> <td><code>docs/functional/recent-notes.md</code></td></tr>
+          <tr><th>Task ID</th>         <td><code>FEAT-007</code></td></tr>
+          <tr><th>Created</th>         <td><code>2026-06-10</code></td></tr>
+        </tbody>
+      </table>
+    </header>
+
+    <main>
+
+      <section id="purpose">
+        <h2>Purpose</h2>
+        <p>This document records assumptions made while converting the source material into an SDD spec.</p>
+        <p>Assumptions are not hidden decisions. They must be explicit, reviewable, and either accepted, corrected, or removed before implementation.</p>
+      </section>
+
+      <hr>
+
+      <section id="assumption-status-summary">
+        <h2>Assumption status summary</h2>
+
+        <table>
+          <thead>
+            <tr><th>Risk level</th><th style="text-align:right">Count</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Low</td>    <td style="text-align:right">1</td></tr>
+            <tr><td>Medium</td> <td style="text-align:right">1</td></tr>
+            <tr><td>High</td>   <td style="text-align:right">0</td></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Blocking assumptions present:</strong></p>
+        <pre><code>No</code></pre>
+      </section>
+
+      <hr>
+
+      <section id="assumptions">
+        <h2>Assumptions</h2>
+        <p>All assumptions for this feature have been reviewed; see the sections below.</p>
+      </section>
+
+      <hr>
+
+      <section id="accepted-assumptions">
+        <h2>Accepted assumptions</h2>
+
+        <div class="card risk-medium" id="a1">
+          <div class="card-header">
+            <span class="req-id">A1</span>
+            <span class="card-title">Default recent notes limit</span>
+            <span class="badge badge-ok">Accepted</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Assumption</dt>            <dd>The default number of recent notes shown by the CLI is 5.</dd>
+              <dt>Reason</dt>                <dd>The functional brief asks for "recent notes" without a default; existing list commands use small default result sets.</dd>
+              <dt>Risk level</dt>            <dd>Medium</dd>
+              <dt>Impact if wrong</dt>       <dd>The CLI may show too many or too few notes by default.</dd>
+              <dt>Blocks implementation</dt> <dd>No</dd>
+              <dt>Related requirements</dt>  <dd>REQ-001</dd>
+              <dt>Review status</dt>         <dd><span class="badge badge-ok">Accepted</span></dd>
+              <dt>Developer decision</dt>    <dd>Accepted by developer on 2026-06-10.</dd>
+            </dl>
+          </div>
+        </div>
+
+        <div class="card risk-low" id="a2">
+          <div class="card-header">
+            <span class="req-id">A2</span>
+            <span class="card-title">Empty-state copy</span>
+            <span class="badge badge-ok">Accepted</span>
+          </div>
+          <div class="card-body">
+            <dl class="card-fields">
+              <dt>Assumption</dt>            <dd>Use <code>No notes found.</code> as the empty-state message.</dd>
+              <dt>Reason</dt>                <dd>The brief does not specify copy; this matches the tone of existing messages.</dd>
+              <dt>Risk level</dt>            <dd>Low</dd>
+              <dt>Impact if wrong</dt>       <dd>Cosmetic only; one string to change.</dd>
+              <dt>Blocks implementation</dt> <dd>No</dd>
+              <dt>Related requirements</dt>  <dd>EDGE-001</dd>
+              <dt>Review status</dt>         <dd><span class="badge badge-ok">Accepted</span></dd>
+              <dt>Developer decision</dt>    <dd>Accepted by developer on 2026-06-10 (see resolved Q2 in open-questions.html).</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <section id="rejected-or-replaced-assumptions">
+        <h2>Rejected or replaced assumptions</h2>
+        <p>None for this feature.</p>
+      </section>
+
+      <hr>
+
+      <section id="notes-for-claude-code">
+        <h2>Notes for Claude Code</h2>
+        <div class="claude-note">
+          <h4>Rules Claude Code must follow</h4>
+          <ol>
+            <li>Do not implement while any assumption has <strong>Blocks implementation: Yes</strong> and <strong>Review status: Pending</strong>.</li>
+            <li>Do not treat assumptions as approved unless the developer explicitly accepts them.</li>
+            <li>If an assumption affects security, permissions, data deletion, billing, public API behavior, or irreversible migrations, prefer moving it to <code>open-questions.html</code>.</li>
+            <li>If the implementation requires a new assumption, stop and update this file before proceeding.</li>
+            <li>If assumptions contradict <code>requirements.html</code>, <code>design.html</code>, or developer instructions, stop and ask for clarification.</li>
+          </ol>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /.main-content -->
+</div><!-- /.page-wrap -->
+<script src="spec.js"></script>
+</body>
+</html>

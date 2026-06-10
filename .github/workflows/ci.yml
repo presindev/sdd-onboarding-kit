@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  shellcheck:
+    name: Shellcheck hook and kit scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run shellcheck
+        run: |
+          # .template scripts contain {{PLACEHOLDER}} tokens and are not valid bash yet.
+          files=$(find hooks scripts -name '*.sh' -not -name '*.template')
+          echo "Checking:"; echo "$files"
+          shellcheck $files
+
+  consistency:
+    name: Reference and placeholder consistency
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: No stale Markdown spec-artifact references
+        run: |
+          # Spec artifacts were migrated to HTML; their old .md names must not
+          # reappear anywhere in the kit.
+          if grep -rn \
+            -e 'requirements\.md\b' -e 'design\.md\b' -e 'tasks\.md\b' \
+            -e 'review\.md\b' -e 'acceptance-tests\.md\b' -e 'assumptions\.md\b' \
+            -e 'open-questions\.md\b' -e 'history\.md\b' -e 'architecture\.md\b' \
+            -e 'conventions\.md\b' -e 'functional-brief\.md\b' \
+            --include='*.md' --include='*.sh' --include='*.template' \
+            --include='*.html' --include='*.json' .; then
+            echo "::error::Stale .md spec-artifact reference found (specs are HTML now)."
+            exit 1
+          fi
+          echo "OK: no stale .md spec-artifact references."
+
+      - name: Placeholder tokens only where expected
+        run: |
+          # {{PLACEHOLDER}} tokens belong in templates/ and scripts/*.template.
+          # A few docs legitimately mention the convention itself.
+          allowlist='^\./(templates/|scripts/[^/]+\.template$|README\.md$|README\.html$|instructions\.md$|skills/sdd-workflow/spec-format\.md$|scripts/validate-sdd-structure\.sh$|\.github/)'
+          offenders=$(grep -rl "{{[A-Z0-9_][A-Z0-9_]*}}" . --include='*.md' --include='*.sh' --include='*.html' --include='*.json' --include='*.template' --include='*.css' --include='*.js' | grep -Ev "$allowlist" || true)
+          if [ -n "$offenders" ]; then
+            echo "::error::Unexpected {{PLACEHOLDER}} tokens in:"
+            echo "$offenders"
+            exit 1
+          fi
+          echo "OK: placeholder tokens only in expected locations."
+
+      - name: manifest.md is up to date
+        run: |
+          bash scripts/update-manifest.sh
+          if ! git diff --exit-code manifest.md; then
+            echo "::error::manifest.md is stale. Run scripts/update-manifest.sh and commit the result."
+            exit 1
+          fi
+          echo "OK: manifest.md matches git ls-files."

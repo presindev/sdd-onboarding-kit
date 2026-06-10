@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requirements — Recent notes CLI command</title>
+  <link rel="stylesheet" href="spec.css">
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="sidebar-title">Contents</p>
+    <div id="toc-list"></div>
+  </nav>
+
+  <div class="main-content">
+    <header class="spec-header">
+      <h1>Requirements — Recent notes CLI command</h1>
+      <table class="meta-table">
+        <tbody>
+          <tr><th>Task ID</th>       <td><code>FEAT-007</code></td></tr>
+          <tr><th>Feature slug</th>  <td><code>example-feature</code></td></tr>
+          <tr><th>Status</th>        <td><span class="badge badge-ok">done</span></td></tr>
+          <tr><th>Author</th>        <td>spec-author</td></tr>
+          <tr><th>Human approval</th><td><span class="badge badge-ok">approved — developer, 2026-06-10</span></td></tr>
+        </tbody>
+      </table>
+    </header>
+
+    <main>
+
+      <section id="summary">
+        <h2>Summary</h2>
+        <p>Add a <code>notes recent</code> CLI command that prints the most recent notes, newest first, with an optional <code>--limit N</code> argument. This is the worked example spec shipped with the SDD onboarding kit; it shows what a finished, reviewed feature spec looks like.</p>
+      </section>
+
+      <section id="functional-requirements">
+        <h2>Functional requirements</h2>
+
+        <div class="req-row">
+          <span class="req-id">REQ-001</span>
+          <span>When the user runs <code>notes recent</code> without <code>--limit</code>, the system shall print at most five notes ordered by descending creation time.</span>
+        </div>
+        <div class="req-row">
+          <span class="req-id">REQ-002</span>
+          <span>When the user runs <code>notes recent --limit N</code> with N greater than zero, the system shall print at most N notes ordered by descending creation time.</span>
+        </div>
+        <div class="req-row">
+          <span class="req-id">REQ-003</span>
+          <span>If the user provides a non-positive or non-numeric limit, the system shall exit with a validation error and print no notes.</span>
+        </div>
+      </section>
+
+      <section id="non-functional-requirements">
+        <h2>Non-functional requirements</h2>
+        <div class="req-row nfr">
+          <span class="req-id nfr">NFR-001</span>
+          <span>The command shall complete in under one second for a store of 10,000 notes.</span>
+        </div>
+      </section>
+
+      <section id="edge-cases">
+        <h2>Edge cases</h2>
+        <div class="req-row edge">
+          <span class="req-id edge">EDGE-001</span>
+          <span>When no notes exist, the system shall print the empty-state message <code>No notes found.</code> and exit successfully.</span>
+        </div>
+      </section>
+
+      <section id="error-states">
+        <h2>Error states</h2>
+        <div class="req-row err">
+          <span class="req-id err">ERR-001</span>
+          <span>If the notes store cannot be read, the system shall print a clear error to stderr and exit with a non-zero status.</span>
+        </div>
+      </section>
+
+      <section id="acceptance-criteria">
+        <h2>Acceptance criteria</h2>
+        <div class="req-row ac">
+          <span class="req-id ac">AC-001</span>
+          <span><code>notes recent</code> on a store with 8 notes prints exactly 5, newest first.</span>
+        </div>
+        <div class="req-row ac">
+          <span class="req-id ac">AC-002</span>
+          <span><code>notes recent --limit 2</code> prints exactly 2 notes, newest first.</span>
+        </div>
+        <div class="req-row ac">
+          <span class="req-id ac">AC-003</span>
+          <span><code>notes recent --limit 0</code> exits non-zero with a validation message and prints no notes.</span>
+        </div>
+      </section>
+
+      <section id="requirement-to-test-mapping">
+        <h2>Requirement-to-test mapping</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Requirement</th>
+              <th>Expected test(s)</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="req-id">REQ-001</span></td>
+              <td><code>tests/test_cli_recent.py::test_default_limit</code></td>
+              <td>Covers AC-001</td>
+            </tr>
+            <tr>
+              <td><span class="req-id">REQ-002</span></td>
+              <td><code>tests/test_cli_recent.py::test_custom_limit</code></td>
+              <td>Covers AC-002</td>
+            </tr>
+            <tr>
+              <td><span class="req-id">REQ-003</span></td>
+              <td><code>tests/test_cli_recent.py::test_invalid_limit</code></td>
+              <td>Covers AC-003</td>
+            </tr>
+            <tr>
+              <td><span class="req-id edge">EDGE-001</span></td>
+              <td><code>tests/test_cli_recent.py::test_empty_store</code></td>
+              <td>Empty-state copy fixed in assumptions.html (A2)</td>
+            </tr>
+            <tr>
+              <td><span class="req-id err">ERR-001</span></td>
+              <td><code>tests/test_cli_recent.py::test_store_unreadable</code></td>
+              <td>Uses tmp dir with revoked permissions</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+  </div><!-- /.main-content -->
+</div><!-- /.page-wrap -->
+<script src="spec.js"></script>
+</body>
+</html>

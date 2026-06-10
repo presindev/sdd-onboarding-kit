@@ -1,5 +1,10 @@
 # SDD examples
 
+A complete, rendered example spec for this feature lives in the kit under
+`specs/example-feature/` (all seven HTML files plus `spec.css`/`spec.js`,
+filled in end-to-end through review). Open any of those files in a browser to
+see the target output. The fragments below are quick references.
+
 ## Example task entry
 
 ```json
@@ -42,47 +47,128 @@
 
 ## Example tasks
 
-```md
-- [ ] `T1`: Add tests for default recent note limit (`REQ-001`).
-- [ ] `T2`: Add tests for custom positive limit (`REQ-002`).
-- [ ] `T3`: Add tests for invalid limit (`REQ-003`).
-- [ ] `T4`: Implement `get_recent_notes(limit)`.
-- [ ] `T5`: Register `notes recent` CLI command.
-- [ ] `T6`: Run validation commands.
+Tasks in `tasks.html` are `<li class="task-item">` entries inside the `<ol class="task-timeline">`. Completed items get `class="task-item done"` (also available: `in-progress`, `blocked`):
+
+```html
+<ol class="task-timeline">
+  <li class="task-item done">
+    <div class="task-item-header">
+      <span class="req-id t">T1</span>
+      <strong>Add tests for default recent note limit (<code>REQ-001</code>).</strong>
+    </div>
+    <div class="task-item-body">Write the failing test first; assert at most five notes ordered by recency.</div>
+  </li>
+  <li class="task-item in-progress">
+    <div class="task-item-header">
+      <span class="req-id t">T2</span>
+      <strong>Add tests for custom positive limit (<code>REQ-002</code>).</strong>
+    </div>
+    <div class="task-item-body">Cover <code>--limit N</code> for N &gt; 0.</div>
+  </li>
+  <li class="task-item">
+    <div class="task-item-header">
+      <span class="req-id t">T3</span>
+      <strong>Add tests for invalid limit (<code>REQ-003</code>).</strong>
+    </div>
+    <div class="task-item-body">Non-positive limits must produce a validation error.</div>
+  </li>
+  <li class="task-item">
+    <div class="task-item-header">
+      <span class="req-id t">T4</span>
+      <strong>Implement <code>get_recent_notes(limit)</code>.</strong>
+    </div>
+    <div class="task-item-body">Business logic in <code>src/notes.py</code>.</div>
+  </li>
+  <li class="task-item">
+    <div class="task-item-header">
+      <span class="req-id t">T5</span>
+      <strong>Register <code>notes recent</code> CLI command.</strong>
+    </div>
+    <div class="task-item-body">Wire the subcommand and <code>--limit</code> argument in <code>src/cli.py</code>.</div>
+  </li>
+  <li class="task-item">
+    <div class="task-item-header">
+      <span class="req-id t">T6</span>
+      <strong>Run validation commands.</strong>
+    </div>
+    <div class="task-item-body">Tests, lint and typecheck as configured in <code>CLAUDE.md</code>.</div>
+  </li>
+</ol>
 ```
 
 ## Example: editing open-questions.html during spec_draft
 
 This is a valid and expected operation. The `block-implementation-before-approval` hook must allow it.
 
-A task in `spec_draft` has a blocking question:
+A task in `spec_draft` has a blocking question card in `open-questions.html`:
 
-```md
-## Q1 — Authentication mechanism
-
-**Status:** blocking
-**Question:** Should the endpoint use API key or OAuth2?
-**Decision:**
+```html
+<div class="card blocking-yes" id="q1">
+  <div class="card-header">
+    <span class="req-id err">Q1</span>
+    <span class="card-title">Authentication mechanism</span>
+    <span class="badge badge-blocking">Blocking</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Question</dt> <dd>Should the endpoint use API key or OAuth2?</dd>
+      <dt>Blocking</dt> <dd>Yes</dd>
+      <dt>Decision</dt> <dd><span class="badge badge-pending">Pending</span></dd>
+    </dl>
+  </div>
+</div>
 ```
 
-The spec-author (or developer) fills in the decision:
+The spec-author (or developer) fills in the decision and moves the card to the `#resolved-questions` section:
 
-```md
-## Q1 — Authentication mechanism
-
-**Status:** resolved
-**Question:** Should the endpoint use API key or OAuth2?
-**Decision:** API key for the MVP. OAuth2 will be addressed in a follow-up task.
+```html
+<div class="card" id="q1">
+  <div class="card-header">
+    <span class="req-id">Q1</span>
+    <span class="card-title">Authentication mechanism</span>
+    <span class="badge badge-ok">Resolved</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Question</dt>    <dd>Should the endpoint use API key or OAuth2?</dd>
+      <dt>Decision</dt>    <dd>API key for the MVP. OAuth2 will be addressed in a follow-up task.</dd>
+      <dt>Resolved by</dt> <dd>developer</dd>
+      <dt>Resolved at</dt> <dd>2026-06-10</dd>
+    </dl>
+  </div>
+</div>
 ```
 
 After all blocking questions are resolved, the spec-author sets the task status to `spec_ready` and requests human approval. The hook must not block this edit — `open-questions.html` is a spec file, not an implementation file.
 
 ## Example review traceability
 
-```md
-| Requirement | Implemented? | Tested? | Evidence |
-|---|---:|---:|---|
-| REQ-001 | Yes | Yes | `src/cli.py`, `tests/test_cli_recent.py::test_default_limit` |
-| REQ-002 | Yes | Yes | `src/cli.py`, `tests/test_cli_recent.py::test_custom_limit` |
-| REQ-003 | Yes | Yes | `src/cli.py`, `tests/test_cli_recent.py::test_invalid_limit` |
+The traceability table in `review.html` uses `class="ok"`, `"warning"`, or `"blocking"` on each evidence `<td>`:
+
+```html
+<table>
+  <thead>
+    <tr><th>Requirement</th><th>Implemented?</th><th>Tested?</th><th>Evidence</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="req-id">REQ-001</span></td>
+      <td class="ok">Yes</td>
+      <td class="ok">Yes</td>
+      <td><code>src/cli.py</code>, <code>tests/test_cli_recent.py::test_default_limit</code></td>
+    </tr>
+    <tr>
+      <td><span class="req-id">REQ-002</span></td>
+      <td class="ok">Yes</td>
+      <td class="ok">Yes</td>
+      <td><code>src/cli.py</code>, <code>tests/test_cli_recent.py::test_custom_limit</code></td>
+    </tr>
+    <tr>
+      <td><span class="req-id">REQ-003</span></td>
+      <td class="ok">Yes</td>
+      <td class="warning">Partial</td>
+      <td><code>src/cli.py</code>; missing test for limit = 0</td>
+    </tr>
+  </tbody>
+</table>
 ```

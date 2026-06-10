@@ -107,11 +107,23 @@ After the developer answers, create or update the following in the target reposi
 │   │       ├── intake-from-functional-doc.md
 │   │       ├── assumptions-policy.md
 │   │       ├── open-questions-policy.md
-│   │       └── examples.md
+│   │       ├── examples.md
+│   │       └── templates/
+│   │           ├── requirements.html.template
+│   │           ├── design.html.template
+│   │           ├── tasks.html.template
+│   │           ├── review.html.template
+│   │           ├── acceptance-tests.html.template
+│   │           ├── assumptions.html.template
+│   │           ├── open-questions.html.template
+│   │           ├── spec.css
+│   │           └── spec.js
 │   ├── hooks/
 │   │   └── README.md
 │   └── settings.json
 ├── specs/
+├── decisions/
+│   └── answers.md
 ├── tasks.json
 ├── history.html
 └── scripts/
@@ -164,9 +176,35 @@ Copy and adapt the full `skills/sdd-workflow/` directory into:
 
 This skill contains the full multi-step SDD procedure. Keep `CLAUDE.md` short and use the skill for operational detail.
 
+### Spec templates
+
+Copy the HTML spec templates and shared assets into the target project so the spec-author has a source when creating new feature specs after the kit is removed:
+
+```text
+templates/specs/requirements.html.template      → .claude/skills/sdd-workflow/templates/requirements.html.template
+templates/specs/design.html.template            → .claude/skills/sdd-workflow/templates/design.html.template
+templates/specs/tasks.html.template             → .claude/skills/sdd-workflow/templates/tasks.html.template
+templates/specs/review.html.template            → .claude/skills/sdd-workflow/templates/review.html.template
+templates/specs/acceptance-tests.html.template  → .claude/skills/sdd-workflow/templates/acceptance-tests.html.template
+templates/specs/assumptions.html.template       → .claude/skills/sdd-workflow/templates/assumptions.html.template
+templates/specs/open-questions.html.template    → .claude/skills/sdd-workflow/templates/open-questions.html.template
+templates/specs/spec.css                        → .claude/skills/sdd-workflow/templates/spec.css
+templates/specs/spec.js                         → .claude/skills/sdd-workflow/templates/spec.js
+```
+
+Copy these verbatim, including the `{{PLACEHOLDER}}` tokens. They are instantiated per feature, not during onboarding.
+
+Do NOT copy the kit's `specs/example-feature/` directory into the target project. It is a rendered reference example for humans and agents, not part of the installed harness.
+
+### Onboarding decisions record
+
+Create `decisions/answers.md` in the target project from `decisions/answers.template.md`, filled with the developer's answers to the onboarding questions. Workflow-level assumptions and onboarding decisions are recorded there.
+
 ### Hooks
 
 Do not enable hooks silently.
+
+Hook scripts and the scripts under `scripts/` are bash and most rely on `jq`. On Windows they require Git Bash (or WSL) plus `jq` on `PATH`; the example hooks fail open (warn and allow) when `jq` is missing. Confirm with the developer that the team's environment provides bash and `jq` before enabling any hook (see `questions.md` §9).
 
 If the developer approves hooks, create `.claude/settings.json` entries from `hooks/settings-snippets.md` and copy any required hook scripts into `scripts/` or `.claude/hooks/`.
 
@@ -183,7 +221,7 @@ Do not configure MCPs silently.
 
 If the developer chooses MCPs, use `mcps/mcp-policy.md` and the relevant integration notes.
 
-If no MCPs are selected, use local Markdown/JSON storage:
+If no MCPs are selected, use local HTML/JSON storage:
 
 - `tasks.json`
 - `specs/<feature>/`
@@ -196,7 +234,7 @@ After writing files:
 1. Run `scripts/validate-sdd-structure.sh` if safe.
 2. Run `scripts/init.sh` if safe.
 3. Run the configured test command if the developer approved running tests.
-4. Verify all generated files have no unresolved placeholders (Markdown and HTML).
+4. Verify all generated files have no unresolved placeholders (Markdown and HTML). Exception: the spec templates under `.claude/skills/sdd-workflow/templates/` keep their `{{PLACEHOLDER}}` tokens by design.
 5. Verify the project `CLAUDE.md` points to `.claude/skills/sdd-workflow/SKILL.md`.
 6. Verify that task statuses in `tasks.json` match the configured state machine.
 

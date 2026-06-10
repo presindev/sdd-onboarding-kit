@@ -9,7 +9,7 @@ These snippets are examples only. Do not paste them into `.claude/settings.json`
   "hooks": {
     "PostToolUse": [
       {
-        "matcher": "Edit|Write|MultiEdit",
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
@@ -29,7 +29,7 @@ These snippets are examples only. Do not paste them into `.claude/settings.json`
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Edit|Write|MultiEdit",
+        "matcher": "Edit|Write",
         "hooks": [
           {
             "type": "command",
@@ -64,4 +64,4 @@ These snippets are examples only. Do not paste them into `.claude/settings.json`
 
 ## Warning
 
-Hook JSON shape can evolve with Claude Code versions. During onboarding, Claude Code should verify the current local documentation or installed version before finalizing `.claude/settings.json`.
+Hook JSON shape, event names (e.g. `SubagentStart`) and tool names used in matchers can evolve with Claude Code versions. During onboarding, Claude Code should verify the current local documentation or installed version before finalizing `.claude/settings.json`.
