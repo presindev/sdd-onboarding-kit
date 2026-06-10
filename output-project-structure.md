@@ -34,6 +34,8 @@ After the onboarding is complete, the target repository should contain a project
 │   │           ├── open-questions.html.template
 │   │           ├── spec.css
 │   │           └── spec.js
+│   ├── context/
+│   │   └── project-map.md
 │   ├── hooks/
 │   │   └── README.md
 │   └── settings.json
@@ -88,3 +90,4 @@ The onboarding is complete when:
 9. Hooks are either explicitly enabled or explicitly left disabled.
 10. MCPs are either explicitly configured or explicitly left unconfigured.
 11. No generated file contains unresolved placeholders without a TODO explaining why (the `.html.template` files under `.claude/skills/sdd-workflow/templates/` are exempt — their placeholders are instantiated per feature).
+12. A project map exists at the configured location (default `.claude/context/project-map.md`) and is linked from `CLAUDE.md`, or a documented TODO defers its generation.

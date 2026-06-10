@@ -160,6 +160,10 @@ Questions:
 3. Should specs remain permanently, or be archived after completion?
 4. Should rejected design options be recorded?
 5. Should Claude maintain a changelog?
+6. Where should the project map live: `.claude/context/project-map.md`
+   (default, harness-internal) or `docs/project-map.md` (visible in docs)?
+7. Should the project map be generated during onboarding (default), or
+   deferred as a recorded TODO?
 
 ## 13. Team conventions
 

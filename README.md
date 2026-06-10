@@ -18,6 +18,8 @@ Full operational documentation lives in **[`DOCUMENTATION.html`](DOCUMENTATION.h
 
 The kit is designed to protect Claude Code's context window: generated `CLAUDE.md` files stay short and link out, long procedures live in skills, and durable knowledge lives in versioned artifacts instead of chat history. See [`reference/context-economy.md`](reference/context-economy.md).
 
+Onboarding also generates a concise **project map** (default `.claude/context/project-map.md`): directory tree, entrypoints, commands, and protected areas — so Claude knows where things live without loading many files.
+
 ## What SDD does
 
 When the harness is installed, Claude Code works like this:
