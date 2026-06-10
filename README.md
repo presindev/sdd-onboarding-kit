@@ -4,6 +4,18 @@ This kit installs a **Spec Driven Development (SDD)** harness in any repository 
 
 It is not a global user configuration. It is a reusable template that produces a project-specific configuration: `CLAUDE.md`, `.claude/agents/`, `.claude/skills/`, `.claude/settings.json`, `specs/`, `tasks.json`, `history.html`, and validation scripts.
 
+## Documentation
+
+Full operational documentation lives in **[`DOCUMENTATION.html`](DOCUMENTATION.html)** (open it in a browser). The documentation is layered:
+
+- `README.md` — quick start, purpose, installation, default safety model (this file);
+- `DOCUMENTATION.html` — full operational documentation;
+- `reference/` — deeper theory and policy material;
+- `skills/` — reusable procedural instructions (installed as `.claude/skills/`);
+- `agents/` — role-specific agents (installed as `.claude/agents/`).
+
+**English is canonical for all reusable kit files.** Generated project-specific artifacts (specs, decisions, history) may use the target project's preferred language; see the language policy in `DOCUMENTATION.html`.
+
 ## What SDD does
 
 When the harness is installed, Claude Code works like this:
