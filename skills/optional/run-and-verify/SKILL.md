@@ -11,10 +11,16 @@ Run, inspect, and verify the target project using its actual commands and
 services, so implementation claims ("it works") are backed by observed
 behavior instead of assumptions.
 
-> Onboarding adapts this skill to the project: the commands below are
-> placeholders filled from the project inspection and developer answers.
-> Roadmap note (kit-internal): a later kit version deepens this skill with
-> per-project generation questions.
+> **This pack is generated, not copied.** When selected, the installed
+> skill is produced from `templates/run-and-verify.md.template`, filled
+> with the target project's real commands: dev server, test (all and
+> targeted), lint, typecheck, build, required services, environment
+> variable names (never values), and UI/API verification steps. Sources:
+> the Phase 1 repository inspection first, then the questions in
+> `questions.md` §15 for whatever could not be inferred. Unknown commands
+> stay as `TODO: ask the developer`. This file documents the pack and the
+> generic procedure; the generated file is the one Claude uses in the
+> target project.
 
 ## When to use
 

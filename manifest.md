@@ -78,6 +78,7 @@
 - `templates/functional/functional-brief.html.template`
 - `templates/history.html.template`
 - `templates/project-map.md.template`
+- `templates/run-and-verify.md.template`
 - `templates/specs/README.md`
 - `templates/specs/acceptance-tests.html.template`
 - `templates/specs/assumptions.html.template`

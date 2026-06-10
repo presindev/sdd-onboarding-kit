@@ -193,3 +193,26 @@ Questions:
    confirmation.)
 3. Should declined packs be recorded in `decisions/answers.md` so they are
    not re-proposed every session? (Default: yes.)
+
+## 15. Run and verify generation
+
+Ask only if the `run-and-verify` pack was selected in §14. Inspect the
+repository first (`package.json` scripts, `Makefile`, CI config, docs) and
+present inferred answers for confirmation; ask only what is missing. Reuse
+the §7 answers for test/lint/typecheck/format commands — do not re-ask.
+Record anything unknown as `TODO: ask the developer`; never invent a
+command.
+
+1. What command starts the local dev server (or runs the project locally),
+   and at what URL/port does it respond?
+2. What command runs a targeted subset of tests (single file, single test,
+   one package)?
+3. What command builds the project, if a build step exists?
+4. Which services must be running locally (database, queue, containers,
+   emulators), and how are they started?
+5. Which environment variables are required? Record names only — never
+   values. Where are they documented (e.g. an `.env.example` file)?
+6. How should UI behavior be verified (routes to open, expected visual
+   state, manual checklist, screenshot comparison)?
+7. How should API/CLI behavior be verified (example requests, expected
+   responses, smoke commands)?

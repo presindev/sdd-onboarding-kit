@@ -153,6 +153,7 @@
     <section id="optional-skills">
       <h2>Optional skills</h2>
       <p>Beyond the core <code>sdd-workflow</code> skill, the kit ships nine optional skill packs under <a href="skills/optional/README.md"><code>skills/optional/</code></a>: <code>context-audit</code>, <code>project-map</code>, <code>run-and-verify</code>, <code>dependency-freshness</code>, <code>git-discipline</code>, <code>decision-log</code>, <code>documentation-update</code>, <code>failure-learning</code>, and <code>ui-qa</code>. None is installed by default — onboarding asks which packs the project needs, and installed skills are listed in <code>CLAUDE.md</code> by name only (their instructions load when invoked). All packs are advisory or permission-gated. See the <code>Skill packs</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+      <p>The <code>run-and-verify</code> pack is special: onboarding <strong>generates a project-specific run/verify recipe</strong> — the project's real dev-server/test/lint/typecheck/build commands, required services, environment variable names (never secret values), and how to verify UI or API behavior. Unknown commands are recorded as TODOs, never invented, and the reviewer validates implementations through this recipe. See the <code>Run and verify skill</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
     </section>
 
     <hr>
