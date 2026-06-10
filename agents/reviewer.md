@@ -69,7 +69,7 @@ If approved:
 
 1. Update each verified task item in `specs/<feature-slug>/tasks.html` to show it as done (add class `done` to the `<li class="task-item">`).
 2. Update task status to `done`, if allowed.
-3. Append a summary entry to `history.html`.
+3. Append a summary entry to `history.html`: insert it immediately after the `<!-- INSERT-ENTRY-HERE -->` marker, using the commented entry format in that file.
 
 If approved with non-blocking findings:
 

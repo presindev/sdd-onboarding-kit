@@ -202,6 +202,8 @@ Create `decisions/answers.md` in the target project from `decisions/answers.temp
 
 Do not enable hooks silently.
 
+Hook scripts and the scripts under `scripts/` are bash and most rely on `jq`. On Windows they require Git Bash (or WSL) plus `jq` on `PATH`; the example hooks fail open (warn and allow) when `jq` is missing. Confirm with the developer that the team's environment provides bash and `jq` before enabling any hook (see `questions.md` §9).
+
 If the developer approves hooks, create `.claude/settings.json` entries from `hooks/settings-snippets.md` and copy any required hook scripts into `scripts/` or `.claude/hooks/`.
 
 Prefer hooks for deterministic constraints such as:

@@ -122,6 +122,7 @@ Questions:
 - Which hooks should be enabled now?
 - Which should remain as examples only?
 - Should hooks fail closed or warn only?
+- Does every development environment have bash and `jq` available (on Windows: Git Bash or WSL)? If not, should hooks fail open (warn and allow) or fail closed (block) when `jq` is missing?
 
 ## 10. MCPs
 
