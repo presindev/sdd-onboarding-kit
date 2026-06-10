@@ -33,6 +33,7 @@
 - `output-project-structure.md`
 - `questions.md`
 - `reference/claude-code-primitives.md`
+- `reference/context-economy.md`
 - `reference/harness-engineering.md`
 - `reference/sdd-theory.md`
 - `scripts/init.sh`
@@ -59,6 +60,7 @@
 - `specs/example-feature/spec.js`
 - `specs/example-feature/tasks.html`
 - `specs/kit-pr-01-documentation-foundation/spec.md`
+- `specs/kit-pr-02-context-economy/spec.md`
 - `templates/.claude/hooks/README.md.template`
 - `templates/.claude/settings.json.template`
 - `templates/.mcp.json.template`

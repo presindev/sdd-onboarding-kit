@@ -115,6 +115,7 @@
       <ul class="toc-list">
         <li><a href="#documentation-model">13. Documentation model</a></li>
         <li><a href="#language-policy">14. Language policy</a></li>
+        <li><a href="#context-economy">15. Context economy</a></li>
       </ul>
     </div>
   </nav>
@@ -468,7 +469,7 @@
           <tr>
             <td>Theory and policy</td>
             <td><code>reference/</code></td>
-            <td>Deeper background material: <a href="reference/sdd-theory.md">SDD theory</a>, <a href="reference/harness-engineering.md">harness engineering</a>, <a href="reference/claude-code-primitives.md">Claude Code primitives</a>.</td>
+            <td>Deeper background material: <a href="reference/sdd-theory.md">SDD theory</a>, <a href="reference/harness-engineering.md">harness engineering</a>, <a href="reference/claude-code-primitives.md">Claude Code primitives</a>, <a href="reference/context-economy.md">context economy</a>.</td>
           </tr>
           <tr>
             <td>Procedures (skills)</td>
@@ -497,6 +498,63 @@
         <li>Contributions to the kit itself must be in English (see the contributing guidelines in <a href="README.md"><code>README.md</code></a>).</li>
         <li>If non-English material is ever kept in the kit for historical reasons, it must be clearly marked as non-canonical/legacy.</li>
       </ul>
+    </section>
+
+    <hr>
+
+    <section id="context-economy">
+      <h2>15. Context economy</h2>
+      <p>Claude Code's context window is a scarce, shared resource: project instructions, file contents, tool definitions, and conversation history all compete for the same space. The kit turns the well-known context-management tricks into one explicit policy, documented in full in <a href="reference/context-economy.md"><code>reference/context-economy.md</code></a>. The generated <code>CLAUDE.md</code> carries only a short summary of these rules and links out.</p>
+
+      <h3>Good vs bad context loading</h3>
+      <table>
+        <thead>
+          <tr><th>Situation</th><th>Bad (context-expensive)</th><th>Good (context-economical)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Project orientation</td><td>Paste the directory tree and ten files into chat</td><td>Link a concise project map from <code>CLAUDE.md</code></td></tr>
+          <tr><td>Long procedure</td><td>Copy the full SDD workflow into <code>CLAUDE.md</code></td><td>Keep it in the <code>sdd-workflow</code> skill; it loads only when used</td></tr>
+          <tr><td>Finding code</td><td>Read 20 files in the main conversation</td><td>Delegate to a subagent; keep only paths and conclusions</td></tr>
+          <tr><td>Task switch</td><td>Continue in the same long session</td><td><code>/compact</code> between unrelated tasks (or <code>/clear</code> if truly unrelated)</td></tr>
+          <tr><td>External tools</td><td>Enable every MCP globally</td><td>Configure per project; scope heavy toolsets to a dedicated subagent</td></tr>
+          <tr><td>Past decisions</td><td>Rely on chat history</td><td>Record in decision logs and specs, link from <code>CLAUDE.md</code></td></tr>
+        </tbody>
+      </table>
+
+      <h3><code>CLAUDE.md</code> length and linked documentation</h3>
+      <ul>
+        <li><code>CLAUDE.md</code> is loaded into every session, so every line has a permanent cost. Keep it to stable facts and short rules.</li>
+        <li>Link to deeper files (reference docs, skills, project map, decision logs) instead of duplicating their content.</li>
+        <li>If a section grows past a screen, move it into a linked file or a skill.</li>
+      </ul>
+
+      <h3>When to compact, spawn subagents, or use skills</h3>
+      <table>
+        <thead>
+          <tr><th>Tool</th><th>Use when</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>/context</code></td>
+            <td>A session has been long and behavior degrades; deciding whether to compact; auditing what consumes the window (it shows usage as a grid with optimization suggestions).</td>
+          </tr>
+          <tr>
+            <td><code>/compact [instructions]</code></td>
+            <td>Between unrelated tasks or after a noisy investigation. Prefer <em>selective</em> compacting: pass focus instructions to preserve decisions, task status, architecture constraints, and unresolved questions.</td>
+          </tr>
+          <tr>
+            <td>Subagents</td>
+            <td>Noisy research that reads many files but yields a short conclusion (exploration, surveys, log triage). Not for small targeted reads.</td>
+          </tr>
+          <tr>
+            <td>Skills</td>
+            <td>Repeatable multi-step procedures that would otherwise be pasted into chat or bloat <code>CLAUDE.md</code>; a skill's body loads only when invoked.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>In an SDD project, compaction and session resets are safe by design: durable truth lives in <code>tasks.json</code>, <code>specs/</code>, decision logs, and <code>history.html</code>, not in chat history. If something matters beyond the session, write it to an artifact before compacting.</p>
+      <p>Command behavior verified against the Claude Code commands reference (2026-06): <code>/context [all]</code>, <code>/compact [instructions]</code>.</p>
     </section>
 
   </main>

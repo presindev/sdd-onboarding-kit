@@ -16,6 +16,8 @@ Full operational documentation lives in **[`DOCUMENTATION.html`](DOCUMENTATION.h
 
 **English is canonical for all reusable kit files.** Generated project-specific artifacts (specs, decisions, history) may use the target project's preferred language; see the language policy in `DOCUMENTATION.html`.
 
+The kit is designed to protect Claude Code's context window: generated `CLAUDE.md` files stay short and link out, long procedures live in skills, and durable knowledge lives in versioned artifacts instead of chat history. See [`reference/context-economy.md`](reference/context-economy.md).
+
 ## What SDD does
 
 When the harness is installed, Claude Code works like this:
