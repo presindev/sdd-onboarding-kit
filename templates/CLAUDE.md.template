@@ -109,6 +109,12 @@ Invoke it directly when needed:
 /sdd-workflow <task-id-or-feature-description>
 ```
 
+## Optional skills installed
+
+{{OPTIONAL_SKILLS_LIST}}
+
+Invoke them by name when their trigger applies. Their full instructions live in `.claude/skills/<name>/SKILL.md` and load only when used — do not duplicate them here.
+
 ## Subagents
 
 Use project subagents when appropriate:

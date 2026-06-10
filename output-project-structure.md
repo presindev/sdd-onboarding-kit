@@ -14,26 +14,28 @@ After the onboarding is complete, the target repository should contain a project
 │   │   ├── implementer.md
 │   │   └── reviewer.md
 │   ├── skills/
-│   │   └── sdd-workflow/
-│   │       ├── SKILL.md
-│   │       ├── workflow.md
-│   │       ├── spec-format.md
-│   │       ├── task-state-machine.md
-│   │       ├── review-checklist.md
-│   │       ├── intake-from-functional-doc.md
-│   │       ├── assumptions-policy.md
-│   │       ├── open-questions-policy.md
-│   │       ├── examples.md
-│   │       └── templates/
-│   │           ├── requirements.html.template
-│   │           ├── design.html.template
-│   │           ├── tasks.html.template
-│   │           ├── review.html.template
-│   │           ├── acceptance-tests.html.template
-│   │           ├── assumptions.html.template
-│   │           ├── open-questions.html.template
-│   │           ├── spec.css
-│   │           └── spec.js
+│   │   ├── sdd-workflow/
+│   │   │   ├── SKILL.md
+│   │   │   ├── workflow.md
+│   │   │   ├── spec-format.md
+│   │   │   ├── task-state-machine.md
+│   │   │   ├── review-checklist.md
+│   │   │   ├── intake-from-functional-doc.md
+│   │   │   ├── assumptions-policy.md
+│   │   │   ├── open-questions-policy.md
+│   │   │   ├── examples.md
+│   │   │   └── templates/
+│   │   │       ├── requirements.html.template
+│   │   │       ├── design.html.template
+│   │   │       ├── tasks.html.template
+│   │   │       ├── review.html.template
+│   │   │       ├── acceptance-tests.html.template
+│   │   │       ├── assumptions.html.template
+│   │   │       ├── open-questions.html.template
+│   │   │       ├── spec.css
+│   │   │       └── spec.js
+│   │   └── <optional skill packs selected during onboarding>/
+│   │       └── SKILL.md
 │   ├── context/
 │   │   └── project-map.md
 │   ├── hooks/
@@ -91,3 +93,4 @@ The onboarding is complete when:
 10. MCPs are either explicitly configured or explicitly left unconfigured.
 11. No generated file contains unresolved placeholders without a TODO explaining why (the `.html.template` files under `.claude/skills/sdd-workflow/templates/` are exempt — their placeholders are instantiated per feature).
 12. A project map exists at the configured location (default `.claude/context/project-map.md`) and is linked from `CLAUDE.md`, or a documented TODO defers its generation.
+13. Optional skill packs are either installed under `.claude/skills/<name>/` (listed by name in `CLAUDE.md`) or explicitly declined in `decisions/answers.md`; no pack is installed without selection.

@@ -135,6 +135,7 @@
           <tr><td><code>questions.md</code></td><td>Project-specific decisions Claude must ask before writing files</td></tr>
           <tr><td><code>agents/</code></td><td>Subagent templates: leader, spec-author, implementer, reviewer</td></tr>
           <tr><td><code>skills/sdd-workflow/</code></td><td>Full SDD workflow skill (copied to <code>.claude/skills/</code>)</td></tr>
+          <tr><td><code>skills/optional/</code></td><td>Optional skill packs, installed only when selected during onboarding</td></tr>
           <tr><td><code>hooks/</code></td><td>Hook policies, settings snippets and example hook scripts</td></tr>
           <tr><td><code>mcps/</code></td><td>Criteria for deciding which MCPs to configure</td></tr>
           <tr><td><code>templates/</code></td><td>File templates Claude adapts to the target project</td></tr>
@@ -145,6 +146,13 @@
           <tr><td><code>DOCUMENTATION.html</code></td><td>Full documentation: installation, daily workflow, features</td></tr>
         </tbody>
       </table>
+    </section>
+
+    <hr>
+
+    <section id="optional-skills">
+      <h2>Optional skills</h2>
+      <p>Beyond the core <code>sdd-workflow</code> skill, the kit ships nine optional skill packs under <a href="skills/optional/README.md"><code>skills/optional/</code></a>: <code>context-audit</code>, <code>project-map</code>, <code>run-and-verify</code>, <code>dependency-freshness</code>, <code>git-discipline</code>, <code>decision-log</code>, <code>documentation-update</code>, <code>failure-learning</code>, and <code>ui-qa</code>. None is installed by default — onboarding asks which packs the project needs, and installed skills are listed in <code>CLAUDE.md</code> by name only (their instructions load when invoked). All packs are advisory or permission-gated. See the <code>Skill packs</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
     </section>
 
     <hr>

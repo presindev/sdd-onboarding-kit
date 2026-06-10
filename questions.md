@@ -173,3 +173,23 @@ Questions:
 4. Are there testing conventions?
 5. Are there review conventions?
 6. Are there security or compliance rules?
+
+## 14. Optional skill packs
+
+The core `sdd-workflow` skill is always installed. The packs under
+`skills/optional/` are installed only when selected (see
+`skills/optional/README.md` for the full table):
+
+`context-audit`, `project-map`, `run-and-verify`, `dependency-freshness`,
+`git-discipline`, `decision-log`, `documentation-update`,
+`failure-learning`, `ui-qa`.
+
+Questions:
+
+1. Which optional skill packs should be installed now? (Default: none.)
+2. If the repository clearly indicates applicability (e.g. a frontend for
+   `ui-qa`, frequent dependency changes for `dependency-freshness`),
+   should Claude suggest those packs? (Suggest yes; install only on
+   confirmation.)
+3. Should declined packs be recorded in `decisions/answers.md` so they are
+   not re-proposed every session? (Default: yes.)

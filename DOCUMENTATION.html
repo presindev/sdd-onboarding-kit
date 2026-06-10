@@ -107,6 +107,7 @@
         <li><a href="#configuration-reference">10. Configuration</a></li>
         <li><a href="#kit-file-reference">11. File reference</a></li>
         <li><a href="#ready-to-use-prompts">12. Prompts</a></li>
+        <li><a href="#skill-packs">17. Skill packs</a></li>
       </ul>
     </div>
 
@@ -617,6 +618,46 @@ tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
         <li>a new protected area or generated path appears.</li>
       </ul>
       <p>Do not update it for routine file additions inside existing directories — a map that changes on every commit defeats its purpose, and one that lists every file defeats context economy (see <a href="#context-economy">§15</a>).</p>
+    </section>
+
+    <hr>
+
+    <section id="skill-packs">
+      <h2>17. Skill packs</h2>
+      <p>The kit's procedural knowledge is modular. The core <code>sdd-workflow</code> skill is always installed; nine <strong>optional skill packs</strong> under <code>skills/optional/</code> are installed only when the developer selects them during onboarding (<code>questions.md</code> §14) or asks later. This keeps the installed harness aligned with what the project actually needs — and keeps <code>CLAUDE.md</code> and the context window small, because skill bodies load only when invoked (see <a href="#context-economy">§15</a>).</p>
+
+      <h3>Available packs</h3>
+      <table>
+        <thead>
+          <tr><th>Skill</th><th>Purpose</th><th>Output artifact</th><th>Safety notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>context-audit</code></td><td>Inspect and reduce context-window usage in long sessions.</td><td>Updated durable artifacts before compaction.</td><td>Advisory only; never compacts away unrecorded decisions.</td></tr>
+          <tr><td><code>project-map</code></td><td>Generate or refresh the project map.</td><td><code>.claude/context/project-map.md</code> (or configured location).</td><td>No secrets; asks before touching <code>CLAUDE.md</code> beyond the map link.</td></tr>
+          <tr><td><code>run-and-verify</code></td><td>Run the project and verify behavior with its real commands.</td><td>Verification evidence in review notes.</td><td>Never invents commands; no destructive ops without approval; no secrets stored.</td></tr>
+          <tr><td><code>dependency-freshness</code></td><td>Check current docs before external dependency/API changes.</td><td>Freshness note in spec/review.</td><td>No installs/upgrades without approval; fetched content treated as untrusted.</td></tr>
+          <tr><td><code>git-discipline</code></td><td>Clean branches, commits, and PR text tied to SDD tasks.</td><td>Requested commits/branches/PR descriptions.</td><td>All mutations permission-gated; no force-push; checks diffs for secrets.</td></tr>
+          <tr><td><code>decision-log</code></td><td>Record durable architectural/workflow decisions.</td><td>Entry in <code>decisions/</code> or <code>docs/adr/</code>.</td><td>Proposes, never overproduces; project memory only.</td></tr>
+          <tr><td><code>documentation-update</code></td><td>Update affected docs after review, before <code>done</code>.</td><td>Updated docs + target list in review notes.</td><td>Runs only after technical review; never documents unreviewed details.</td></tr>
+          <tr><td><code>failure-learning</code></td><td>Propose a reusable lesson after a meaningful mistake.</td><td>Approved lesson in decision log/review notes.</td><td>Proposal-only; no memory writes without explicit approval; no global memory.</td></tr>
+          <tr><td><code>ui-qa</code></td><td>Verify UI changes against spec acceptance criteria.</td><td>Per-criterion QA checklist in review notes.</td><td>No stored credentials; test accounts preferred; no production actions.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Installation and onboarding behavior</h3>
+      <ul>
+        <li>Default: <strong>no optional pack is installed.</strong> Onboarding asks which packs to install; if the repository clearly indicates applicability (e.g. a frontend for <code>ui-qa</code>), Claude suggests the pack but installs only on confirmation.</li>
+        <li>Selected packs are copied from <code>skills/optional/&lt;name&gt;/</code> to <code>.claude/skills/&lt;name&gt;/</code> and adapted to the project (commands, paths, doc locations).</li>
+        <li>Installed and declined packs are recorded in <code>decisions/answers.md</code>, so declined packs are not re-proposed.</li>
+        <li>The generated <code>CLAUDE.md</code> lists installed packs by name with a one-line purpose; skill bodies are never pasted into it.</li>
+        <li>Packs can be added later at any time with the same copy-and-adapt rule.</li>
+      </ul>
+
+      <h3>Usage example</h3>
+      <p>In a project that installed <code>decision-log</code>, after a design review settles on PostgreSQL over DynamoDB: <em>"Use the decision-log skill to record that we chose PostgreSQL, why, and what we rejected."</em> Claude drafts the entry, proposes it, and appends it to <code>decisions/architecture-decisions.md</code> only after approval.</p>
+
+      <h3>Structure of every pack</h3>
+      <p>Each <code>SKILL.md</code> documents: purpose; when to use; when not to use; required inputs; output artifact; safety constraints; and a short procedure. All packs are advisory or permission-gated — none mutates git state, external systems, or memory without explicit developer approval.</p>
     </section>
 
   </main>
