@@ -99,7 +99,7 @@ Invoke it directly when needed:
 
 Use project subagents when appropriate:
 
-- `leader`: orchestrates task state and flow.
+- `leader`: inspects task state and recommends which agent to invoke next (subagents cannot invoke each other; the main conversation orchestrates).
 - `spec-author`: creates requirements, design and implementation tasks.
 - `implementer`: writes code from approved specs.
 - `reviewer`: validates implementation against specs.
