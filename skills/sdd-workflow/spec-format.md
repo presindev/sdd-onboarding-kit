@@ -12,8 +12,10 @@ specs/<feature-slug>/
 └── spec.js
 ```
 
-Spec files are self-contained HTML documents. Copy `spec.css` and `spec.js` from
-`templates/specs/` into the feature folder when creating a new spec.
+Spec files are self-contained HTML documents. When creating a new spec, instantiate each
+file from the corresponding `.html.template` in `.claude/skills/sdd-workflow/templates/`
+(replace every `{{PLACEHOLDER}}` token), and copy `spec.css` and `spec.js` from that same
+directory into the feature folder.
 All HTML spec files link to the shared stylesheet with:
 
 ```html
@@ -104,6 +106,9 @@ Task rules:
 
 The ordered `<ol class="task-timeline">` list provides a visual milestone view.
 Each `<li class="task-item">` can carry a status class: `done`, `in-progress`, or `blocked`.
+This status class is the single mechanism for subtask progress: the implementer adds
+`done` to each completed item, and the reviewer verifies it. The global task status
+(spec_ready, human_approved, …) lives in `tasks.json`, never in the HTML.
 
 ## `review.html`
 

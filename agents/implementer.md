@@ -44,7 +44,7 @@ For each task in `tasks.html`:
 1. Read the related requirement(s).
 2. Make the smallest coherent code change.
 3. Add or update tests when required.
-4. Mark the task item complete only if actually completed.
+4. Mark the task item complete only if actually completed: add `class="done"` to its `<li class="task-item">` in `tasks.html` (use `in-progress` or `blocked` for partial states).
 5. Run targeted validation if configured.
 6. Continue to the next task.
 

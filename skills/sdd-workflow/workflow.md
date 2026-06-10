@@ -73,7 +73,7 @@ Only after approval:
 3. Execute tasks sequentially.
 4. Add/update tests.
 5. Run configured validation.
-6. Mark completed tasks in `tasks.html`.
+6. Mark completed tasks in `tasks.html` (add `class="done"` to the `<li class="task-item">`).
 7. Set status to `review`.
 
 ## 7. Review
@@ -104,9 +104,10 @@ If reviewer rejects:
 
 ## 9. History entry format
 
-Append entries like:
-
-Append to `history.html` using the entry format in `templates/history.html.template` (copy the HTML entry block).
+Append to `history.html` by copying the commented entry block from the file itself
+(the format lives in `templates/history.html.template`) and inserting the filled-in
+entry immediately after the `<!-- INSERT-ENTRY-HERE -->` marker, newest first.
+Remove the "No entries yet" paragraph when adding the first entry.
 
 ## Workflow variant: intake from functional document
 
@@ -126,6 +127,7 @@ functional document
 → human approval
 → implementation
 → review
+```
 
 Rules:
 

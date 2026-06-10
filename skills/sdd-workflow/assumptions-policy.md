@@ -178,29 +178,31 @@ Do not implement based on high-risk assumptions without developer approval.
 
 ## Required assumption format
 
-Each assumption in `assumptions.html` must use this format:
+Each assumption in `assumptions.html` is a card inside the `#assumptions` section, following the structure of the `assumptions.html` template. Set the `.card` risk class (`risk-low`, `risk-medium`, `risk-high`) to match the risk level:
 
-```md
-## A<number> — <short title>
-
-**Assumption:**  
-<What Claude Code is assuming.>
-
-**Reason:**  
-<Why this assumption was made.>
-
-**Risk level:**  
-Low | Medium | High
-
-**Impact if wrong:**  
-<What breaks or changes if the assumption is incorrect.>
-
-**Blocks implementation:**  
-Yes | No
-
-**Related requirements:**  
-- R<number>
+```html
+<div class="card risk-medium" id="a1">
+  <div class="card-header">
+    <span class="req-id">A1</span>
+    <span class="card-title">Short title</span>
+    <span class="badge badge-pending">Pending</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Assumption</dt>            <dd>What Claude Code is assuming.</dd>
+      <dt>Reason</dt>                <dd>Why this assumption was made.</dd>
+      <dt>Risk level</dt>            <dd>Low | Medium | High</dd>
+      <dt>Impact if wrong</dt>       <dd>What breaks or changes if the assumption is incorrect.</dd>
+      <dt>Blocks implementation</dt> <dd>Yes | No</dd>
+      <dt>Related requirements</dt>  <dd>REQ-001</dd>
+      <dt>Review status</dt>         <dd><span class="badge badge-pending">Pending</span></dd>
+      <dt>Developer decision</dt>    <dd>Pending</dd>
+    </dl>
+  </div>
+</div>
 ```
+
+When the developer accepts or rejects an assumption, move its card to the `#accepted-assumptions` or `#rejected-or-replaced-assumptions` section and update the badge (`badge-ok` / `badge-rejected`).
 
 ---
 
@@ -308,47 +310,54 @@ The `reviewer` agent must check:
 
 ### Good assumption
 
-```md
-## A1 — Default recent notes limit
-
-**Assumption:**  
-The default number of recent notes shown by the CLI is 5.
-
-**Reason:**  
-The functional brief says the command should show recent notes but does not specify a default. Existing list commands use small default result sets.
-
-**Risk level:**  
-Medium
-
-**Impact if wrong:**  
-The CLI may show too many or too few notes by default.
-
-**Blocks implementation:**  
-No
-
-**Related requirements:**  
-- R1
+```html
+<div class="card risk-medium" id="a1">
+  <div class="card-header">
+    <span class="req-id">A1</span>
+    <span class="card-title">Default recent notes limit</span>
+    <span class="badge badge-pending">Pending</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Assumption</dt>            <dd>The default number of recent notes shown by the CLI is 5.</dd>
+      <dt>Reason</dt>                <dd>The functional brief says the command should show recent notes but does not specify a default. Existing list commands use small default result sets.</dd>
+      <dt>Risk level</dt>            <dd>Medium</dd>
+      <dt>Impact if wrong</dt>       <dd>The CLI may show too many or too few notes by default.</dd>
+      <dt>Blocks implementation</dt> <dd>No</dd>
+      <dt>Related requirements</dt>  <dd>REQ-001</dd>
+      <dt>Review status</dt>         <dd><span class="badge badge-pending">Pending</span></dd>
+      <dt>Developer decision</dt>    <dd>Pending</dd>
+    </dl>
+  </div>
+</div>
 ```
 
 ### Bad assumption
 
-```md
-Users can see all notes.
+```html
+<p>Users can see all notes.</p>
 ```
 
 This is bad because it does not explain risk, impact, or whether it blocks implementation.
 
 ### Better as open question
 
-```md
-## Q1 — Should users see only their own notes?
+A permissions decision like this belongs in `open-questions.html` as a blocking question card:
 
-**Question:**  
-Should `notes recent` return only notes owned by the current user?
-
-**Why it matters:**  
-This affects authorization and data privacy.
-
-**Blocking:**  
-Yes
+```html
+<div class="card blocking-yes" id="q1">
+  <div class="card-header">
+    <span class="req-id err">Q1</span>
+    <span class="card-title">Should users see only their own notes?</span>
+    <span class="badge badge-blocking">Blocking</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Question</dt>       <dd>Should <code>notes recent</code> return only notes owned by the current user?</dd>
+      <dt>Why it matters</dt> <dd>This affects authorization and data privacy.</dd>
+      <dt>Blocking</dt>       <dd>Yes</dd>
+      <dt>Decision</dt>       <dd><span class="badge badge-pending">Pending</span></dd>
+    </dl>
+  </div>
+</div>
 ```

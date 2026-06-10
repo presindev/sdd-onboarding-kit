@@ -82,47 +82,40 @@ Non-blocking questions should still be recorded.
 
 ## Required question format
 
-Each question in `open-questions.html` must use this format:
+Each question in `open-questions.html` is a card inside the `#open-questions` section, following the structure of the `open-questions.html` template. Add `class="blocking-yes"` to the `.card` for blocking questions, and use `badge-blocking` or `badge-warning` accordingly:
 
-```md
-## Q<number> — <short title>
-
-**Question:**  
-<The question that needs to be answered.>
-
-**Why it matters:**  
-<Explain what decision depends on this answer.>
-
-**Blocking:**  
-Yes | No
-
-**Default assumption if not answered:**  
-<Optional. Only include if safe.>
-
-**Affected files/spec sections:**  
-- `requirements.html`
-- `design.html`
-- `tasks.html`
-
-**Related requirements:**  
-- R<number>
-
-**Decision:**  
-Pending
+```html
+<div class="card blocking-yes" id="q1">
+  <div class="card-header">
+    <span class="req-id err">Q1</span>
+    <span class="card-title">Short title</span>
+    <span class="badge badge-blocking">Blocking</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Question</dt>                          <dd>The question that needs to be answered.</dd>
+      <dt>Why it matters</dt>                    <dd>What decision depends on this answer.</dd>
+      <dt>Blocking</dt>                          <dd>Yes | No</dd>
+      <dt>Default assumption if not answered</dt><dd>Optional. Only include if safe.</dd>
+      <dt>Affected files / sections</dt>         <dd><code>requirements.html</code>, <code>design.html</code>, <code>tasks.html</code></dd>
+      <dt>Related requirements</dt>              <dd>REQ-001</dd>
+      <dt>Decision</dt>                          <dd><span class="badge badge-pending">Pending</span></dd>
+      <dt>Resolved by</dt>                       <dd>Pending</dd>
+      <dt>Resolved at</dt>                       <dd>Pending</dd>
+    </dl>
+  </div>
+</div>
 ```
 
-Once answered, update the question:
+Once answered, move the card to the `#resolved-questions` (or `#deferred-questions`) section and update its fields:
 
-```md
-**Decision:**  
-<Developer's decision.>
-
-**Resolved by:**  
-<name or "developer">
-
-**Resolved at:**  
-<YYYY-MM-DD>
+```html
+<dt>Decision</dt>    <dd>Developer's decision.</dd>
+<dt>Resolved by</dt> <dd>developer</dd>
+<dt>Resolved at</dt> <dd>YYYY-MM-DD</dd>
 ```
+
+with the header badge changed to `<span class="badge badge-ok">Resolved</span>`.
 
 ---
 
@@ -191,34 +184,43 @@ Some entries may appear in both files:
 - `open-questions.html` records the decision still needed.
 - `assumptions.html` records the temporary assumption used for the draft.
 
-Example:
+Example, in `open-questions.html`:
 
-```md
-## Q2 — Empty-state copy
-
-**Question:**  
-What exact message should be shown when no notes exist?
-
-**Blocking:**  
-No
-
-**Default assumption if not answered:**  
-Use "No notes found."
+```html
+<div class="card" id="q2">
+  <div class="card-header">
+    <span class="req-id">Q2</span>
+    <span class="card-title">Empty-state copy</span>
+    <span class="badge badge-warning">Non-blocking</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Question</dt>                          <dd>What exact message should be shown when no notes exist?</dd>
+      <dt>Blocking</dt>                          <dd>No</dd>
+      <dt>Default assumption if not answered</dt><dd>Use "No notes found."</dd>
+      <dt>Decision</dt>                          <dd><span class="badge badge-pending">Pending</span></dd>
+    </dl>
+  </div>
+</div>
 ```
 
 And in `assumptions.html`:
 
-```md
-## A2 — Empty-state copy
-
-**Assumption:**  
-Use "No notes found." as the empty-state message.
-
-**Risk level:**  
-Low
-
-**Blocks implementation:**  
-No
+```html
+<div class="card risk-low" id="a2">
+  <div class="card-header">
+    <span class="req-id">A2</span>
+    <span class="card-title">Empty-state copy</span>
+    <span class="badge badge-pending">Pending</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Assumption</dt>            <dd>Use "No notes found." as the empty-state message.</dd>
+      <dt>Risk level</dt>            <dd>Low</dd>
+      <dt>Blocks implementation</dt> <dd>No</dd>
+    </dl>
+  </div>
+</div>
 ```
 
 ---
@@ -309,67 +311,54 @@ The `reviewer` agent must check:
 
 ### Good blocking question
 
-```md
-## Q1 — User visibility scope
-
-**Question:**  
-Should users see only their own notes or all notes in the system?
-
-**Why it matters:**  
-This determines authorization behavior and data filtering.
-
-**Blocking:**  
-Yes
-
-**Default assumption if not answered:**  
-None. This must be decided by the developer.
-
-**Affected files/spec sections:**  
-- `requirements.html`
-- `design.html`
-- `tasks.html`
-
-**Related requirements:**  
-- R2
-
-**Decision:**  
-Pending
+```html
+<div class="card blocking-yes" id="q1">
+  <div class="card-header">
+    <span class="req-id err">Q1</span>
+    <span class="card-title">User visibility scope</span>
+    <span class="badge badge-blocking">Blocking</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Question</dt>                          <dd>Should users see only their own notes or all notes in the system?</dd>
+      <dt>Why it matters</dt>                    <dd>This determines authorization behavior and data filtering.</dd>
+      <dt>Blocking</dt>                          <dd>Yes</dd>
+      <dt>Default assumption if not answered</dt><dd>None. This must be decided by the developer.</dd>
+      <dt>Affected files / sections</dt>         <dd><code>requirements.html</code>, <code>design.html</code>, <code>tasks.html</code></dd>
+      <dt>Related requirements</dt>              <dd>REQ-002</dd>
+      <dt>Decision</dt>                          <dd><span class="badge badge-pending">Pending</span></dd>
+    </dl>
+  </div>
+</div>
 ```
 
 ### Good non-blocking question
 
-```md
-## Q2 — Empty-state copy
-
-**Question:**  
-What exact message should be displayed when no notes exist?
-
-**Why it matters:**  
-This affects user-facing copy but not the core behavior.
-
-**Blocking:**  
-No
-
-**Default assumption if not answered:**  
-Use "No notes found."
-
-**Affected files/spec sections:**  
-- `requirements.html`
-- `acceptance-tests.html`
-
-**Related requirements:**  
-- R4
-
-**Decision:**  
-Pending
+```html
+<div class="card" id="q2">
+  <div class="card-header">
+    <span class="req-id">Q2</span>
+    <span class="card-title">Empty-state copy</span>
+    <span class="badge badge-warning">Non-blocking</span>
+  </div>
+  <div class="card-body">
+    <dl class="card-fields">
+      <dt>Question</dt>                          <dd>What exact message should be displayed when no notes exist?</dd>
+      <dt>Why it matters</dt>                    <dd>This affects user-facing copy but not the core behavior.</dd>
+      <dt>Blocking</dt>                          <dd>No</dd>
+      <dt>Default assumption if not answered</dt><dd>Use "No notes found."</dd>
+      <dt>Affected files / sections</dt>         <dd><code>requirements.html</code>, <code>acceptance-tests.html</code></dd>
+      <dt>Related requirements</dt>              <dd>REQ-004</dd>
+      <dt>Decision</dt>                          <dd><span class="badge badge-pending">Pending</span></dd>
+    </dl>
+  </div>
+</div>
 ```
 
 ### Bad question
 
-```md
-## Questions
-
-- How should this work?
+```html
+<p>How should this work?</p>
 ```
 
 This is too vague and not actionable.

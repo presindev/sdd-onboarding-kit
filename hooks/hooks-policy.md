@@ -28,6 +28,10 @@ Use hooks for rules like:
 
 Hooks can block legitimate work if they are too broad. Keep them small, testable and project-specific.
 
+## Environment requirements
+
+The example hook scripts are bash and rely on `jq` for reading hook JSON and `tasks.json`. On Windows this means Git Bash (or WSL) plus `jq` installed and on `PATH`. The examples fail open — they warn and allow the action — when `jq` is missing; switch them to fail closed only if the developer explicitly accepts that hooks will block work on machines without `jq`.
+
 ## Hook modes
 
 ### Advisory

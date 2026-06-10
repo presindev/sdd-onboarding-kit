@@ -64,7 +64,10 @@
   <section id="entries">
     <h2>Entries</h2>
 
-    <!-- Append completed task entries below using this format:
+    <!-- ENTRY FORMAT — copy this block for each completed task, fill it in,
+         and insert it immediately after the INSERT-ENTRY-HERE marker below
+         (newest entry first). Remove the "No entries yet" paragraph when
+         adding the first entry.
 
     <div class="entry">
       <div class="entry-header">
@@ -85,6 +88,8 @@
     </div>
 
     -->
+
+    <!-- INSERT-ENTRY-HERE -->
 
     <p style="color: var(--c-text-muted); font-style: italic;">No entries yet.</p>
   </section>

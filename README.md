@@ -44,11 +44,12 @@ Claude Code will inspect the repository, ask you the configuration questions fro
 | `hooks/` | Hook policies, settings snippets and example hook scripts |
 | `mcps/` | Criteria for deciding which MCPs to configure |
 | `templates/` | File templates Claude adapts to the target project |
+| `specs/example-feature/` | Fully rendered example spec (open the HTML files in a browser) |
 | `scripts/` | Base scripts for validating structure, environment and tests |
 | `reference/` | SDD theory, harness engineering, Claude Code primitives |
 | `output-project-structure.md` | Expected structure of the target project after onboarding |
 | `usage-prompts.md` | Ready-to-use prompts for daily SDD use |
-| `DOCUMENTATION.md` | Full documentation: installation, daily workflow, features |
+| `DOCUMENTATION.html` | Full documentation: installation, daily workflow, features (open in a browser) |
 
 ## Central principle
 
