@@ -1,0 +1,72 @@
+# {{PROJECT_NAME}} — project map
+
+Orientation artifact for Claude Code and developers: where things live, how
+the project runs, and what must not be touched without approval.
+
+Rules for this file:
+
+- Keep it concise — aim for one or two screens. It exists to avoid loading
+  many files into context, not to replace them (see the context-economy
+  policy).
+- Keep the tree shallow (2–3 levels) and annotated; omit generated and
+  vendored directories. Do not list every file.
+- Never record secrets, credentials, or tokens here.
+- **Maintenance rule:** update this map when the structure changes
+  significantly — new top-level directories, moved entrypoints, renamed
+  build/test commands, or new protected areas.
+
+## Directory tree
+
+```text
+{{DIRECTORY_TREE}}
+```
+
+## Key entrypoints
+
+| Entrypoint | Purpose |
+|---|---|
+| {{ENTRYPOINT_PATH}} | {{ENTRYPOINT_PURPOSE}} |
+
+## Commands
+
+| Action | Command |
+|---|---|
+| Install / validate environment | {{INIT_COMMAND}} |
+| Run all tests | {{TEST_COMMAND}} |
+| Lint | {{LINT_COMMAND}} |
+| Typecheck | {{TYPECHECK_COMMAND}} |
+| Build | {{BUILD_COMMAND}} |
+
+If a command is unknown, keep it as a `TODO: ask the developer` entry — do
+not invent one.
+
+## Framework and runtime assumptions
+
+{{FRAMEWORK_RUNTIME_ASSUMPTIONS}}
+
+## Important documentation
+
+| Document | Path |
+|---|---|
+| {{DOC_NAME}} | {{DOC_PATH}} |
+
+## Protected areas
+
+Files or directories that require explicit approval before changes:
+
+{{PROTECTED_AREAS}}
+
+## SDD locations
+
+| Artifact | Path |
+|---|---|
+| Task state | {{TASK_STORAGE}} |
+| Specs | specs/<feature-slug>/ |
+| History | history.html |
+| Decisions | decisions/ |
+
+## Generated files and do-not-edit
+
+| Path | Rule |
+|---|---|
+| {{GENERATED_PATH}} | {{GENERATED_RULE}} |

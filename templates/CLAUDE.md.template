@@ -6,6 +6,20 @@ This project uses **Spec Driven Development (SDD)** for non-trivial implementati
 
 {{PROJECT_SUMMARY}}
 
+## Project map
+
+Repository structure, entrypoints, commands, important docs, and protected
+areas are described in the project map:
+
+```text
+{{PROJECT_MAP_PATH}}
+```
+
+Read it when you need orientation; do not duplicate its directory tree into
+this file. Update it when the structure changes significantly (new
+top-level directories, moved entrypoints, changed commands, new protected
+areas).
+
 ## Commands
 
 Use these project commands:

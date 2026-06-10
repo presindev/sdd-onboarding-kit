@@ -116,6 +116,7 @@
         <li><a href="#documentation-model">13. Documentation model</a></li>
         <li><a href="#language-policy">14. Language policy</a></li>
         <li><a href="#context-economy">15. Context economy</a></li>
+        <li><a href="#project-map">16. Project map</a></li>
       </ul>
     </div>
   </nav>
@@ -555,6 +556,67 @@
 
       <p>In an SDD project, compaction and session resets are safe by design: durable truth lives in <code>tasks.json</code>, <code>specs/</code>, decision logs, and <code>history.html</code>, not in chat history. If something matters beyond the session, write it to an artifact before compacting.</p>
       <p>Command behavior verified against the Claude Code commands reference (2026-06): <code>/context [all]</code>, <code>/compact [instructions]</code>.</p>
+    </section>
+
+    <hr>
+
+    <section id="project-map">
+      <h2>16. Project map</h2>
+      <p>Onboarding generates a <strong>project map</strong>: a one-to-two-screen orientation artifact describing where things live in the target repository. It is the context-economy answer to "how does Claude learn the repository structure?" — instead of embedding a directory tree in <code>CLAUDE.md</code> or reading many files at session start, Claude reads one concise, linked artifact.</p>
+
+      <h3>Location and generation</h3>
+      <ul>
+        <li>Default location: <code>.claude/context/project-map.md</code> (harness-internal). Teams that want it visible in their docs may choose <code>docs/project-map.md</code> instead (onboarding question, <code>questions.md</code> §12).</li>
+        <li>Generated during onboarding from the Phase 1 repository inspection, using <code>templates/project-map.md.template</code>.</li>
+        <li>If the developer defers generation, onboarding records a clear TODO instead of creating an empty file.</li>
+        <li>The generated <code>CLAUDE.md</code> links to the map; it never embeds the tree.</li>
+        <li>Unknown commands are recorded as <code>TODO: ask the developer</code> — never invented. Secrets, credentials, and tokens are never recorded.</li>
+      </ul>
+
+      <h3>Contents</h3>
+      <p>The map has eight sections: directory tree (2–3 levels, annotated); key entrypoints; package/build/test/lint commands; framework and runtime assumptions; important documentation; protected areas; SDD artifact locations (tasks, specs, history, decisions); and generated or do-not-edit files.</p>
+
+      <h3>Example</h3>
+      <pre><code># acme-shop — project map
+
+## Directory tree
+src/            application code
+  api/          REST endpoints (Express routers)
+  domain/       business logic, no I/O
+  db/           Prisma schema + repositories
+tests/          Vitest suites, mirrors src/
+prisma/         migrations (PROTECTED)
+public/         static assets
+
+## Key entrypoints
+| src/server.ts | HTTP server bootstrap |
+| src/api/index.ts | router registration |
+
+## Commands
+| Tests | npm test | Lint | npm run lint |
+| Typecheck | npm run typecheck | Build | npm run build |
+
+## Framework and runtime assumptions
+Node 22, Express 5, Prisma 6, PostgreSQL 16 (docker compose).
+
+## Protected areas
+prisma/migrations/, .env*, .github/workflows/
+
+## SDD locations
+tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
+
+## Generated files and do-not-edit
+| src/generated/** | regenerate via npm run codegen, never edit |</code></pre>
+
+      <h3>When to update the map</h3>
+      <p>The map carries its own maintenance rule. Update it when the structure changes <em>significantly</em>:</p>
+      <ul>
+        <li>a top-level or load-bearing directory is added, renamed, or removed;</li>
+        <li>an entrypoint moves;</li>
+        <li>build/test/lint commands change;</li>
+        <li>a new protected area or generated path appears.</li>
+      </ul>
+      <p>Do not update it for routine file additions inside existing directories — a map that changes on every commit defeats its purpose, and one that lists every file defeats context economy (see <a href="#context-economy">§15</a>).</p>
     </section>
 
   </main>

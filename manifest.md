@@ -61,6 +61,7 @@
 - `specs/example-feature/tasks.html`
 - `specs/kit-pr-01-documentation-foundation/spec.md`
 - `specs/kit-pr-02-context-economy/spec.md`
+- `specs/kit-pr-03-project-map/spec.md`
 - `templates/.claude/hooks/README.md.template`
 - `templates/.claude/settings.json.template`
 - `templates/.mcp.json.template`
@@ -69,6 +70,7 @@
 - `templates/conventions.html.template`
 - `templates/functional/functional-brief.html.template`
 - `templates/history.html.template`
+- `templates/project-map.md.template`
 - `templates/specs/README.md`
 - `templates/specs/acceptance-tests.html.template`
 - `templates/specs/assumptions.html.template`

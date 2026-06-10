@@ -118,6 +118,8 @@ After the developer answers, create or update the following in the target reposi
 │   │           ├── open-questions.html.template
 │   │           ├── spec.css
 │   │           └── spec.js
+│   ├── context/
+│   │   └── project-map.md
 │   ├── hooks/
 │   │   └── README.md
 │   └── settings.json
@@ -154,6 +156,19 @@ It must be concise and project-specific. It should contain:
 - protected files or risky areas.
 
 Do not put the full theory of SDD into `CLAUDE.md`. Put long procedures in the project skill.
+
+Do not embed a directory tree in `CLAUDE.md`; link the project map instead (replace `{{PROJECT_MAP_PATH}}` with the configured location).
+
+### Project map
+
+Generate a project map from `templates/project-map.md.template`, filled with the Phase 1 inspection results.
+
+- Default location: `.claude/context/project-map.md`. Use `docs/project-map.md` if the developer prefers it visible in docs (see `questions.md` §12).
+- Keep it concise: shallow annotated tree (2–3 levels), no exhaustive file listing, no generated/vendored directories.
+- Record unknown commands as `TODO: ask the developer` — do not invent them.
+- Never record secrets, credentials, or tokens.
+- If the developer defers generation, record a clear TODO (in `decisions/answers.md` and the onboarding summary) instead of creating an empty file.
+- The map carries its own maintenance rule: it must be updated when the repository structure changes significantly.
 
 ### Subagents
 
@@ -237,6 +252,7 @@ After writing files:
 4. Verify all generated files have no unresolved placeholders (Markdown and HTML). Exception: the spec templates under `.claude/skills/sdd-workflow/templates/` keep their `{{PLACEHOLDER}}` tokens by design.
 5. Verify the project `CLAUDE.md` points to `.claude/skills/sdd-workflow/SKILL.md`.
 6. Verify that task statuses in `tasks.json` match the configured state machine.
+7. Verify the project map exists at the configured location and is linked from `CLAUDE.md`, or that a TODO records that generation was deferred.
 
 ## Phase 6 — Final onboarding summary
 
