@@ -63,9 +63,9 @@ if grep -R "{{[A-Z0-9_]*}}" CLAUDE.md .claude 2>/dev/null \
 fi
 
 # Check for unresolved {{PLACEHOLDER}} tokens in generated HTML spec files
-if find specs -name "*.html" 2>/dev/null | xargs grep -l "{{[A-Z0-9_]*}}" 2>/dev/null | grep -q .; then
+if find specs -name "*.html" -exec grep -l "{{[A-Z0-9_]*}}" {} + 2>/dev/null | grep -q .; then
   echo "Unresolved template placeholders found in HTML spec files:" >&2
-  find specs -name "*.html" | xargs grep -l "{{[A-Z0-9_]*}}" 2>/dev/null >&2
+  find specs -name "*.html" -exec grep -l "{{[A-Z0-9_]*}}" {} + 2>/dev/null >&2
   exit 1
 fi
 
