@@ -41,6 +41,16 @@
 - `scripts/run-tests.sh.template`
 - `scripts/update-manifest.sh`
 - `scripts/validate-sdd-structure.sh`
+- `skills/optional/README.md`
+- `skills/optional/context-audit/SKILL.md`
+- `skills/optional/decision-log/SKILL.md`
+- `skills/optional/dependency-freshness/SKILL.md`
+- `skills/optional/documentation-update/SKILL.md`
+- `skills/optional/failure-learning/SKILL.md`
+- `skills/optional/git-discipline/SKILL.md`
+- `skills/optional/project-map/SKILL.md`
+- `skills/optional/run-and-verify/SKILL.md`
+- `skills/optional/ui-qa/SKILL.md`
 - `skills/sdd-workflow/SKILL.md`
 - `skills/sdd-workflow/assumptions-policy.md`
 - `skills/sdd-workflow/examples.md`
@@ -59,9 +69,6 @@
 - `specs/example-feature/spec.css`
 - `specs/example-feature/spec.js`
 - `specs/example-feature/tasks.html`
-- `specs/kit-pr-01-documentation-foundation/spec.md`
-- `specs/kit-pr-02-context-economy/spec.md`
-- `specs/kit-pr-03-project-map/spec.md`
 - `templates/.claude/hooks/README.md.template`
 - `templates/.claude/settings.json.template`
 - `templates/.mcp.json.template`

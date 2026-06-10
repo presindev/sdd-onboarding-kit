@@ -61,7 +61,8 @@ You must not assume:
 - what hooks to enable;
 - what commands run tests, lint, typecheck or formatting;
 - whether to create branches, commits or pull requests;
-- whether tasks may be skipped as too small for SDD.
+- whether tasks may be skipped as too small for SDD;
+- which optional skill packs to install.
 
 If the developer wants a default recommendation, propose the safe default profile in this file.
 
@@ -98,26 +99,27 @@ After the developer answers, create or update the following in the target reposi
 │   │   ├── implementer.md
 │   │   └── reviewer.md
 │   ├── skills/
-│   │   └── sdd-workflow/
-│   │       ├── SKILL.md
-│   │       ├── workflow.md
-│   │       ├── spec-format.md
-│   │       ├── task-state-machine.md
-│   │       ├── review-checklist.md
-│   │       ├── intake-from-functional-doc.md
-│   │       ├── assumptions-policy.md
-│   │       ├── open-questions-policy.md
-│   │       ├── examples.md
-│   │       └── templates/
-│   │           ├── requirements.html.template
-│   │           ├── design.html.template
-│   │           ├── tasks.html.template
-│   │           ├── review.html.template
-│   │           ├── acceptance-tests.html.template
-│   │           ├── assumptions.html.template
-│   │           ├── open-questions.html.template
-│   │           ├── spec.css
-│   │           └── spec.js
+│   │   ├── sdd-workflow/
+│   │   │   ├── SKILL.md
+│   │   │   ├── workflow.md
+│   │   │   ├── spec-format.md
+│   │   │   ├── task-state-machine.md
+│   │   │   ├── review-checklist.md
+│   │   │   ├── intake-from-functional-doc.md
+│   │   │   ├── assumptions-policy.md
+│   │   │   ├── open-questions-policy.md
+│   │   │   ├── examples.md
+│   │   │   └── templates/
+│   │   │       ├── requirements.html.template
+│   │   │       ├── design.html.template
+│   │   │       ├── tasks.html.template
+│   │   │       ├── review.html.template
+│   │   │       ├── acceptance-tests.html.template
+│   │   │       ├── assumptions.html.template
+│   │   │       ├── open-questions.html.template
+│   │   │       ├── spec.css
+│   │   │       └── spec.js
+│   │   └── <optional skill packs selected during onboarding>/
 │   ├── context/
 │   │   └── project-map.md
 │   ├── hooks/
@@ -190,6 +192,15 @@ Copy and adapt the full `skills/sdd-workflow/` directory into:
 ```
 
 This skill contains the full multi-step SDD procedure. Keep `CLAUDE.md` short and use the skill for operational detail.
+
+### Optional skill packs
+
+The core `sdd-workflow` skill is always installed. The packs under `skills/optional/` are installed only when the developer selects them (see `questions.md` §14).
+
+- For each selected pack, copy `skills/optional/<name>/` to `.claude/skills/<name>/` and adapt placeholders and project-specific details (commands, paths, doc locations).
+- If the repository clearly indicates applicability (e.g. a frontend for `ui-qa`), suggest the pack — but install only on confirmation.
+- Record installed and declined packs in `decisions/answers.md`.
+- In `CLAUDE.md`, list installed optional skills by name with a one-line purpose at most. Never paste skill bodies into `CLAUDE.md`: skill content loads only when invoked, which is what keeps it cheap.
 
 ### Spec templates
 

@@ -1,0 +1,63 @@
+---
+name: ui-qa
+description: Verify UI changes against spec acceptance criteria. Use when a task changes user-visible interface behavior, layout, or flows.
+---
+
+# UI QA
+
+## Purpose
+
+Check that UI changes match their spec's acceptance criteria — routes,
+visual states, interaction flows, responsive behavior, and accessibility —
+and record the evidence.
+
+> Roadmap note (kit-internal): a later kit version adds an optional
+> browser-tester subagent with a scoped Playwright MCP; this v1 uses the
+> verification means already available in the project (dev server, manual
+> steps, existing UI test commands, developer-provided screenshots).
+
+## When to use
+
+- A task changes user-visible behavior, layout, styling, or flows.
+- A spec contains visual or interaction acceptance criteria.
+- A UI bug fix needs before/after confirmation.
+
+## When not to use
+
+- Backend-only or non-visual changes.
+- When no UI can be run or observed in the environment — record that QA
+  was not performed instead of claiming it was.
+
+## Required inputs
+
+- The spec's UI acceptance criteria: target route/component, expected
+  visual state, interaction flow; screenshots or mockups if provided.
+- How to run the UI locally (dev server command from `CLAUDE.md` / the
+  project map).
+- Test account credentials **names** if auth is required — provided by the
+  developer at run time, never stored.
+
+## Procedure
+
+1. Start the UI with the project's dev command (or use the running
+   instance the developer points to).
+2. Walk each acceptance criterion: navigate to the target route, perform
+   the interaction, compare the observed state with the expected one
+   (screenshots/mockups when provided).
+3. Check the spec's responsive and accessibility criteria where present.
+4. Run the project's existing UI test suite if one exists.
+5. Record per-criterion results: pass, fail (with what was observed), or
+   not verifiable (with why).
+
+## Output artifact
+
+A UI QA checklist in the task's review notes: criterion → result →
+evidence (screenshot reference or description).
+
+## Safety constraints
+
+- Never store credentials in specs, skills, or evidence; ask the developer
+  to provide them at run time and prefer test accounts.
+- Require explicit approval before using any credentials.
+- No destructive actions against shared or production environments;
+  verify against local/test instances.
