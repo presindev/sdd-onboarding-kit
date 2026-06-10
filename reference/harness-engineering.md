@@ -1,71 +1,71 @@
-# Harness Engineering aplicado a SDD
+# Harness Engineering applied to SDD
 
-Harness Engineering es la práctica de construir un arnés de trabajo alrededor de una IA para que siga un flujo concreto de manera repetible, auditable y segura.
+Harness Engineering is the practice of building a working harness around an AI so that it follows a specific workflow in a repeatable, auditable and safe way.
 
-SDD es el flujo. El harness es la infraestructura que fuerza o facilita ese flujo.
+SDD is the workflow. The harness is the infrastructure that enforces or facilitates that workflow.
 
-## Objetivo del harness
+## Goal of the harness
 
-El objetivo no es que Claude Code “recuerde” una preferencia. El objetivo es que el repositorio contenga artefactos que guíen el trabajo de forma persistente:
+The goal is not for Claude Code to "remember" a preference. The goal is for the repository to contain artifacts that guide the work persistently:
 
-- instrucciones del proyecto;
-- subagentes especializados;
-- skills reutilizables;
-- hooks deterministas;
-- memoria externa en archivos;
-- plantillas de specs;
-- scripts de validación;
-- integración opcional con herramientas externas mediante MCP.
+- project instructions;
+- specialized subagents;
+- reusable skills;
+- deterministic hooks;
+- external memory in files;
+- spec templates;
+- validation scripts;
+- optional integration with external tools via MCP.
 
-## Componentes del harness
+## Harness components
 
-### 1. Instrucciones persistentes
+### 1. Persistent instructions
 
-El proyecto debe tener un `CLAUDE.md` con reglas breves y específicas.
+The project must have a `CLAUDE.md` with short, specific rules.
 
-### 2. Subagentes
+### 2. Subagents
 
-El flujo se divide en roles:
+The workflow is split into roles:
 
-- `leader`: orquesta estados y decide qué fase toca;
-- `spec-author`: genera requirements, design y tasks;
-- `implementer`: implementa código contra la spec aprobada;
-- `reviewer`: valida trazabilidad, tests y calidad.
+- `leader`: inspects task state and recommends which phase and agent comes next (the main conversation orchestrates);
+- `spec-author`: generates requirements, design and tasks;
+- `implementer`: implements code against the approved spec;
+- `reviewer`: validates traceability, tests and quality.
 
-### 3. Memoria externa
+### 3. External memory
 
-El contexto importante se guarda fuera del chat:
+Important context is stored outside the chat:
 
-- `tasks.json`: estado de tareas;
-- `specs/<feature>/`: specs versionables;
-- `history.html`: historial de ejecución;
-- `docs/architecture.html`: arquitectura;
-- `docs/conventions.html`: convenciones.
+- `tasks.json`: task state;
+- `specs/<feature>/`: versionable specs;
+- `history.html`: execution history;
+- `docs/architecture.html`: architecture;
+- `docs/conventions.html`: conventions.
 
-### 4. Skill SDD
+### 4. SDD skill
 
-La skill contiene el procedimiento largo. Esto evita inflar `CLAUDE.md` con instrucciones que solo son necesarias durante tareas SDD.
+The skill contains the long procedure. This avoids bloating `CLAUDE.md` with instructions that are only needed during SDD tasks.
 
 ### 5. Hooks
 
-Los hooks pueden aplicar reglas deterministas, por ejemplo bloquear edición de código si no existe una spec aprobada.
+Hooks can enforce deterministic rules, for example blocking code edits when no approved spec exists.
 
-Los hooks deben activarse solo tras aprobación del desarrollador.
+Hooks must be enabled only after developer approval.
 
 ### 6. MCPs
 
-Los MCPs conectan Claude Code a herramientas externas: GitHub, Linear, Jira, documentación, memoria, bases de datos o sistemas internos.
+MCPs connect Claude Code to external tools: GitHub, Linear, Jira, documentation, memory, databases or internal systems.
 
-Deben configurarse solo si el proyecto realmente los necesita.
+They should be configured only if the project actually needs them.
 
-## Principio de diseño
+## Design principle
 
-El harness debe ser:
+The harness must be:
 
-- explícito;
+- explicit;
 - versionable;
-- revisable;
+- reviewable;
 - portable;
-- configurable por proyecto;
-- estricto donde haya riesgo;
-- flexible donde el desarrollador necesite criterio.
+- configurable per project;
+- strict where there is risk;
+- flexible where the developer needs judgment.

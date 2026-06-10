@@ -219,7 +219,7 @@ Do not configure MCPs silently.
 
 If the developer chooses MCPs, use `mcps/mcp-policy.md` and the relevant integration notes.
 
-If no MCPs are selected, use local Markdown/JSON storage:
+If no MCPs are selected, use local HTML/JSON storage:
 
 - `tasks.json`
 - `specs/<feature>/`

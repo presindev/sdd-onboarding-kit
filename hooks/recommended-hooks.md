@@ -14,7 +14,6 @@ Recommended matchers:
 
 - `Edit`
 - `Write`
-- `MultiEdit`
 
 Script:
 
@@ -32,7 +31,7 @@ Recommended event:
 
 Recommended matchers:
 
-- `Edit|Write|MultiEdit`
+- `Edit|Write`
 
 Script:
 

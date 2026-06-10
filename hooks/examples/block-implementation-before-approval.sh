@@ -6,6 +6,13 @@ set -euo pipefail
 # This script assumes local tasks.json and blocks edits to implementation files
 # when there is an active SDD task without human approval.
 # Edits to spec files (specs/, tasks.json, history.html, etc.) are always allowed.
+#
+# KNOWN LIMITATION (deliberate, to keep the example simple): the guard is
+# project-wide, not per-task. If ANY sdd:true task is pending/spec_draft/
+# spec_ready, ALL implementation edits are blocked — including work on a
+# different, already-approved task. If your team runs several SDD tasks in
+# parallel, adapt the jq filter to scope the check to the task being worked on
+# (e.g. by branch name or an ACTIVE_TASK env var).
 
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 TASKS_FILE="$PROJECT_DIR/tasks.json"
@@ -23,7 +30,7 @@ FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty' 2>/dev/null |
 case "$FILE_PATH" in
   */specs/*|*/tasks.json|*/history.html|*/open-questions.html|*/requirements.html|\
   */design.html|*/tasks.html|*/assumptions.html|*/acceptance-tests.html|*/review.html|\
-  */.claude/*|*/scripts/validate-sdd-structure.sh|*/scripts/block-implementation-before-approval.sh)
+  */.claude/*)
     exit 0
     ;;
 esac

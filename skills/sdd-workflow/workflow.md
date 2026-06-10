@@ -127,6 +127,7 @@ functional document
 → human approval
 → implementation
 → review
+```
 
 Rules:
 
