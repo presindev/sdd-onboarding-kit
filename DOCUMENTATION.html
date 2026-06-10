@@ -108,6 +108,7 @@
         <li><a href="#kit-file-reference">11. File reference</a></li>
         <li><a href="#ready-to-use-prompts">12. Prompts</a></li>
         <li><a href="#skill-packs">17. Skill packs</a></li>
+        <li><a href="#run-and-verify">18. Run and verify</a></li>
       </ul>
     </div>
 
@@ -647,7 +648,7 @@ tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
       <h3>Installation and onboarding behavior</h3>
       <ul>
         <li>Default: <strong>no optional pack is installed.</strong> Onboarding asks which packs to install; if the repository clearly indicates applicability (e.g. a frontend for <code>ui-qa</code>), Claude suggests the pack but installs only on confirmation.</li>
-        <li>Selected packs are copied from <code>skills/optional/&lt;name&gt;/</code> to <code>.claude/skills/&lt;name&gt;/</code> and adapted to the project (commands, paths, doc locations).</li>
+        <li>Selected packs are copied from <code>skills/optional/&lt;name&gt;/</code> to <code>.claude/skills/&lt;name&gt;/</code> and adapted to the project (commands, paths, doc locations). Exception: <code>run-and-verify</code> is generated from <code>templates/run-and-verify.md.template</code> instead of copied — see <a href="#run-and-verify">§18</a>.</li>
         <li>Installed and declined packs are recorded in <code>decisions/answers.md</code>, so declined packs are not re-proposed.</li>
         <li>The generated <code>CLAUDE.md</code> lists installed packs by name with a one-line purpose; skill bodies are never pasted into it.</li>
         <li>Packs can be added later at any time with the same copy-and-adapt rule.</li>
@@ -658,6 +659,50 @@ tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
 
       <h3>Structure of every pack</h3>
       <p>Each <code>SKILL.md</code> documents: purpose; when to use; when not to use; required inputs; output artifact; safety constraints; and a short procedure. All packs are advisory or permission-gated — none mutates git state, external systems, or memory without explicit developer approval.</p>
+    </section>
+
+    <hr>
+
+    <section id="run-and-verify">
+      <h2>18. Run and verify skill</h2>
+      <p>Implementation quality depends on knowing how to run the project and validate behavior. Instead of rediscovering that in every session, onboarding captures it once: when the <code>run-and-verify</code> pack is selected (<a href="#skill-packs">§17</a>), Claude generates a <strong>project-specific</strong> <code>.claude/skills/run-and-verify/SKILL.md</code> from <code>templates/run-and-verify.md.template</code>. The generated skill records the project's real commands and verification steps, and the implementer and reviewer run applicable checks through it.</p>
+
+      <h3>How generation works</h3>
+      <ol>
+        <li><strong>Inspect first.</strong> Claude fills the template placeholders (<code>DEV_SERVER_COMMAND</code>, <code>TEST_COMMAND</code>, <code>TARGETED_TEST_COMMAND</code>, <code>LINT_COMMAND</code>, <code>TYPECHECK_COMMAND</code>, <code>BUILD_COMMAND</code>, <code>REQUIRED_SERVICES</code>, <code>ENV_VAR_NAMES</code>, <code>UI_VERIFICATION</code>, <code>API_VERIFICATION</code>) from the Phase 1 repository inspection — <code>package.json</code> scripts, <code>Makefile</code>, CI config, existing docs — and confirms the inferred commands with the developer.</li>
+        <li><strong>Ask only the gaps.</strong> The remaining questions come from <code>questions.md</code> §15: dev server and URL, targeted test command, build command, required services, environment variable names, and how to verify UI/API behavior. Test/lint/typecheck answers from §7 are reused, not re-asked.</li>
+        <li><strong>Never invent.</strong> Anything that cannot be confirmed is recorded as <code>TODO: ask the developer</code>. A skill with honest TODOs is useful; a skill with invented commands is dangerous.</li>
+      </ol>
+
+      <h3>What the generated skill contains</h3>
+      <ul>
+        <li>A commands table: dev server, all tests, targeted tests, lint, typecheck, build.</li>
+        <li>Required services (databases, queues, containers) and how to start them locally.</li>
+        <li>Required environment variables — <strong>names only</strong>, with a pointer to where they are documented (e.g. an <code>.env.example</code> file).</li>
+        <li>UI and API/CLI verification recipes: routes to open, expected states, example requests and responses, smoke commands.</li>
+        <li>A verification procedure: narrowest check first, then broader checks, then runtime behavior against the spec's acceptance criteria, then an honest report (what ran, what passed, what failed, what could not be verified and why).</li>
+      </ul>
+
+      <h3>Examples by project type</h3>
+      <table>
+        <thead>
+          <tr><th>Project type</th><th>Typical commands</th><th>Typical verification</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Frontend (e.g. Vite/Next.js)</td><td><code>npm run dev</code> · <code>npm test</code> · <code>npx vitest run path/to.test.ts</code> · <code>npm run lint</code> · <code>npm run build</code></td><td>Open the affected route on the dev server, compare against the spec's expected visual state; run the <code>ui-qa</code> skill if installed.</td></tr>
+          <tr><td>Backend API (e.g. Express/FastAPI)</td><td><code>docker compose up -d db</code> · <code>npm run dev</code> / <code>uvicorn app:app --reload</code> · targeted test per route</td><td>Send an example request (<code>curl</code>/HTTP client) to the changed endpoint and compare the response with the acceptance criteria.</td></tr>
+          <tr><td>Library</td><td><code>npm test</code> / <code>pytest</code> · <code>npm run typecheck</code> · <code>npm run build</code></td><td>No server to run: targeted tests plus a small consumer snippet exercising the public API that changed.</td></tr>
+          <tr><td>CLI tool</td><td><code>go build ./...</code> / <code>cargo build</code> · unit tests</td><td>Invoke the built binary with the spec's example arguments and compare stdout/exit codes.</td></tr>
+          <tr><td>Monorepo</td><td>Per-package commands (<code>pnpm --filter &lt;pkg&gt; test</code>, <code>turbo run lint</code>)</td><td>Run the affected package's checks first, then the workspace-level checks; the skill names which packages map to which commands.</td></tr>
+        </tbody>
+      </table>
+      <p>These are illustrations — the generated skill always uses the project's verified commands, never assumed ones.</p>
+
+      <h3>Review integration</h3>
+      <p>When the skill is installed, the review flow depends on it: the implementer runs validation through it before moving a task to <code>review</code> (<code>agents/implementer.md</code>), and the reviewer verifies that applicable checks were run through it, with the evidence — commands run, results, unverified items — recorded in <code>review.html</code> (<code>agents/reviewer.md</code>, review checklist §4). TODO entries in the skill surface as explicitly unverified items, never as silent gaps.</p>
+
+      <h3>Secrets</h3>
+      <p>The generated skill never stores secret values. Environment variables appear by name only; values come from the developer's local environment or the project's documented mechanism. This applies to verification evidence too: never paste tokens, credentials, or secret-bearing output into specs, reviews, or the skill itself. Verification runs against local/test environments — never production without explicit instruction.</p>
     </section>
 
   </main>

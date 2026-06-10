@@ -197,10 +197,20 @@ This skill contains the full multi-step SDD procedure. Keep `CLAUDE.md` short an
 
 The core `sdd-workflow` skill is always installed. The packs under `skills/optional/` are installed only when the developer selects them (see `questions.md` §14).
 
-- For each selected pack, copy `skills/optional/<name>/` to `.claude/skills/<name>/` and adapt placeholders and project-specific details (commands, paths, doc locations).
+- For each selected pack, copy `skills/optional/<name>/` to `.claude/skills/<name>/` and adapt placeholders and project-specific details (commands, paths, doc locations). Exception: `run-and-verify` is generated from a template, not copied — see "Run and verify skill" below.
 - If the repository clearly indicates applicability (e.g. a frontend for `ui-qa`), suggest the pack — but install only on confirmation.
 - Record installed and declined packs in `decisions/answers.md`.
 - In `CLAUDE.md`, list installed optional skills by name with a one-line purpose at most. Never paste skill bodies into `CLAUDE.md`: skill content loads only when invoked, which is what keeps it cheap.
+
+### Run and verify skill
+
+If the developer selected the `run-and-verify` pack (`questions.md` §14), generate `.claude/skills/run-and-verify/SKILL.md` from `templates/run-and-verify.md.template` instead of copying the pack file verbatim.
+
+- Fill the placeholders from the Phase 1 inspection first (`package.json` scripts, `Makefile`, CI config, existing docs), confirm inferred commands with the developer, and ask the `questions.md` §15 questions only for what remains unknown.
+- Reuse the §7 answers for test/lint/typecheck commands — do not re-ask.
+- Record any command that cannot be confirmed as `TODO: ask the developer`. Never invent a command.
+- Record required environment variables by name only. Never write secret values, tokens, or credentials into the generated skill or any other file.
+- The generated skill is the project's run/verify recipe: implementer and reviewer run applicable checks through it (see `agents/implementer.md`, `agents/reviewer.md`, and the review checklist).
 
 ### Spec templates
 
@@ -264,6 +274,7 @@ After writing files:
 5. Verify the project `CLAUDE.md` points to `.claude/skills/sdd-workflow/SKILL.md`.
 6. Verify that task statuses in `tasks.json` match the configured state machine.
 7. Verify the project map exists at the configured location and is linked from `CLAUDE.md`, or that a TODO records that generation was deferred.
+8. If the `run-and-verify` pack was selected, verify `.claude/skills/run-and-verify/SKILL.md` has no unresolved placeholders (unknown commands appear as explicit `TODO: ask the developer` entries), no invented commands, and no secret values — environment variables by name only.
 
 ## Phase 6 — Final onboarding summary
 

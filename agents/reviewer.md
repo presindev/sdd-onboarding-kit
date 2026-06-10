@@ -21,7 +21,8 @@ Read:
 - relevant tests;
 - project `CLAUDE.md`;
 - architecture/conventions docs;
-- configured validation scripts.
+- configured validation scripts;
+- `.claude/skills/run-and-verify/SKILL.md`, if the project has it — it records the project's real commands and how to verify runtime behavior.
 
 ## Review checklist
 
@@ -37,6 +38,7 @@ At minimum, verify:
 6. Lint/typecheck pass if configured.
 7. No protected files were edited without approval.
 8. No obvious security, data loss or API compatibility issue was introduced.
+9. If the project has a `run-and-verify` skill, applicable checks were run through it and the evidence (commands run, results, unverified items) is recorded in `review.html`.
 
 ## Review outcomes
 

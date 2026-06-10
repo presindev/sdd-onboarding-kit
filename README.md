@@ -72,6 +72,8 @@ Claude Code will inspect the repository, ask you the configuration questions fro
 
 Beyond the core `sdd-workflow` skill, the kit ships nine optional skill packs under [`skills/optional/`](skills/optional/README.md): `context-audit`, `project-map`, `run-and-verify`, `dependency-freshness`, `git-discipline`, `decision-log`, `documentation-update`, `failure-learning`, and `ui-qa`. None is installed by default — onboarding asks which packs the project needs, and installed skills are listed in `CLAUDE.md` by name only (their instructions load when invoked). All packs are advisory or permission-gated. See the `Skill packs` section in `DOCUMENTATION.html`.
 
+The `run-and-verify` pack is special: onboarding **generates a project-specific run/verify recipe** — the project's real dev-server/test/lint/typecheck/build commands, required services, environment variable names (never secret values), and how to verify UI or API behavior. Unknown commands are recorded as TODOs, never invented, and the reviewer validates implementations through this recipe. See the `Run and verify skill` section in `DOCUMENTATION.html`.
+
 ## Central principle
 
 The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.

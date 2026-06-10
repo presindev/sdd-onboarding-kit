@@ -68,6 +68,8 @@ scripts/init.sh
 
 If project-specific commands differ, use those from `CLAUDE.md`.
 
+If the project has `.claude/skills/run-and-verify/SKILL.md`, run validation through that skill: it records the project's real commands, required services, environment variable names, and how to verify UI/API behavior. Do not invent commands it does not list; report its `TODO` entries as unverified items.
+
 ## Completion
 
 When implementation tasks are complete:
