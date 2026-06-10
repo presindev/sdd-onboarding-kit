@@ -109,6 +109,14 @@
         <li><a href="#ready-to-use-prompts">12. Prompts</a></li>
       </ul>
     </div>
+
+    <div class="toc-section">
+      <p class="toc-label">Documentation</p>
+      <ul class="toc-list">
+        <li><a href="#documentation-model">13. Documentation model</a></li>
+        <li><a href="#language-policy">14. Language policy</a></li>
+      </ul>
+    </div>
   </nav>
 
   <main class="main">
@@ -434,6 +442,61 @@
 
       <h3>Check harness structure</h3>
       <div class="prompt-box">Run `scripts/validate-sdd-structure.sh` and report any missing files or unresolved placeholders.</div>
+    </section>
+
+    <hr>
+
+    <section id="documentation-model">
+      <h2>13. Documentation model</h2>
+      <p>The kit's documentation is layered so that each audience reads only what it needs, and so that <code>CLAUDE.md</code> files stay short. Each layer links down to the next instead of duplicating it.</p>
+
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Location</th><th>Audience and purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Quick start</td>
+            <td><a href="README.md"><code>README.md</code></a></td>
+            <td>New users: what the kit does, how to install it, the default safety model.</td>
+          </tr>
+          <tr>
+            <td>Operational documentation</td>
+            <td><code>DOCUMENTATION.html</code> (this page)</td>
+            <td>Maintainers and daily users: full installation, workflow, features, and policies.</td>
+          </tr>
+          <tr>
+            <td>Theory and policy</td>
+            <td><code>reference/</code></td>
+            <td>Deeper background material: <a href="reference/sdd-theory.md">SDD theory</a>, <a href="reference/harness-engineering.md">harness engineering</a>, <a href="reference/claude-code-primitives.md">Claude Code primitives</a>.</td>
+          </tr>
+          <tr>
+            <td>Procedures (skills)</td>
+            <td><code>skills/</code> → installed as <code>.claude/skills/</code></td>
+            <td>Reusable step-by-step procedures, e.g. <a href="skills/sdd-workflow/SKILL.md">the SDD workflow skill</a>. Long procedures live here, never in <code>CLAUDE.md</code>.</td>
+          </tr>
+          <tr>
+            <td>Roles (agents)</td>
+            <td><code>agents/</code> → installed as <code>.claude/agents/</code></td>
+            <td>Role-specific subagent definitions: <a href="agents/leader.md">leader</a>, <a href="agents/spec-author.md">spec-author</a>, <a href="agents/implementer.md">implementer</a>, <a href="agents/reviewer.md">reviewer</a>.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Related entry points: <a href="instructions.md">onboarding instructions</a>, <a href="questions.md">onboarding questions</a>, <a href="hooks/hooks-policy.md">hooks policy</a>, <a href="mcps/mcp-policy.md">MCP policy</a>.</p>
+      <p>The same hierarchy applies to the harness generated in a target project: the project's <code>CLAUDE.md</code> stays concise and links to the project's skill, agents, specs, and decision records instead of embedding them.</p>
+    </section>
+
+    <hr>
+
+    <section id="language-policy">
+      <h2>14. Language policy</h2>
+      <p><strong>English is canonical for all reusable kit files</strong>: instructions, questions, reference material, agents, skills, hooks, MCP notes, templates, and this documentation. This keeps the kit portable across teams and repositories.</p>
+      <p><strong>Generated project-specific artifacts may use the target project's preferred language.</strong> When the harness is installed, the developer can choose the language for generated specs, decision records, task descriptions, and history entries. The structure (file names, state names, status values such as <code>spec_ready</code> or <code>human_approved</code>) always stays in English so hooks and scripts keep working.</p>
+      <ul>
+        <li>Contributions to the kit itself must be in English (see the contributing guidelines in <a href="README.md"><code>README.md</code></a>).</li>
+        <li>If non-English material is ever kept in the kit for historical reasons, it must be clearly marked as non-canonical/legacy.</li>
+      </ul>
     </section>
 
   </main>

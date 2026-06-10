@@ -1,25 +1,25 @@
-# Spec Driven Development: teoría operativa
+# Spec Driven Development: operational theory
 
-Spec Driven Development, o SDD, es un flujo de trabajo en el que la especificación ocupa el centro del proceso de desarrollo.
+Spec Driven Development (SDD) is a workflow in which the specification sits at the center of the development process.
 
-La tesis práctica es simple: antes de pedirle a una IA que escriba código, se debe definir de forma suficientemente precisa qué debe construir, cómo debe comportarse el sistema y cómo se validará el resultado.
+The practical thesis is simple: before asking an AI to write code, you must define precisely enough what it should build, how the system should behave, and how the result will be validated.
 
-## Qué es una spec
+## What a spec is
 
-Una spec es una representación explícita del software que se quiere implementar. Puede contener:
+A spec is an explicit representation of the software to be implemented. It may contain:
 
-- requisitos funcionales;
-- requisitos no funcionales;
-- historias de usuario;
-- criterios de aceptación;
-- escenarios de error;
-- diseño técnico;
-- cambios de archivos;
-- tareas implementables;
-- estrategia de testing;
-- restricciones de arquitectura.
+- functional requirements;
+- non-functional requirements;
+- user stories;
+- acceptance criteria;
+- error scenarios;
+- technical design;
+- file changes;
+- implementable tasks;
+- testing strategy;
+- architecture constraints.
 
-En este kit, una spec de feature se divide por defecto en cuatro documentos:
+In this kit, a feature spec is split by default into four documents:
 
 ```text
 specs/<feature-slug>/
@@ -29,66 +29,66 @@ specs/<feature-slug>/
 └── review.html
 ```
 
-## La spec como fuente de verdad
+## The spec as source of truth
 
-En SDD, la IA no implementa directamente desde una conversación vaga. Implementa contra documentos concretos.
+In SDD, the AI does not implement directly from a vague conversation. It implements against concrete documents.
 
-Esto reduce tres problemas habituales del desarrollo con IA:
+This reduces three common problems of AI-assisted development:
 
-1. pérdida de contexto en conversaciones largas;
-2. ambigüedad en instrucciones naturales;
-3. dificultad para comprobar si el código generado corresponde realmente a lo solicitado.
+1. context loss in long conversations;
+2. ambiguity in natural-language instructions;
+3. difficulty verifying that the generated code actually matches what was requested.
 
-## Flujo general
+## General flow
 
-El flujo base es:
+The base flow is:
 
 ```text
-especificar → aprobar → implementar → validar → cerrar o iterar
+specify → approve → implement → validate → close or iterate
 ```
 
-Traducido a estados de trabajo:
+Translated into work states:
 
 ```text
 pending → spec_draft → spec_ready → human_approved → in_progress → review → done
 ```
 
-## Papel del humano
+## The human's role
 
-Este kit no está diseñado para eliminar al desarrollador del proceso. Está diseñado para que el desarrollador conserve control sobre:
+This kit is not designed to remove the developer from the process. It is designed so the developer keeps control over:
 
-- intención del producto;
-- arquitectura;
-- criterios de aceptación;
-- validación de tests;
-- decisiones de seguridad;
-- decisión final de marcar una tarea como completada.
+- product intent;
+- architecture;
+- acceptance criteria;
+- test validation;
+- security decisions;
+- the final decision to mark a task as complete.
 
-La IA acelera el proceso, pero el criterio técnico sigue siendo responsabilidad del equipo.
+The AI accelerates the process, but technical judgment remains the team's responsibility.
 
-## Relación con TDD
+## Relationship with TDD
 
-SDD no sustituye necesariamente a TDD. Puede incluir TDD.
+SDD does not necessarily replace TDD. It can include TDD.
 
-Una spec bien escrita debe facilitar la generación de tests. Si se usa una notación como EARS o Given/When/Then, cada requisito puede transformarse en uno o varios tests.
+A well-written spec should make test generation easy. If a notation such as EARS or Given/When/Then is used, each requirement can be turned into one or more tests.
 
-## Cuándo usar SDD
+## When to use SDD
 
-Usa SDD para:
+Use SDD for:
 
-- features con varios pasos;
-- cambios que afecten a arquitectura;
-- cambios con impacto en APIs;
-- lógica de negocio importante;
-- cambios donde la trazabilidad sea valiosa;
-- tareas que requieran tests nuevos o modificados.
+- multi-step features;
+- changes that affect architecture;
+- changes with API impact;
+- significant business logic;
+- changes where traceability is valuable;
+- tasks that require new or modified tests.
 
-No siempre hace falta SDD para:
+SDD is not always needed for:
 
 - typos;
-- cambios cosméticos triviales;
-- renombrados locales;
-- documentación menor;
-- pequeños fixes obvios.
+- trivial cosmetic changes;
+- local renames;
+- minor documentation;
+- small obvious fixes.
 
-El proyecto debe definir explícitamente qué tareas pueden saltarse SDD.
+The project must explicitly define which tasks may skip SDD.

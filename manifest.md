@@ -58,6 +58,7 @@
 - `specs/example-feature/spec.css`
 - `specs/example-feature/spec.js`
 - `specs/example-feature/tasks.html`
+- `specs/kit-pr-01-documentation-foundation/spec.md`
 - `templates/.claude/hooks/README.md.template`
 - `templates/.claude/settings.json.template`
 - `templates/.mcp.json.template`
