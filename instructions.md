@@ -234,7 +234,7 @@ After writing files:
 1. Run `scripts/validate-sdd-structure.sh` if safe.
 2. Run `scripts/init.sh` if safe.
 3. Run the configured test command if the developer approved running tests.
-4. Verify all generated files have no unresolved placeholders (Markdown and HTML).
+4. Verify all generated files have no unresolved placeholders (Markdown and HTML). Exception: the spec templates under `.claude/skills/sdd-workflow/templates/` keep their `{{PLACEHOLDER}}` tokens by design.
 5. Verify the project `CLAUDE.md` points to `.claude/skills/sdd-workflow/SKILL.md`.
 6. Verify that task statuses in `tasks.json` match the configured state machine.
 
