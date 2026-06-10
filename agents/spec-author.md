@@ -28,8 +28,8 @@ Create or update:
 specs/<feature-slug>/requirements.html
 specs/<feature-slug>/design.html
 specs/<feature-slug>/tasks.html
-specs/<feature-slug>/spec.css   (copy from templates/specs/spec.css)
-specs/<feature-slug>/spec.js    (copy from templates/specs/spec.js)
+specs/<feature-slug>/spec.css   (copy from .claude/skills/sdd-workflow/templates/spec.css)
+specs/<feature-slug>/spec.js    (copy from .claude/skills/sdd-workflow/templates/spec.js)
 ```
 
 Optionally prepare:
@@ -111,8 +111,8 @@ Before implementation can happen, create:
 - `specs/<feature-slug>/assumptions.html`
 - `specs/<feature-slug>/open-questions.html`
 - `specs/<feature-slug>/acceptance-tests.html`
-- `specs/<feature-slug>/spec.css` (copy from `templates/specs/spec.css`)
-- `specs/<feature-slug>/spec.js` (copy from `templates/specs/spec.js`)
+- `specs/<feature-slug>/spec.css` (copy from `.claude/skills/sdd-workflow/templates/spec.css`)
+- `specs/<feature-slug>/spec.js` (copy from `.claude/skills/sdd-workflow/templates/spec.js`)
 
 If blocking questions remain, set the task status to `spec_draft`.
 If the spec is ready for human review, set the task status to `spec_ready`.

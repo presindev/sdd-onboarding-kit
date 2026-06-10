@@ -150,7 +150,7 @@ Required files:
 - assumptions.html
 - open-questions.html
 - acceptance-tests.html
-- spec.css (copy from kit's templates/specs/spec.css)
-- spec.js (copy from kit's templates/specs/spec.js)
+- spec.css (copy from .claude/skills/sdd-workflow/templates/spec.css)
+- spec.js (copy from .claude/skills/sdd-workflow/templates/spec.js)
 
 Claude Code must stop after generating the spec and wait for human approval before implementation.

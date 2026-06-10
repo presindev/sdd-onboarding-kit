@@ -107,11 +107,23 @@ After the developer answers, create or update the following in the target reposi
 │   │       ├── intake-from-functional-doc.md
 │   │       ├── assumptions-policy.md
 │   │       ├── open-questions-policy.md
-│   │       └── examples.md
+│   │       ├── examples.md
+│   │       └── templates/
+│   │           ├── requirements.html.template
+│   │           ├── design.html.template
+│   │           ├── tasks.html.template
+│   │           ├── review.html.template
+│   │           ├── acceptance-tests.html.template
+│   │           ├── assumptions.html.template
+│   │           ├── open-questions.html.template
+│   │           ├── spec.css
+│   │           └── spec.js
 │   ├── hooks/
 │   │   └── README.md
 │   └── settings.json
 ├── specs/
+├── decisions/
+│   └── answers.md
 ├── tasks.json
 ├── history.html
 └── scripts/
@@ -163,6 +175,28 @@ Copy and adapt the full `skills/sdd-workflow/` directory into:
 ```
 
 This skill contains the full multi-step SDD procedure. Keep `CLAUDE.md` short and use the skill for operational detail.
+
+### Spec templates
+
+Copy the HTML spec templates and shared assets into the target project so the spec-author has a source when creating new feature specs after the kit is removed:
+
+```text
+templates/specs/requirements.html.template      → .claude/skills/sdd-workflow/templates/requirements.html.template
+templates/specs/design.html.template            → .claude/skills/sdd-workflow/templates/design.html.template
+templates/specs/tasks.html.template             → .claude/skills/sdd-workflow/templates/tasks.html.template
+templates/specs/review.html.template            → .claude/skills/sdd-workflow/templates/review.html.template
+templates/specs/acceptance-tests.html.template  → .claude/skills/sdd-workflow/templates/acceptance-tests.html.template
+templates/specs/assumptions.html.template       → .claude/skills/sdd-workflow/templates/assumptions.html.template
+templates/specs/open-questions.html.template    → .claude/skills/sdd-workflow/templates/open-questions.html.template
+templates/specs/spec.css                        → .claude/skills/sdd-workflow/templates/spec.css
+templates/specs/spec.js                         → .claude/skills/sdd-workflow/templates/spec.js
+```
+
+Copy these verbatim, including the `{{PLACEHOLDER}}` tokens. They are instantiated per feature, not during onboarding.
+
+### Onboarding decisions record
+
+Create `decisions/answers.md` in the target project from `decisions/answers.template.md`, filled with the developer's answers to the onboarding questions. Workflow-level assumptions and onboarding decisions are recorded there.
 
 ### Hooks
 
