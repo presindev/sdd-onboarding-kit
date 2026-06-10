@@ -31,7 +31,8 @@
       <section id="tasks">
         <h2>Tasks</h2>
         <p>Implement tasks in the order listed. Each task should be small and independently verifiable.
-           Mark tasks complete in <code>tasks.json</code> — this file is the human-readable view.</p>
+           Mark a task complete by adding <code>class="done"</code> to its <code>&lt;li class="task-item"&gt;</code>
+           (<code>in-progress</code> and <code>blocked</code> are also available). The global task status lives in <code>tasks.json</code>.</p>
 
         <ol class="task-timeline">
           <li class="task-item">

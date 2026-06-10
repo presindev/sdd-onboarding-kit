@@ -106,6 +106,9 @@ Task rules:
 
 The ordered `<ol class="task-timeline">` list provides a visual milestone view.
 Each `<li class="task-item">` can carry a status class: `done`, `in-progress`, or `blocked`.
+This status class is the single mechanism for subtask progress: the implementer adds
+`done` to each completed item, and the reviewer verifies it. The global task status
+(spec_ready, human_approved, …) lives in `tasks.json`, never in the HTML.
 
 ## `review.html`
 

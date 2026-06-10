@@ -73,7 +73,7 @@ Only after approval:
 3. Execute tasks sequentially.
 4. Add/update tests.
 5. Run configured validation.
-6. Mark completed tasks in `tasks.html`.
+6. Mark completed tasks in `tasks.html` (add `class="done"` to the `<li class="task-item">`).
 7. Set status to `review`.
 
 ## 7. Review

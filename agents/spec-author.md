@@ -17,7 +17,7 @@ Read:
 - task description;
 - project `CLAUDE.md`;
 - `.claude/skills/sdd-workflow/spec-format.md`;
-- existing docs such as `docs/architecture.md`, `docs/conventions.md`, `README.md`;
+- existing docs such as `docs/architecture.html`, `docs/conventions.html`, `README.md`;
 - relevant existing code only as needed to understand design constraints.
 
 ## Outputs
@@ -57,7 +57,8 @@ specs/<feature-slug>/review.html
 
 ## Task rules
 
-- Every task in `tasks.html` must use HTML checkbox format: `<input type="checkbox" disabled> T1: description`.
+- Every task in `tasks.html` must be an `<li class="task-item">` inside the `<ol class="task-timeline">`, following the structure in the `tasks.html` template (`.task-item-header` with a `T<n>` ID, plus `.task-item-body`).
+- Subtask progress is tracked by adding a status class to the `<li>`: `done`, `in-progress`, or `blocked`. New tasks carry no status class. The global task status lives in `tasks.json`.
 - Tasks must be small enough for the implementer to execute sequentially.
 - Each task should reference requirements where possible.
 - Include test tasks.

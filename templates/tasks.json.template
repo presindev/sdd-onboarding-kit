@@ -17,6 +17,7 @@
       "title": "Example SDD task",
       "slug": "example-sdd-task",
       "description": "Replace this example with a real task.",
+      "source": null,
       "sdd": true,
       "status": "pending",
       "spec_path": "specs/example-sdd-task",
