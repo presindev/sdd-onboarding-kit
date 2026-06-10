@@ -194,6 +194,8 @@ templates/specs/spec.js                         → .claude/skills/sdd-workflow/
 
 Copy these verbatim, including the `{{PLACEHOLDER}}` tokens. They are instantiated per feature, not during onboarding.
 
+Do NOT copy the kit's `specs/example-feature/` directory into the target project. It is a rendered reference example for humans and agents, not part of the installed harness.
+
 ### Onboarding decisions record
 
 Create `decisions/answers.md` in the target project from `decisions/answers.template.md`, filled with the developer's answers to the onboarding questions. Workflow-level assumptions and onboarding decisions are recorded there.

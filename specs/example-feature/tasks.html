@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks — Recent notes CLI command</title>
+  <link rel="stylesheet" href="spec.css">
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="sidebar-title">Contents</p>
+    <div id="toc-list"></div>
+  </nav>
+
+  <div class="main-content">
+    <header class="spec-header">
+      <h1>Implementation tasks — Recent notes CLI command</h1>
+      <table class="meta-table">
+        <tbody>
+          <tr><th>Task ID</th>      <td><code>FEAT-007</code></td></tr>
+          <tr><th>Feature slug</th> <td><code>example-feature</code></td></tr>
+          <tr><th>Status</th>       <td><span class="badge badge-ok">done</span></td></tr>
+        </tbody>
+      </table>
+    </header>
+
+    <main>
+
+      <section id="tasks">
+        <h2>Tasks</h2>
+        <p>Implement tasks in the order listed. Each task should be small and independently verifiable.
+           Mark a task complete by adding <code>class="done"</code> to its <code>&lt;li class="task-item"&gt;</code>
+           (<code>in-progress</code> and <code>blocked</code> are also available). The global task status lives in <code>tasks.json</code>.</p>
+
+        <ol class="task-timeline">
+          <li class="task-item done">
+            <div class="task-item-header">
+              <span class="req-id t">T1</span>
+              <strong>Add failing tests for default recent note limit (<code>REQ-001</code>).</strong>
+            </div>
+            <div class="task-item-body">New module <code>tests/test_cli_recent.py</code>; assert 5 notes max, newest first.</div>
+          </li>
+          <li class="task-item done">
+            <div class="task-item-header">
+              <span class="req-id t">T2</span>
+              <strong>Add failing tests for custom positive limit (<code>REQ-002</code>).</strong>
+            </div>
+            <div class="task-item-body">Cover <code>--limit 2</code> and <code>--limit 12</code> on an 8-note store.</div>
+          </li>
+          <li class="task-item done">
+            <div class="task-item-header">
+              <span class="req-id t">T3</span>
+              <strong>Add failing tests for invalid limit, empty store and unreadable store (<code>REQ-003</code>, <code>EDGE-001</code>, <code>ERR-001</code>).</strong>
+            </div>
+            <div class="task-item-body">Exit codes and stderr messages per <code>acceptance-tests.html</code>.</div>
+          </li>
+          <li class="task-item done">
+            <div class="task-item-header">
+              <span class="req-id t">T4</span>
+              <strong>Implement <code>get_recent_notes(limit)</code> in <code>src/notes.py</code>.</strong>
+            </div>
+            <div class="task-item-body">Sort by <code>created_at</code> descending, slice to limit, raise <code>ValueError</code> on non-positive limit.</div>
+          </li>
+          <li class="task-item done">
+            <div class="task-item-header">
+              <span class="req-id t">T5</span>
+              <strong>Register the <code>notes recent</code> subcommand in <code>src/cli.py</code>.</strong>
+            </div>
+            <div class="task-item-body">Argparse wiring, <code>--limit</code> validation, empty-state message from A2.</div>
+          </li>
+          <li class="task-item done">
+            <div class="task-item-header">
+              <span class="req-id t">T6</span>
+              <strong>Run validation commands.</strong>
+            </div>
+            <div class="task-item-body">Full test suite, lint and typecheck as configured in <code>CLAUDE.md</code>; all green.</div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="validation-checklist">
+        <h2>Validation checklist</h2>
+        <p>The reviewer verifies each item below before marking the task <code>done</code>.</p>
+        <ul class="checklist">
+          <li><input type="checkbox" checked disabled> Requirements are covered by tests.</li>
+          <li><input type="checkbox" checked disabled> Tests pass.</li>
+          <li><input type="checkbox" checked disabled> Lint / typecheck pass if configured.</li>
+          <li><input type="checkbox" checked disabled> No protected files were modified without approval.</li>
+          <li><input type="checkbox" checked disabled> Reviewer approved traceability.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div><!-- /.main-content -->
+</div><!-- /.page-wrap -->
+<script src="spec.js"></script>
+</body>
+</html>

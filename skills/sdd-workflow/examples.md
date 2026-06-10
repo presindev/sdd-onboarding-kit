@@ -1,5 +1,10 @@
 # SDD examples
 
+A complete, rendered example spec for this feature lives in the kit under
+`specs/example-feature/` (all seven HTML files plus `spec.css`/`spec.js`,
+filled in end-to-end through review). Open any of those files in a browser to
+see the target output. The fragments below are quick references.
+
 ## Example task entry
 
 ```json

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design — Recent notes CLI command</title>
+  <link rel="stylesheet" href="spec.css">
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="sidebar-title">Contents</p>
+    <div id="toc-list"></div>
+  </nav>
+
+  <div class="main-content">
+    <header class="spec-header">
+      <h1>Design — Recent notes CLI command</h1>
+      <table class="meta-table">
+        <tbody>
+          <tr><th>Task ID</th>      <td><code>FEAT-007</code></td></tr>
+          <tr><th>Feature slug</th> <td><code>example-feature</code></td></tr>
+          <tr><th>Status</th>       <td><span class="badge badge-ok">done</span></td></tr>
+        </tbody>
+      </table>
+    </header>
+
+    <main>
+
+      <section id="technical-summary">
+        <h2>Technical summary</h2>
+        <p>Add a <code>recent</code> subcommand to the existing argparse-based CLI. Business logic lives in a new <code>get_recent_notes(limit)</code> function in <code>src/notes.py</code>, which sorts the in-memory note list by <code>created_at</code> descending and slices to <code>limit</code>. The CLI layer only parses and validates arguments; it holds no business logic.</p>
+      </section>
+
+      <section id="data-flow">
+        <h2>Data flow</h2>
+        <div class="diagram-container">
+          <svg width="560" height="140" viewBox="0 0 560 140" aria-label="Data flow: CLI argument parsing to note store to stdout">
+            <defs>
+              <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="#6b7280"/>
+              </marker>
+            </defs>
+            <rect x="20" y="50" width="120" height="40" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5"/>
+            <text x="80" y="75" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#1e3a8a">cli.py: parse args</text>
+            <line x1="140" y1="70" x2="218" y2="70" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+            <rect x="220" y="40" width="120" height="60" rx="6" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+            <text x="280" y="68" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#4c1d95">notes.py:</text>
+            <text x="280" y="84" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#4c1d95">get_recent_notes</text>
+            <line x1="340" y1="70" x2="418" y2="70" stroke="#6b7280" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+            <rect x="420" y="50" width="120" height="40" rx="6" fill="#eafaf1" stroke="#27ae60" stroke-width="1.5"/>
+            <text x="480" y="75" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#14532d">stdout</text>
+            <text x="280" y="128" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9ca3af">Validation errors short-circuit to stderr + exit 2 before the store is read</text>
+          </svg>
+        </div>
+      </section>
+
+      <section id="files-to-change">
+        <h2>Files to change</h2>
+        <table>
+          <thead>
+            <tr><th>File</th><th>Change</th><th>Reason</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>src/cli.py</code></td><td>Add <code>recent</code> subcommand and <code>--limit</code> argument</td><td>CLI entrypoint (REQ-001, REQ-002, REQ-003)</td></tr>
+            <tr><td><code>src/notes.py</code></td><td>Add <code>get_recent_notes(limit)</code></td><td>Business logic (REQ-001, REQ-002)</td></tr>
+            <tr><td><code>tests/test_cli_recent.py</code></td><td>New test module</td><td>Requirement coverage</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="files-not-to-change">
+        <h2>Files not to change</h2>
+        <table>
+          <thead>
+            <tr><th>File or directory</th><th>Reason</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>src/storage.py</code></td><td>The existing store API already exposes <code>load_notes()</code>; no persistence change is needed.</td></tr>
+            <tr><td><code>src/cli.py</code> existing subcommands</td><td>Out of scope; non-regression tests protect them.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="interfaces-and-contracts">
+        <h2>Interfaces and contracts</h2>
+        <div class="tabs">
+          <ul class="tab-bar">
+            <li><button class="tab-btn" type="button">API / Functions</button></li>
+            <li><button class="tab-btn" type="button">Schema</button></li>
+            <li><button class="tab-btn" type="button">CLI</button></li>
+          </ul>
+          <div class="tab-panel">
+            <pre><code>def get_recent_notes(limit: int = 5) -&gt; list[Note]:
+    """Return at most `limit` notes, newest first.
+
+    Raises ValueError if limit &lt;= 0.
+    """</code></pre>
+          </div>
+          <div class="tab-panel">
+            <pre><code># No schema changes. Note objects already carry:
+#   id: str, text: str, created_at: datetime</code></pre>
+          </div>
+          <div class="tab-panel">
+            <pre><code>$ notes recent              # prints up to 5 notes, newest first
+$ notes recent --limit 12   # prints up to 12 notes
+$ notes recent --limit 0    # exit 2: "limit must be a positive integer"</code></pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="data-model-changes">
+        <h2>Data model changes</h2>
+        <p>None.</p>
+      </section>
+
+      <section id="test-design">
+        <h2>Test design</h2>
+        <p>One CLI-level test per requirement in <code>tests/test_cli_recent.py</code>, using the existing <code>cli_runner</code> fixture: default limit (REQ-001), custom limit (REQ-002), invalid limit (REQ-003), empty store (EDGE-001), unreadable store (ERR-001). The full matrix lives in <code>acceptance-tests.html</code>.</p>
+      </section>
+
+      <section id="risks-and-trade-offs">
+        <h2>Risks and trade-offs</h2>
+        <p>Sorting in memory is O(n log n) per call; acceptable for the 10k-note target (NFR-001). Rejected alternative: keeping a sorted index in the store — more code and a migration for no measurable gain at this scale.</p>
+      </section>
+
+      <section id="rollback-plan">
+        <h2>Rollback plan</h2>
+        <p>Revert the single feature commit. No data, schema or config changes exist, so removal is complete and safe.</p>
+      </section>
+
+    </main>
+  </div><!-- /.main-content -->
+</div><!-- /.page-wrap -->
+<script src="spec.js"></script>
+</body>
+</html>
