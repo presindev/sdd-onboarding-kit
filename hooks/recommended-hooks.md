@@ -42,12 +42,17 @@ hooks/examples/run-tests-after-edit.sh
 
 ## 3. Validate specs before status changes
 
-Purpose: ensure `requirements.html`, `design.html` and `tasks.html` exist before moving to `spec_ready`.
-State is read from `tasks.json` via `jq`, not from spec file content.
+Purpose: ensure `requirements.html`, `design.html` and `tasks.html` exist before a task can move to `spec_ready`.
+
+The script reads the PreToolUse JSON from stdin, acts only when the tool call edits `tasks.json` and the proposed content contains `spec_ready`, then verifies the three core spec files exist for the affected feature slug(s). State is read from `tasks.json` and the tool input via `jq`, not from spec file content. It fails open (warning, exit 0) when `jq` is unavailable.
 
 Recommended event:
 
-- `PreToolUse` or project task update workflow.
+- `PreToolUse`
+
+Recommended matchers:
+
+- `Edit|Write`
 
 Script:
 
