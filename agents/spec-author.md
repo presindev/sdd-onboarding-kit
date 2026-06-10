@@ -25,15 +25,17 @@ Read:
 Create or update:
 
 ```text
-specs/<feature-slug>/requirements.md
-specs/<feature-slug>/design.md
-specs/<feature-slug>/tasks.md
+specs/<feature-slug>/requirements.html
+specs/<feature-slug>/design.html
+specs/<feature-slug>/tasks.html
+specs/<feature-slug>/spec.css   (copy from templates/specs/spec.css)
+specs/<feature-slug>/spec.js    (copy from templates/specs/spec.js)
 ```
 
 Optionally prepare:
 
 ```text
-specs/<feature-slug>/review.md
+specs/<feature-slug>/review.html
 ```
 
 ## Requirements rules
@@ -55,7 +57,7 @@ specs/<feature-slug>/review.md
 
 ## Task rules
 
-- Every task in `tasks.md` must use Markdown checkbox format: `- [ ] \`T1\`: description`.
+- Every task in `tasks.html` must use HTML checkbox format: `<input type="checkbox" disabled> T1: description`.
 - Tasks must be small enough for the implementer to execute sequentially.
 - Each task should reference requirements where possible.
 - Include test tasks.
@@ -103,12 +105,14 @@ The functional document is not an approved spec.
 
 Before implementation can happen, create:
 
-- `specs/<feature-slug>/requirements.md`
-- `specs/<feature-slug>/design.md`
-- `specs/<feature-slug>/tasks.md`
-- `specs/<feature-slug>/assumptions.md`
-- `specs/<feature-slug>/open-questions.md`
-- `specs/<feature-slug>/acceptance-tests.md`
+- `specs/<feature-slug>/requirements.html`
+- `specs/<feature-slug>/design.html`
+- `specs/<feature-slug>/tasks.html`
+- `specs/<feature-slug>/assumptions.html`
+- `specs/<feature-slug>/open-questions.html`
+- `specs/<feature-slug>/acceptance-tests.html`
+- `specs/<feature-slug>/spec.css` (copy from `templates/specs/spec.css`)
+- `specs/<feature-slug>/spec.js` (copy from `templates/specs/spec.js`)
 
 If blocking questions remain, set the task status to `spec_draft`.
 If the spec is ready for human review, set the task status to `spec_ready`.

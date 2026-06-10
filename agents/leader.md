@@ -41,9 +41,9 @@ rejected
 ### If task status is `pending`
 
 1. Invoke or instruct `spec-author`.
-2. Create `specs/<feature-slug>/requirements.md`.
-3. Create `specs/<feature-slug>/design.md`.
-4. Create `specs/<feature-slug>/tasks.md`.
+2. Create `specs/<feature-slug>/requirements.html`.
+3. Create `specs/<feature-slug>/design.html`.
+4. Create `specs/<feature-slug>/tasks.html`.
 5. Set status to `spec_ready` only when the spec is complete.
 6. Stop. Do not invoke `implementer`.
 
@@ -63,7 +63,7 @@ Stop and ask for human approval. Do not implement code.
 
 ### If task status is `in_progress`
 
-Continue implementation according to `tasks.md`.
+Continue implementation according to `tasks.html`.
 
 ### If task status is `review`
 
@@ -87,7 +87,7 @@ Inspect reviewer findings. Decide whether the task returns to:
 - Do not allow implementation from an ambiguous spec.
 - Do not mark `done` unless tests and review requirements pass.
 - Do not invent external integration configuration.
-- Record meaningful progress in `history.md` only after completion or major state transition.
+- Record meaningful progress in `history.html` only after completion or major state transition.
 - If task storage is external, update local files only as configured by the project.
 
 ## Output

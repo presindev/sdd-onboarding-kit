@@ -75,7 +75,7 @@ human_approval_required: true
 requirements_format: EARS
 task_storage: local_tasks_json
 spec_storage: specs/<feature-slug>/
-history_storage: history.md
+history_storage: history.html
 mcp_profile: none_by_default
 hooks_profile: recommend_but_do_not_enable_without_approval
 git_branch_policy: ask_before_creating_branch
@@ -113,7 +113,7 @@ After the developer answers, create or update the following in the target reposi
 │   └── settings.json
 ├── specs/
 ├── tasks.json
-├── history.md
+├── history.html
 └── scripts/
     ├── init.sh
     ├── run-tests.sh
@@ -187,7 +187,7 @@ If no MCPs are selected, use local Markdown/JSON storage:
 
 - `tasks.json`
 - `specs/<feature>/`
-- `history.md`
+- `history.html`
 
 ## Phase 5 — Validate installation
 
@@ -196,7 +196,7 @@ After writing files:
 1. Run `scripts/validate-sdd-structure.sh` if safe.
 2. Run `scripts/init.sh` if safe.
 3. Run the configured test command if the developer approved running tests.
-4. Verify all generated Markdown files have no unresolved placeholders.
+4. Verify all generated files have no unresolved placeholders (Markdown and HTML).
 5. Verify the project `CLAUDE.md` points to `.claude/skills/sdd-workflow/SKILL.md`.
 6. Verify that task statuses in `tasks.json` match the configured state machine.
 
@@ -236,10 +236,10 @@ If the developer provides a functional document, product brief, ticket, PRD, use
 1. `skills/sdd-workflow/intake-from-functional-doc.md`
 2. `skills/sdd-workflow/assumptions-policy.md`
 3. `skills/sdd-workflow/open-questions-policy.md`
-4. `templates/functional/functional-brief.md.template`
-5. `templates/specs/assumptions.md.template`
-6. `templates/specs/open-questions.md.template`
-7. `templates/specs/acceptance-tests.md.template`
+4. `templates/functional/functional-brief.html.template`
+5. `templates/specs/assumptions.html.template`
+6. `templates/specs/open-questions.html.template`
+7. `templates/specs/acceptance-tests.html.template`
 
 Claude Code must treat the functional document as source material, not as an approved implementation spec.
 

@@ -15,7 +15,7 @@ Ask only unanswered questions. If the repository already provides a reliable ans
 ## 2. Human approval policy
 
 1. Is human approval mandatory before implementation?
-2. Should Claude stop after creating `requirements.md`, `design.md`, and `tasks.md`?
+2. Should Claude stop after creating `requirements.html`, `design.html`, and `tasks.html`?
 3. Who approves specs: the current developer, a reviewer, or a team process?
 4. Can Claude revise specs after feedback without resetting the task?
 5. Should Claude be allowed to continue automatically after approval is recorded in `tasks.json`?
@@ -38,7 +38,7 @@ Additional questions:
 
 ## 4. Design format
 
-1. Should `design.md` include exact files/classes/functions to modify?
+1. Should `design.html` include exact files/classes/functions to modify?
 2. Should Claude propose alternatives before selecting a design?
 3. Should architecture impacts be mandatory?
 4. Should database/schema/API changes require an explicit migration section?
@@ -59,7 +59,7 @@ If using local storage:
 
 - What task ID format should be used?
 - Should task slugs be generated from titles?
-- Should completed tasks move to `history.md`?
+- Should completed tasks move to `history.html`?
 
 If using an external tracker:
 
@@ -154,7 +154,7 @@ Questions:
 
 ## 12. Documentation and history
 
-1. Should every completed task append to `history.md`?
+1. Should every completed task append to `history.html`?
 2. Should architectural decisions be stored in `docs/adr/`?
 3. Should specs remain permanently, or be archived after completion?
 4. Should rejected design options be recorded?

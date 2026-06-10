@@ -23,7 +23,7 @@ If no MCP is selected, use:
 ```text
 tasks.json
 specs/<feature-slug>/
-history.md
+history.html
 ```
 
 ## Security policy

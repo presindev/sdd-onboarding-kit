@@ -21,7 +21,7 @@ Create a new SDD task for: <description>. First generate requirements/design/tas
 ## Approve a spec
 
 ```text
-I have reviewed the spec for `<feature-slug>` and I approve it. Change the status to `human_approved` and prepare the implementation following `tasks.md`.
+I have reviewed the spec for `<feature-slug>` and I approve it. Change the status to `human_approved` and prepare the implementation following `tasks.html`.
 ```
 
 ## Implement an approved spec
@@ -33,5 +33,5 @@ Implement feature `<feature-slug>` following the approved spec strictly. Run tes
 ## Review an implementation
 
 ```text
-Use the reviewer to validate the implementation of `<feature-slug>` against requirements.md, design.md and tasks.md. Run tests and tell me if it can be marked as done.
+Use the reviewer to validate the implementation of `<feature-slug>` against requirements.html, design.html and tasks.html. Run tests and tell me if it can be marked as done.
 ```

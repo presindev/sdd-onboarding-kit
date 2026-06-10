@@ -2,7 +2,7 @@
 
 This kit installs a **Spec Driven Development (SDD)** harness in any repository you work on with Claude Code.
 
-It is not a global user configuration. It is a reusable template that produces a project-specific configuration: `CLAUDE.md`, `.claude/agents/`, `.claude/skills/`, `.claude/settings.json`, `specs/`, `tasks.json`, `history.md`, and validation scripts.
+It is not a global user configuration. It is a reusable template that produces a project-specific configuration: `CLAUDE.md`, `.claude/agents/`, `.claude/skills/`, `.claude/settings.json`, `specs/`, `tasks.json`, `history.html`, and validation scripts.
 
 ## What SDD does
 

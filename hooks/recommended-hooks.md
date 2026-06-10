@@ -42,7 +42,8 @@ hooks/examples/run-tests-after-edit.sh
 
 ## 3. Validate specs before status changes
 
-Purpose: ensure `requirements.md`, `design.md` and `tasks.md` exist before moving to `spec_ready`.
+Purpose: ensure `requirements.html`, `design.html` and `tasks.html` exist before moving to `spec_ready`.
+State is read from `tasks.json` via `jq`, not from spec file content.
 
 Recommended event:
 

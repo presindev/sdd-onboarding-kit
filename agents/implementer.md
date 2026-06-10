@@ -1,6 +1,6 @@
 ---
 name: implementer
-description: Use only after an SDD spec has human approval. Implements code strictly from requirements.md, design.md and tasks.md, then runs configured validation.
+description: Use only after an SDD spec has human approval. Implements code strictly from requirements.html, design.html and tasks.html, then runs configured validation.
 tools: Read, Grep, Glob, Bash, Edit, Write
 ---
 
@@ -16,9 +16,9 @@ Before writing code, verify:
 
 1. The task exists.
 2. The task status is `human_approved` or `in_progress`.
-3. `specs/<feature-slug>/requirements.md` exists.
-4. `specs/<feature-slug>/design.md` exists.
-5. `specs/<feature-slug>/tasks.md` exists.
+3. `specs/<feature-slug>/requirements.html` exists.
+4. `specs/<feature-slug>/design.html` exists.
+5. `specs/<feature-slug>/tasks.html` exists.
 6. Human approval is recorded if required by the project.
 7. You know the validation commands or there is an explicit TODO.
 
@@ -28,9 +28,9 @@ If any precondition fails, stop.
 
 Read only the context needed for implementation:
 
-- approved `requirements.md`;
-- approved `design.md`;
-- approved `tasks.md`;
+- approved `requirements.html`;
+- approved `design.html`;
+- approved `tasks.html`;
 - project `CLAUDE.md`;
 - architecture/conventions docs referenced by the spec;
 - relevant code files.
@@ -39,7 +39,7 @@ Do not rely on old chat context as the source of truth.
 
 ## Implementation protocol
 
-For each task in `tasks.md`:
+For each task in `tasks.html`:
 
 1. Read the related requirement(s).
 2. Make the smallest coherent code change.

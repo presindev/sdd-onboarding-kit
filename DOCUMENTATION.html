@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDD Onboarding Kit — Documentation</title>
+  <style>
+    :root {
+      --c-accent: #2563eb; --c-accent-bg: #eff6ff;
+      --c-ok: #27ae60; --c-ok-bg: #eafaf1;
+      --c-blocking: #c0392b; --c-blocking-bg: #fdecea;
+      --c-warning: #e67e22; --c-warning-bg: #fef6ed;
+      --c-border: #d1d5db; --c-bg-alt: #f9fafb;
+      --c-text: #111827; --c-text-muted: #6b7280;
+      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
+      --sidebar-w: 240px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); font-size: 15px; line-height: 1.65; color: var(--c-text); background: #fff; }
+    .page-wrap { display: flex; min-height: 100vh; }
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      background: #0f172a; color: #94a3b8;
+      padding: 1.5rem 1.25rem;
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    }
+    .sidebar-brand { font-size: 0.85rem; font-weight: 700; color: #f8fafc; margin-bottom: 1.5rem; }
+    .sidebar-brand span { display: block; font-size: 0.7rem; font-weight: 400; color: #64748b; margin-top: 0.15rem; }
+    .toc-section { margin-bottom: 1.25rem; }
+    .toc-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: #475569; font-weight: 700; margin-bottom: 0.5rem; }
+    .toc-list { list-style: none; padding: 0; }
+    .toc-list li { margin-bottom: 0.3rem; }
+    .toc-list a { font-size: 0.82rem; color: #94a3b8; text-decoration: none; display: block; padding: 0.2rem 0; }
+    .toc-list a:hover { color: #f8fafc; }
+    .main { flex: 1; padding: 2.5rem 3rem; max-width: 860px; }
+    h1 { font-size: 1.7rem; font-weight: 800; margin-bottom: 0.35rem; }
+    .lead { color: var(--c-text-muted); font-size: 1rem; margin-bottom: 2rem; }
+    h2 { font-size: 1.2rem; font-weight: 700; margin: 2.5rem 0 0.75rem; padding-bottom: 0.35rem; border-bottom: 2px solid var(--c-border); }
+    h3 { font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+    h4 { font-size: 0.9rem; font-weight: 600; margin: 1rem 0 0.4rem; color: var(--c-text-muted); }
+    p { margin: 0.65rem 0; }
+    ul, ol { padding-left: 1.5rem; margin: 0.5rem 0; }
+    li { margin: 0.3rem 0; }
+    code { font-family: var(--font-mono); font-size: 0.875em; background: #e5e7eb; padding: 0.15em 0.4em; border-radius: 3px; }
+    pre { background: #1e1e2e; color: #cdd6f4; padding: 1rem 1.25rem; border-radius: 6px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.84rem; margin: 1rem 0; }
+    pre code { background: none; padding: 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1rem 0; }
+    th, td { border: 1px solid var(--c-border); padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
+    th { background: var(--c-bg-alt); font-weight: 600; }
+    a { color: var(--c-accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .badge { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 9999px; text-transform: uppercase; }
+    .badge-ok      { background: var(--c-ok-bg);       color: var(--c-ok); }
+    .badge-blocking{ background: var(--c-blocking-bg); color: var(--c-blocking); }
+    .badge-warning { background: var(--c-warning-bg);  color: var(--c-warning); }
+    .badge-pending { background: #f3f4f6;              color: var(--c-text-muted); }
+    .state-machine { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin: 1rem 0; font-size: 0.82rem; }
+    .state { background: var(--c-bg-alt); border: 1px solid var(--c-border); border-radius: 4px; padding: 0.3rem 0.65rem; font-family: var(--font-mono); }
+    .arrow { color: var(--c-text-muted); }
+    .prompt-box { background: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; padding: 1rem 1.25rem; font-family: var(--font-mono); font-size: 0.85rem; margin: 1rem 0; color: #14532d; white-space: pre-wrap; }
+    hr { border: none; border-top: 1px solid var(--c-border); margin: 2rem 0; }
+    @media (max-width: 768px) {
+      .page-wrap { flex-direction: column; }
+      .sidebar { position: static; width: 100%; height: auto; }
+      .main { padding: 1.25rem; }
+    }
+    @media print {
+      .sidebar { display: none; }
+      .main { max-width: none; padding: 0; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="sidebar" aria-label="Documentation navigation">
+    <div class="sidebar-brand">
+      SDD Onboarding Kit
+      <span>for Claude Code</span>
+    </div>
+
+    <div class="toc-section">
+      <p class="toc-label">Overview</p>
+      <ul class="toc-list">
+        <li><a href="#what-is-sdd">1. What is SDD</a></li>
+        <li><a href="#what-this-kit-is">2. What this kit is</a></li>
+      </ul>
+    </div>
+
+    <div class="toc-section">
+      <p class="toc-label">Getting started</p>
+      <ul class="toc-list">
+        <li><a href="#installation">3. Installation</a></li>
+        <li><a href="#daily-workflow">4. Daily workflow</a></li>
+        <li><a href="#task-lifecycle">5. Task lifecycle</a></li>
+        <li><a href="#spec-format">6. Spec format</a></li>
+      </ul>
+    </div>
+
+    <div class="toc-section">
+      <p class="toc-label">Reference</p>
+      <ul class="toc-list">
+        <li><a href="#subagents">7. Subagents</a></li>
+        <li><a href="#hooks">8. Hooks</a></li>
+        <li><a href="#mcp-integrations">9. MCP integrations</a></li>
+        <li><a href="#configuration-reference">10. Configuration</a></li>
+        <li><a href="#kit-file-reference">11. File reference</a></li>
+        <li><a href="#ready-to-use-prompts">12. Prompts</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main">
+    <h1>SDD Onboarding Kit — Documentation</h1>
+    <p class="lead">Complete reference for installation, daily workflow, subagents, hooks, and MCP integrations.</p>
+
+    <hr>
+
+    <section id="what-is-sdd">
+      <h2>1. What is SDD</h2>
+      <p><strong>Spec Driven Development (SDD)</strong> is a workflow where Claude Code writes and gets approval for a specification before touching any production code. The spec covers:</p>
+      <ul>
+        <li><strong>Requirements</strong> — observable behavior the feature must satisfy.</li>
+        <li><strong>Design</strong> — which files to change, how, and why.</li>
+        <li><strong>Tasks</strong> — an ordered, checkable implementation checklist.</li>
+      </ul>
+      <p>The developer reviews the spec and explicitly approves it. Claude then implements strictly against the approved spec. An automated reviewer validates that the result matches the spec, requirements are traceable, and tests pass.</p>
+      <p>The goal is to eliminate ambiguity, prevent scope creep, and give the developer a meaningful decision point before code is written.</p>
+    </section>
+
+    <hr>
+
+    <section id="what-this-kit-is">
+      <h2>2. What this kit is</h2>
+      <p>This kit is a <strong>reusable installer</strong>. It produces a project-specific SDD harness, not a global configuration.</p>
+      <p>When you run the onboarding prompt, Claude Code reads the kit, inspects your repository, asks you project-specific questions, and generates:</p>
+      <ul>
+        <li>A <code>CLAUDE.md</code> tailored to your project.</li>
+        <li>Four Claude subagents (leader, spec-author, implementer, reviewer).</li>
+        <li>The full SDD workflow skill.</li>
+        <li>Local task and spec storage.</li>
+        <li>Optional hooks and MCP integrations.</li>
+        <li>Validation scripts.</li>
+      </ul>
+      <p>The kit itself stays inert. Only the generated harness in your project becomes active.</p>
+    </section>
+
+    <hr>
+
+    <section id="installation">
+      <h2>3. Installation</h2>
+
+      <h3>Prerequisites</h3>
+      <ul>
+        <li>Claude Code (CLI, desktop app, or IDE extension).</li>
+        <li>A git repository where you want SDD installed.</li>
+      </ul>
+
+      <h3>Step 1 — Add the kit to your project</h3>
+      <p>Copy or clone this kit folder into your project root:</p>
+      <pre><code>my-project/
+└── sdd-onboarding-kit/</code></pre>
+
+      <h3>Step 2 — Open Claude Code in your project</h3>
+      <p>Open Claude Code with <code>my-project/</code> as the working directory.</p>
+
+      <h3>Step 3 — Run the onboarding prompt</h3>
+      <div class="prompt-box">Read `sdd-onboarding-kit/instructions.md` and configure this repository to use Spec Driven Development. Ask me all necessary questions before making project-specific decisions.</div>
+
+      <h3>Step 4 — Answer the configuration questions</h3>
+      <p>Claude Code will inspect your repository and ask about scope, approval policy, requirements format, task storage, state machine, test commands, git policy, hooks, MCPs, and protected files.</p>
+
+      <h3>Step 5 — Review and confirm</h3>
+      <p>Claude generates a summary of files created, hooks enabled, and any open TODOs. Review the generated <code>CLAUDE.md</code> and <code>.claude/</code> before starting work.</p>
+
+      <h3>What gets created</h3>
+      <pre><code>&lt;project&gt;/
+├── CLAUDE.md
+├── .claude/
+│   ├── agents/
+│   │   ├── leader.md
+│   │   ├── spec-author.md
+│   │   ├── implementer.md
+│   │   └── reviewer.md
+│   ├── skills/sdd-workflow/
+│   │   ├── SKILL.md
+│   │   └── … (8 supporting files)
+│   ├── hooks/README.md
+│   └── settings.json
+├── specs/
+├── tasks.json
+├── history.html
+└── scripts/
+    ├── init.sh
+    ├── run-tests.sh
+    ├── run-lint.sh
+    └── validate-sdd-structure.sh</code></pre>
+    </section>
+
+    <hr>
+
+    <section id="daily-workflow">
+      <h2>4. Daily workflow</h2>
+
+      <h3>Start a new feature</h3>
+      <div class="prompt-box">Create a new SDD task for: &lt;description&gt;. First generate requirements/design/tasks and do not implement anything until I approve the spec.</div>
+      <p>Claude will create a task in <code>tasks.json</code>, create <code>specs/&lt;slug&gt;/requirements.html</code>, <code>design.html</code>, and <code>tasks.html</code>, then stop for your review.</p>
+
+      <h3>Review and approve a spec</h3>
+      <p>Open the HTML spec files under <code>specs/&lt;feature-slug&gt;/</code> in a browser. When satisfied:</p>
+      <div class="prompt-box">I have reviewed the spec for `&lt;feature-slug&gt;` and I approve it. Change the status to `human_approved` and prepare the implementation following `tasks.html`.</div>
+
+      <h3>Implement an approved spec</h3>
+      <div class="prompt-box">Implement feature `&lt;feature-slug&gt;` following the approved spec strictly. Run tests and leave traceability of what you changed.</div>
+
+      <h3>Review an implementation</h3>
+      <div class="prompt-box">Use the reviewer to validate the implementation of `&lt;feature-slug&gt;` against requirements.html, design.html and tasks.html. Run tests and tell me if it can be marked as done.</div>
+    </section>
+
+    <hr>
+
+    <section id="task-lifecycle">
+      <h2>5. Task lifecycle</h2>
+      <p>Every SDD task moves through a defined state machine:</p>
+
+      <div class="state-machine">
+        <span class="state">pending</span><span class="arrow">→</span>
+        <span class="state">spec_draft</span><span class="arrow">→</span>
+        <span class="state">spec_ready</span><span class="arrow">→</span>
+        <span class="state">human_approved</span><span class="arrow">→</span>
+        <span class="state">in_progress</span><span class="arrow">→</span>
+        <span class="state">review</span><span class="arrow">→</span>
+        <span class="state">done</span>
+      </div>
+
+      <p>Optional states: <code>blocked</code>, <code>rejected</code>.</p>
+
+      <table>
+        <thead>
+          <tr><th>State</th><th>Meaning</th><th>Who can advance it</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>pending</code></td>        <td>Task exists, no spec yet</td>              <td>Claude (starts drafting)</td></tr>
+          <tr><td><code>spec_draft</code></td>     <td>Spec is being written or revised</td>       <td>Claude</td></tr>
+          <tr><td><code>spec_ready</code></td>     <td>Spec complete, awaiting approval</td>       <td>Claude (sets after finishing spec)</td></tr>
+          <tr><td><code>human_approved</code></td> <td>Developer approved the spec</td>            <td>Developer only</td></tr>
+          <tr><td><code>in_progress</code></td>    <td>Implementation underway</td>                <td>Claude</td></tr>
+          <tr><td><code>review</code></td>         <td>Implementation complete, under validation</td><td>Claude</td></tr>
+          <tr><td><code>done</code></td>           <td>Complete</td>                               <td>Reviewer (after passing tests)</td></tr>
+          <tr><td><code>blocked</code></td>        <td>Waiting on external input</td>              <td>Either party</td></tr>
+          <tr><td><code>rejected</code></td>       <td>Review found blocking defects</td>          <td>Reviewer</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr>
+
+    <section id="spec-format">
+      <h2>6. Spec format</h2>
+      <p>Each feature gets a directory under <code>specs/</code>:</p>
+      <pre><code>specs/&lt;feature-slug&gt;/
+├── requirements.html
+├── design.html
+├── tasks.html
+├── assumptions.html       (when derived from a functional document)
+├── open-questions.html    (when derived from a functional document)
+├── acceptance-tests.html  (when derived from a functional document)
+├── review.html            (written by the reviewer)
+├── spec.css               (shared stylesheet)
+└── spec.js                (collapsible sections, TOC, tabs)</code></pre>
+
+      <h3>requirements.html</h3>
+      <p>Defines observable behavior. Supported formats: EARS, user stories, Given/When/Then, numbered requirements.</p>
+
+      <h3>design.html</h3>
+      <p>Translates requirements into a technical plan. Contains files to change, interfaces, data model changes, test design, risks, rollback plan, and an inline SVG data-flow diagram.</p>
+
+      <h3>tasks.html</h3>
+      <p>An ordered milestone view with status badges. Each task references requirements. Test and validation tasks are included.</p>
+
+      <h3>review.html</h3>
+      <p>Written by the reviewer. Contains a color-coded traceability table (blocking / warning / ok), commands run, findings, and a final decision.</p>
+    </section>
+
+    <hr>
+
+    <section id="subagents">
+      <h2>7. Subagents</h2>
+      <p>The harness installs four Claude subagents under <code>.claude/agents/</code>:</p>
+
+      <h3>Leader</h3>
+      <p>The orchestrator. Reads task state, routes work to the correct specialist, never writes production code, stops for human approval at <code>spec_ready</code>.</p>
+
+      <h3>Spec Author</h3>
+      <p>Writes and revises specs. Produces <code>requirements.html</code>, <code>design.html</code>, <code>tasks.html</code>. When working from a functional document also produces <code>assumptions.html</code>, <code>open-questions.html</code>, and <code>acceptance-tests.html</code>.</p>
+
+      <h3>Implementer</h3>
+      <p>The only agent allowed to write production code. Implements in task order, adds tests, runs validation, marks tasks complete. Does not deviate from the spec without asking.</p>
+
+      <h3>Reviewer</h3>
+      <p>Validates that the implementation satisfies the spec. Checks requirement coverage, test coverage, design adherence, conventions. Writes <code>review.html</code> with one of: <span class="badge badge-ok">approved</span>, <span class="badge badge-blocking">rejected</span>, <span class="badge badge-warning">needs_changes</span>.</p>
+    </section>
+
+    <hr>
+
+    <section id="hooks">
+      <h2>8. Hooks</h2>
+      <p>Hooks are optional shell scripts that Claude Code executes automatically. <strong>Hooks are never enabled without your explicit approval.</strong></p>
+
+      <table>
+        <thead>
+          <tr><th>Hook</th><th>Event</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Block implementation before approval</td><td><code>PreToolUse</code> on Edit/Write</td><td>Prevents code edits when task is <code>pending</code>, <code>spec_draft</code>, or <code>spec_ready</code></td></tr>
+          <tr><td>Run tests after edits</td><td><code>PostToolUse</code> on Edit/Write</td><td>Automatically runs the test suite after any source edit</td></tr>
+          <tr><td>Validate spec before status change</td><td><code>PreToolUse</code></td><td>Ensures <code>requirements.html</code>, <code>design.html</code>, and <code>tasks.html</code> all exist before moving to <code>spec_ready</code></td></tr>
+          <tr><td>Block destructive commands</td><td><code>PreToolUse</code> on Bash</td><td>Intercepts <code>rm -rf</code>, <code>git reset --hard</code>, <code>drop database</code>, and similar</td></tr>
+          <tr><td>Notify for human approval</td><td><code>Stop</code> / <code>Notification</code></td><td>Alerts you when Claude stops waiting for spec approval</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr>
+
+    <section id="mcp-integrations">
+      <h2>9. MCP integrations</h2>
+      <p>MCPs let Claude Code connect to external systems. The harness works fully without MCPs. <strong>MCPs are never configured without your explicit approval.</strong></p>
+
+      <table>
+        <thead>
+          <tr><th>MCP</th><th>Use case</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>GitHub</td><td>Read/write issues, pull requests, repository metadata</td></tr>
+          <tr><td>Linear</td><td>Project and task management</td></tr>
+          <tr><td>Jira</td><td>Enterprise task management</td></tr>
+          <tr><td>Notion / Google Drive</td><td>Documentation and knowledge bases</td></tr>
+          <tr><td>Memory</td><td>Persistent architecture decisions and conventions</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr>
+
+    <section id="configuration-reference">
+      <h2>10. Configuration reference</h2>
+      <p>The generated <code>CLAUDE.md</code> is the central configuration file. Key sections:</p>
+
+      <table>
+        <thead>
+          <tr><th>Section</th><th>What it controls</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Build/test/lint commands</td><td>What Claude runs for validation</td></tr>
+          <tr><td>SDD workflow policy</td><td>Which tasks require SDD</td></tr>
+          <tr><td>Human approval policy</td><td>Whether approval is mandatory and who grants it</td></tr>
+          <tr><td>State machine</td><td>Allowed statuses and transitions</td></tr>
+          <tr><td>Spec and task storage</td><td>Where specs and tasks live</td></tr>
+          <tr><td>Protected files</td><td>Files Claude must not modify without approval</td></tr>
+        </tbody>
+      </table>
+
+      <h3><code>tasks.json</code> schema</h3>
+      <pre><code>{
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "slug": "feature-slug",
+      "title": "Short title",
+      "description": "What the feature does",
+      "sdd": true,
+      "status": "pending",
+      "spec": "specs/feature-slug/",
+      "approval": null
+    }
+  ]
+}</code></pre>
+    </section>
+
+    <hr>
+
+    <section id="kit-file-reference">
+      <h2>11. Kit file reference</h2>
+      <table>
+        <thead>
+          <tr><th>Path</th><th>Purpose</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>instructions.md</code></td>           <td>Step-by-step procedure Claude follows to install the harness</td></tr>
+          <tr><td><code>questions.md</code></td>              <td>All project-specific decisions Claude must ask</td></tr>
+          <tr><td><code>output-project-structure.md</code></td><td>Expected structure of the target project after onboarding</td></tr>
+          <tr><td><code>manifest.md</code></td>               <td>Complete list of all files in the kit</td></tr>
+          <tr><td><code>agents/</code></td>                   <td>Leader, spec-author, implementer, reviewer subagent templates</td></tr>
+          <tr><td><code>skills/sdd-workflow/</code></td>      <td>Full SDD workflow skill</td></tr>
+          <tr><td><code>hooks/</code></td>                    <td>Hook policies, settings snippets, example scripts</td></tr>
+          <tr><td><code>mcps/</code></td>                     <td>MCP selection policy and integration notes</td></tr>
+          <tr><td><code>templates/specs/</code></td>          <td>HTML spec templates (requirements, design, tasks, review, …)</td></tr>
+          <tr><td><code>templates/functional/</code></td>     <td>Functional brief HTML template</td></tr>
+          <tr><td><code>scripts/validate-sdd-structure.sh</code></td><td>Validates that all required harness files are present</td></tr>
+          <tr><td><code>reference/</code></td>                <td>SDD theory, harness engineering, Claude Code primitives</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr>
+
+    <section id="ready-to-use-prompts">
+      <h2>12. Ready-to-use prompts</h2>
+
+      <h3>Install the harness</h3>
+      <div class="prompt-box">Read `sdd-onboarding-kit/instructions.md` and configure this repository to use Spec Driven Development. Ask me all necessary questions before making project-specific decisions.</div>
+
+      <h3>Start the next pending task</h3>
+      <div class="prompt-box">Use the SDD workflow. Review `tasks.json`, select the next pending task marked with `sdd: true`, generate the spec and stop for human approval.</div>
+
+      <h3>Create a new task</h3>
+      <div class="prompt-box">Create a new SDD task for: &lt;description&gt;. First generate requirements/design/tasks and do not implement anything until I approve the spec.</div>
+
+      <h3>Approve a spec</h3>
+      <div class="prompt-box">I have reviewed the spec for `&lt;feature-slug&gt;` and I approve it. Change the status to `human_approved` and prepare the implementation following `tasks.html`.</div>
+
+      <h3>Implement an approved spec</h3>
+      <div class="prompt-box">Implement feature `&lt;feature-slug&gt;` following the approved spec strictly. Run tests and leave traceability of what you changed.</div>
+
+      <h3>Review an implementation</h3>
+      <div class="prompt-box">Use the reviewer to validate the implementation of `&lt;feature-slug&gt;` against requirements.html, design.html and tasks.html. Run tests and tell me if it can be marked as done.</div>
+
+      <h3>Convert a functional document to a spec</h3>
+      <div class="prompt-box">Here is the functional document for &lt;feature&gt;. Convert it into an SDD spec. Do not implement anything until I approve.</div>
+
+      <h3>Check harness structure</h3>
+      <div class="prompt-box">Run `scripts/validate-sdd-structure.sh` and report any missing files or unresolved placeholders.</div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>

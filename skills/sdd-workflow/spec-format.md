@@ -4,26 +4,42 @@ Each SDD feature gets a directory:
 
 ```text
 specs/<feature-slug>/
-├── requirements.md
-├── design.md
-├── tasks.md
-└── review.md
+├── requirements.html
+├── design.html
+├── tasks.html
+├── review.html
+├── spec.css
+└── spec.js
 ```
 
-## `requirements.md`
+Spec files are self-contained HTML documents. Copy `spec.css` and `spec.js` from
+`templates/specs/` into the feature folder when creating a new spec.
+All HTML spec files link to the shared stylesheet with:
+
+```html
+<link rel="stylesheet" href="spec.css">
+```
+
+and load interactivity at the bottom of `<body>` with:
+
+```html
+<script src="spec.js"></script>
+```
+
+## `requirements.html`
 
 Purpose: define observable behavior.
 
 Recommended sections:
 
-1. Metadata.
+1. Metadata (header table: Task ID, Feature slug, Status, Author, Human approval).
 2. Summary.
-3. Functional requirements.
-4. Non-functional requirements.
-5. Edge cases.
-6. Error states.
-7. Acceptance criteria.
-8. Requirement-to-test mapping.
+3. Functional requirements (with `REQ-NNN` IDs).
+4. Non-functional requirements (with `NFR-NNN` IDs).
+5. Edge cases (with `EDGE-NNN` IDs).
+6. Error states (with `ERR-NNN` IDs).
+7. Acceptance criteria (with `AC-NNN` IDs).
+8. Requirement-to-test mapping table.
 
 ## Requirements formats
 
@@ -57,25 +73,26 @@ Then <expected outcome>
 
 Use this when behavior is scenario-driven.
 
-## `design.md`
+## `design.html`
 
 Purpose: translate behavior into a technical plan.
 
 Recommended sections:
 
-1. Metadata.
+1. Metadata (header table).
 2. Technical summary.
-3. Files to change.
-4. Files not to change.
-5. Interfaces and contracts.
-6. Data model changes.
-7. Test design.
-8. Risks and trade-offs.
-9. Rollback plan.
+3. Data flow (inline SVG diagram — replace the placeholder).
+4. Files to change (table).
+5. Files not to change (table).
+6. Interfaces and contracts (use tabs for multiple languages/formats).
+7. Data model changes.
+8. Test design.
+9. Risks and trade-offs.
+10. Rollback plan.
 
-## `tasks.md`
+## `tasks.html`
 
-Purpose: give the implementer a small, ordered checklist.
+Purpose: give the implementer a small, ordered checklist with a milestone view.
 
 Task rules:
 
@@ -85,24 +102,18 @@ Task rules:
 - Include test tasks.
 - Include validation tasks.
 
-Example:
+The ordered `<ol class="task-timeline">` list provides a visual milestone view.
+Each `<li class="task-item">` can carry a status class: `done`, `in-progress`, or `blocked`.
 
-```md
-- [ ] T1: Add tests for `REQ-001` and `REQ-002`.
-- [ ] T2: Add CLI parser support for `--limit`.
-- [ ] T3: Implement limit validation.
-- [ ] T4: Run `scripts/run-tests.sh`.
-```
-
-## `review.md`
+## `review.html`
 
 Purpose: record whether the implementation satisfies the spec.
 
 Recommended sections:
 
-1. Metadata.
-2. Traceability table.
+1. Metadata (header table).
+2. Traceability table — use `class="blocking"`, `"warning"`, or `"ok"` on `<td>` cells.
 3. Commands run.
-4. Findings.
-5. Decision.
-6. Follow-ups.
+4. Findings (collapsible sections for blocking and non-blocking).
+5. Decision (approved / rejected / needs_changes).
+6. Notes.

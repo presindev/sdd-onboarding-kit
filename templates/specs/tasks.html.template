@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks — {{FEATURE_TITLE}}</title>
+  <link rel="stylesheet" href="spec.css">
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="sidebar-title">Contents</p>
+    <div id="toc-list"></div>
+  </nav>
+
+  <div class="main-content">
+    <header class="spec-header">
+      <h1>Implementation tasks — {{FEATURE_TITLE}}</h1>
+      <table class="meta-table">
+        <tbody>
+          <tr><th>Task ID</th>      <td><code>{{TASK_ID}}</code></td></tr>
+          <tr><th>Feature slug</th> <td><code>{{FEATURE_SLUG}}</code></td></tr>
+          <tr><th>Status</th>       <td><span class="badge badge-draft">spec_draft</span></td></tr>
+        </tbody>
+      </table>
+    </header>
+
+    <main>
+
+      <section id="tasks">
+        <h2>Tasks</h2>
+        <p>Implement tasks in the order listed. Each task should be small and independently verifiable.
+           Mark tasks complete in <code>tasks.json</code> — this file is the human-readable view.</p>
+
+        <ol class="task-timeline">
+          <li class="task-item">
+            <div class="task-item-header">
+              <span class="req-id t">T1</span>
+              <strong>TODO: Add or update tests for requirement <code>REQ-001</code>.</strong>
+            </div>
+            <div class="task-item-body">Write or update automated tests before implementing to confirm the requirement is currently failing.</div>
+          </li>
+          <li class="task-item">
+            <div class="task-item-header">
+              <span class="req-id t">T2</span>
+              <strong>TODO: Implement the smallest code change needed for <code>REQ-001</code>.</strong>
+            </div>
+            <div class="task-item-body">Keep changes focused. Do not expand scope beyond the approved spec.</div>
+          </li>
+          <li class="task-item">
+            <div class="task-item-header">
+              <span class="req-id t">T3</span>
+              <strong>TODO: Add edge-case handling.</strong>
+            </div>
+            <div class="task-item-body">Cover the edge cases identified in <code>requirements.html</code>.</div>
+          </li>
+          <li class="task-item">
+            <div class="task-item-header">
+              <span class="req-id t">T4</span>
+              <strong>TODO: Run validation commands.</strong>
+            </div>
+            <div class="task-item-body">Run tests, lint, and typecheck as configured in <code>CLAUDE.md</code>.</div>
+          </li>
+          <li class="task-item">
+            <div class="task-item-header">
+              <span class="req-id t">T5</span>
+              <strong>TODO: Update documentation if needed.</strong>
+            </div>
+            <div class="task-item-body">Update any user-facing docs or changelog entries that cover this change.</div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="validation-checklist">
+        <h2>Validation checklist</h2>
+        <p>The reviewer verifies each item below before marking the task <code>done</code>.</p>
+        <ul class="checklist">
+          <li><input type="checkbox" disabled> Requirements are covered by tests.</li>
+          <li><input type="checkbox" disabled> Tests pass.</li>
+          <li><input type="checkbox" disabled> Lint / typecheck pass if configured.</li>
+          <li><input type="checkbox" disabled> No protected files were modified without approval.</li>
+          <li><input type="checkbox" disabled> Reviewer approved traceability.</li>
+        </ul>
+      </section>
+
+    </main>
+  </div><!-- /.main-content -->
+</div><!-- /.page-wrap -->
+<script src="spec.js"></script>
+</body>
+</html>

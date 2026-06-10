@@ -23,10 +23,10 @@ En este kit, una spec de feature se divide por defecto en cuatro documentos:
 
 ```text
 specs/<feature-slug>/
-├── requirements.md
-├── design.md
-├── tasks.md
-└── review.md
+├── requirements.html
+├── design.html
+├── tasks.html
+└── review.html
 ```
 
 ## La spec como fuente de verdad

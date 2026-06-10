@@ -57,11 +57,16 @@ Specs are stored in:
 
 ```text
 specs/<feature-slug>/
-├── requirements.md
-├── design.md
-├── tasks.md
-└── review.md
+├── requirements.html
+├── design.html
+├── tasks.html
+├── review.html
+├── spec.css
+└── spec.js
 ```
+
+Spec files are self-contained HTML. Open any of them in a browser to read the spec.
+Structured state (task status, approval) lives in `tasks.json`, not in the HTML files.
 
 ## Required SDD workflow
 
@@ -74,7 +79,7 @@ For each SDD task:
 5. Run tests and validation.
 6. Run reviewer.
 7. Mark done only if requirements, implementation and tests are aligned.
-8. Append a summary to `history.md`.
+8. Append a summary to `history.html`.
 
 ## SDD skill
 
@@ -139,11 +144,13 @@ specs/<feature-slug>/
 
 Required files:
 
-- requirements.md
-- design.md
-- tasks.md
-- assumptions.md
-- open-questions.md
-- acceptance-tests.md
+- requirements.html
+- design.html
+- tasks.html
+- assumptions.html
+- open-questions.html
+- acceptance-tests.html
+- spec.css (copy from kit's templates/specs/spec.css)
+- spec.js (copy from kit's templates/specs/spec.js)
 
 Claude Code must stop after generating the spec and wait for human approval before implementation.

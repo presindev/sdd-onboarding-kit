@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Requirements — {{FEATURE_TITLE}}</title>
+  <link rel="stylesheet" href="spec.css">
+</head>
+<body>
+<div class="page-wrap">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <p class="sidebar-title">Contents</p>
+    <div id="toc-list"></div>
+  </nav>
+
+  <div class="main-content">
+    <header class="spec-header">
+      <h1>Requirements — {{FEATURE_TITLE}}</h1>
+      <table class="meta-table">
+        <tbody>
+          <tr><th>Task ID</th>       <td><code>{{TASK_ID}}</code></td></tr>
+          <tr><th>Feature slug</th>  <td><code>{{FEATURE_SLUG}}</code></td></tr>
+          <tr><th>Status</th>        <td><span class="badge badge-draft">spec_draft</span></td></tr>
+          <tr><th>Author</th>        <td>spec-author</td></tr>
+          <tr><th>Human approval</th><td><span class="badge badge-pending">pending</span></td></tr>
+        </tbody>
+      </table>
+    </header>
+
+    <main>
+
+      <section id="summary">
+        <h2>Summary</h2>
+        <p>{{FEATURE_SUMMARY}}</p>
+      </section>
+
+      <section id="functional-requirements">
+        <h2>Functional requirements</h2>
+        <p>Use the configured requirements format.</p>
+
+        <h3 id="ears-example">EARS example</h3>
+        <div class="req-row">
+          <span class="req-id">REQ-001</span>
+          <span>When <code>&lt;trigger&gt;</code>, the system shall <code>&lt;expected response&gt;</code>.</span>
+        </div>
+        <div class="req-row">
+          <span class="req-id">REQ-002</span>
+          <span>If <code>&lt;condition&gt;</code>, the system shall <code>&lt;expected response&gt;</code>.</span>
+        </div>
+        <div class="req-row">
+          <span class="req-id">REQ-003</span>
+          <span>While <code>&lt;state&gt;</code>, the system shall <code>&lt;expected response&gt;</code>.</span>
+        </div>
+      </section>
+
+      <section id="non-functional-requirements">
+        <h2>Non-functional requirements</h2>
+        <div class="req-row nfr">
+          <span class="req-id nfr">NFR-001</span>
+          <span>TODO.</span>
+        </div>
+      </section>
+
+      <section id="edge-cases">
+        <h2>Edge cases</h2>
+        <div class="req-row edge">
+          <span class="req-id edge">EDGE-001</span>
+          <span>TODO.</span>
+        </div>
+      </section>
+
+      <section id="error-states">
+        <h2>Error states</h2>
+        <div class="req-row err">
+          <span class="req-id err">ERR-001</span>
+          <span>TODO.</span>
+        </div>
+      </section>
+
+      <section id="acceptance-criteria">
+        <h2>Acceptance criteria</h2>
+        <div class="req-row ac">
+          <span class="req-id ac">AC-001</span>
+          <span>TODO.</span>
+        </div>
+      </section>
+
+      <section id="requirement-to-test-mapping">
+        <h2>Requirement-to-test mapping</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Requirement</th>
+              <th>Expected test(s)</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="req-id">REQ-001</span></td>
+              <td>TODO</td>
+              <td>TODO</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+  </div><!-- /.main-content -->
+</div><!-- /.page-wrap -->
+<script src="spec.js"></script>
+</body>
+</html>
