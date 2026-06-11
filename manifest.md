@@ -34,6 +34,7 @@
 - `questions.md`
 - `reference/claude-code-primitives.md`
 - `reference/context-economy.md`
+- `reference/dependency-freshness-policy.md`
 - `reference/harness-engineering.md`
 - `reference/sdd-theory.md`
 - `scripts/init.sh`

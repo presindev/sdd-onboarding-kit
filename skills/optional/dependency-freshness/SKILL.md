@@ -11,9 +11,22 @@ Prevent changes based on stale training data: before touching external
 dependencies, SDKs, APIs, or framework configuration, verify against
 current documentation and record the evidence.
 
-> Roadmap note (kit-internal): a later kit version adds the full freshness
-> policy (`reference/dependency-freshness-policy.md`) and spec/review
-> integration; this skill is forward-compatible with it.
+> Kit source note: the full policy (risk tiers, evidence format, reviewer
+> enforcement) lives in `reference/dependency-freshness-policy.md`. When
+> installing this pack, adapt this file to the strictness recorded in
+> `decisions/answers.md` (onboarding question §16).
+
+## Strictness levels
+
+The project configures one of these at onboarding (default: the first):
+
+1. **Required for high-risk categories, advisory otherwise** — missing
+   evidence blocks completion for auth, payments, database migrations,
+   cloud infrastructure, framework upgrades, security-sensitive code.
+2. **Required for all external dependency/API changes.**
+3. **Advisory only** — recommend, never block.
+
+Purely internal changes never require freshness evidence under any level.
 
 ## When to use
 
@@ -48,9 +61,12 @@ current documentation and record the evidence.
 
 ## Output artifact
 
-A freshness note in the spec (design section) or review: systems involved,
-docs checked, version constraints, deprecations avoided, compatibility
-notes.
+Freshness evidence in the `External dependencies and freshness` section of
+the feature's `design.html` (the spec template carries it), or in
+`review.html` when verification happened during implementation: systems
+involved, docs checked (source and date), version constraints, deprecations
+avoided, compatibility notes. For changes with no external surface the
+section states `None`.
 
 ## Safety constraints
 

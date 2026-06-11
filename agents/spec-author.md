@@ -54,6 +54,14 @@ specs/<feature-slug>/review.html
 - Include test strategy.
 - Include risks and trade-offs.
 - If the design affects architecture, explicitly call it out.
+- If the change touches external dependencies, SDKs, APIs, framework
+  configuration, or security-sensitive integrations, fill the design's
+  `External dependencies and freshness` section with current-docs evidence:
+  systems involved, docs checked (source and date), version constraints,
+  deprecated APIs avoided, compatibility notes. Verification is required,
+  not optional, for high-risk categories (auth, payments, database
+  migrations, cloud infrastructure, framework upgrades, security-sensitive
+  code). For purely internal changes, state `None` — do not add overhead.
 
 ## Task rules
 

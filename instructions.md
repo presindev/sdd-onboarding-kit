@@ -62,7 +62,8 @@ You must not assume:
 - what commands run tests, lint, typecheck or formatting;
 - whether to create branches, commits or pull requests;
 - whether tasks may be skipped as too small for SDD;
-- which optional skill packs to install.
+- which optional skill packs to install;
+- how strictly dependency/API freshness verification should be enforced.
 
 If the developer wants a default recommendation, propose the safe default profile in this file.
 
@@ -83,6 +84,7 @@ git_branch_policy: ask_before_creating_branch
 git_commit_policy: ask_before_committing
 tests_required_before_done: true
 reviewer_required_before_done: true
+dependency_freshness_policy: required_for_high_risk_categories
 ```
 
 ## Phase 3 — Generate the project SDD harness

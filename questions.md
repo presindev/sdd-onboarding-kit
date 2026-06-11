@@ -216,3 +216,23 @@ command.
    state, manual checklist, screenshot comparison)?
 7. How should API/CLI behavior be verified (example requests, expected
    responses, smoke commands)?
+
+## 16. Dependency and API freshness
+
+Should changes that touch external dependencies, SDKs, APIs, or framework
+configuration require explicit verification against current documentation,
+with the evidence recorded in the spec or review?
+
+1. Yes for high-risk categories, advisory otherwise (default). High-risk:
+   auth, payments, database migrations, cloud infrastructure, framework
+   upgrades, security-sensitive code.
+2. Yes for all external dependency/API changes.
+3. Advisory only: recommend verification but never block on it.
+
+Notes:
+
+- Purely internal changes never require freshness evidence.
+- This policy applies even if the `dependency-freshness` pack (§14) is not
+  installed: the design template, spec-author rules, and reviewer checklist
+  enforce it. The pack adds the step-by-step procedure.
+- Record the chosen strictness in `decisions/answers.md`.
