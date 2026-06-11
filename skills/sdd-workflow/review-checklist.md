@@ -51,6 +51,7 @@ For every functional requirement:
 - [ ] Destructive operations were not added without explicit design approval.
 - [ ] Security-sensitive changes were reviewed.
 - [ ] External inputs are validated.
+- [ ] External dependency/SDK/API/framework changes carry freshness evidence (docs checked with source and date, version constraints, deprecated APIs avoided) in the design's `External dependencies and freshness` section or in the review. Purely internal changes state `None`.
 
 ## 7. Decision
 
@@ -61,4 +62,4 @@ Choose exactly one:
 - `spec_revision_required`
 - `blocked`
 
-A review cannot be `approved` if a blocking requirement has no implementation or test evidence.
+A review cannot be `approved` if a blocking requirement has no implementation or test evidence, or if a high-risk external change (auth, payments, database migrations, cloud infrastructure, framework upgrades, security-sensitive code) lacks the required freshness evidence.

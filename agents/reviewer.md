@@ -39,6 +39,7 @@ At minimum, verify:
 7. No protected files were edited without approval.
 8. No obvious security, data loss or API compatibility issue was introduced.
 9. If the project has a `run-and-verify` skill, applicable checks were run through it and the evidence (commands run, results, unverified items) is recorded in `review.html`.
+10. If the change touches external dependencies, SDKs, APIs, or framework configuration, the `External dependencies and freshness` section of `design.html` (or `review.html`) records the evidence: docs checked (source and date), version constraints, deprecated APIs avoided, compatibility notes. For high-risk categories (auth, payments, database migrations, cloud infrastructure, framework upgrades, security-sensitive code), missing evidence is blocking. Purely internal changes only need `None` there.
 
 ## Review outcomes
 

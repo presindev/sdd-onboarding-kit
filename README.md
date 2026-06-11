@@ -74,6 +74,8 @@ Beyond the core `sdd-workflow` skill, the kit ships nine optional skill packs un
 
 The `run-and-verify` pack is special: onboarding **generates a project-specific run/verify recipe** — the project's real dev-server/test/lint/typecheck/build commands, required services, environment variable names (never secret values), and how to verify UI or API behavior. Unknown commands are recorded as TODOs, never invented, and the reviewer validates implementations through this recipe. See the `Run and verify skill` section in `DOCUMENTATION.html`.
 
+The kit also includes **freshness checks for external APIs and dependencies**: changes that touch external dependencies, SDKs, APIs, or framework configuration are verified against current documentation, with the evidence recorded in the spec, and the reviewer can block high-risk changes (auth, payments, migrations, cloud infrastructure, framework upgrades, security-sensitive code) that lack it. Purely internal changes are unaffected. See [`reference/dependency-freshness-policy.md`](reference/dependency-freshness-policy.md) and the `Dependency and API freshness` section in `DOCUMENTATION.html`.
+
 ## Central principle
 
 The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.
