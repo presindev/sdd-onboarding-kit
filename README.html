@@ -159,6 +159,13 @@
 
     <hr>
 
+    <section id="failure-learning">
+      <h2>Failure learning</h2>
+      <p>The optional <code>failure-learning</code> pack turns real mistakes (wrong assumptions, convention violations, repeated errors) into reusable lessons. Claude drafts a structured entry and <strong>proposes</strong> it; the developer chooses where it lives — project decision log (preferred), review/history only, or global memory. <strong>Claude never writes global memory without explicit user approval of the exact entry text</strong>, and never stores secrets or personal data in any memory layer. An optional advisory hook can suggest running the skill after repeated failures, but it never writes memory itself. See <a href="reference/memory-policy.md"><code>reference/memory-policy.md</code></a> and the <code>Memory policy</code> / <code>Failure learning</code> sections in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+    </section>
+
+    <hr>
+
     <section id="central-principle">
       <h2>Central principle</h2>
       <p>The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.</p>

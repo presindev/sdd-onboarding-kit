@@ -17,6 +17,8 @@
 - `agents/spec-author.md`
 - `decisions/answers.template.md`
 - `hooks/examples/block-implementation-before-approval.sh`
+- `hooks/examples/failure-learning/README.md`
+- `hooks/examples/failure-learning/suggest-failure-learning.sh`
 - `hooks/examples/run-tests-after-edit.sh`
 - `hooks/examples/validate-spec-before-status-change.sh`
 - `hooks/hooks-policy.md`
@@ -36,6 +38,7 @@
 - `reference/context-economy.md`
 - `reference/dependency-freshness-policy.md`
 - `reference/harness-engineering.md`
+- `reference/memory-policy.md`
 - `reference/sdd-theory.md`
 - `scripts/init.sh`
 - `scripts/run-lint.sh.template`
@@ -78,6 +81,7 @@
 - `templates/conventions.html.template`
 - `templates/functional/functional-brief.html.template`
 - `templates/history.html.template`
+- `templates/memory/failure-learning-entry.md`
 - `templates/project-map.md.template`
 - `templates/run-and-verify.md.template`
 - `templates/specs/README.md`

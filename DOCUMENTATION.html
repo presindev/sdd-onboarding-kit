@@ -110,6 +110,8 @@
         <li><a href="#skill-packs">17. Skill packs</a></li>
         <li><a href="#run-and-verify">18. Run and verify</a></li>
         <li><a href="#dependency-freshness">19. Dependency freshness</a></li>
+        <li><a href="#memory-policy">20. Memory policy</a></li>
+        <li><a href="#failure-learning">21. Failure learning</a></li>
       </ul>
     </div>
 
@@ -641,7 +643,7 @@ tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
           <tr><td><code>git-discipline</code></td><td>Clean branches, commits, and PR text tied to SDD tasks.</td><td>Requested commits/branches/PR descriptions.</td><td>All mutations permission-gated; no force-push; checks diffs for secrets.</td></tr>
           <tr><td><code>decision-log</code></td><td>Record durable architectural/workflow decisions.</td><td>Entry in <code>decisions/</code> or <code>docs/adr/</code>.</td><td>Proposes, never overproduces; project memory only.</td></tr>
           <tr><td><code>documentation-update</code></td><td>Update affected docs after review, before <code>done</code>.</td><td>Updated docs + target list in review notes.</td><td>Runs only after technical review; never documents unreviewed details.</td></tr>
-          <tr><td><code>failure-learning</code></td><td>Propose a reusable lesson after a meaningful mistake.</td><td>Approved lesson in decision log/review notes.</td><td>Proposal-only; no memory writes without explicit approval; no global memory.</td></tr>
+          <tr><td><code>failure-learning</code></td><td>Propose a reusable lesson after a meaningful mistake (see <a href="#failure-learning">§21</a>).</td><td>Approved lesson in the layer the developer chose.</td><td>Proposal-only; no memory writes without explicit approval; global memory only via the explicit option.</td></tr>
           <tr><td><code>ui-qa</code></td><td>Verify UI changes against spec acceptance criteria.</td><td>Per-criterion QA checklist in review notes.</td><td>No stored credentials; test accounts preferred; no production actions.</td></tr>
         </tbody>
       </table>
@@ -748,6 +750,99 @@ tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
         <li>If current docs are unreachable, Claude says so in the spec/review and asks how to proceed instead of guessing.</li>
         <li>Evidence never includes credentials, tokens, or private URLs.</li>
       </ul>
+    </section>
+
+    <hr>
+
+    <section id="memory-policy">
+      <h2>20. Memory policy</h2>
+      <p>Claude Code has several places where knowledge can persist across sessions. They differ in scope, visibility, and risk; the full policy lives in <code>reference/memory-policy.md</code>. One rule is non-negotiable: <strong>Claude never writes global memory silently — every memory write requires explicit developer approval of the specific entry text.</strong></p>
+
+      <h3>Memory layers and their differences</h3>
+      <table>
+        <thead>
+          <tr><th>Layer</th><th>Location</th><th>Scope</th><th>Versioned</th><th>Use for</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Global (user) memory</td><td><code>~/.claude/CLAUDE.md</code></td><td>All projects of this user</td><td>No</td><td>Personal, project-independent preferences — only with explicit approval.</td></tr>
+          <tr><td>Auto memory</td><td><code>~/.claude/projects/&lt;project&gt;/memory/</code></td><td>One project, one user</td><td>No</td><td>Claude Code's own session memory; under this policy, durable project knowledge goes to versioned artifacts instead.</td></tr>
+          <tr><td>Project memory — instructions</td><td><code>CLAUDE.md</code> (team) / <code>CLAUDE.local.md</code> (personal, gitignored)</td><td>One project</td><td>Yes / No</td><td>Short load-bearing rules every session needs.</td></tr>
+          <tr><td>Project memory — decision logs</td><td><code>decisions/</code></td><td>One project</td><td>Yes</td><td>Reusable lessons, architectural and workflow decisions. <strong>Preferred default.</strong></td></tr>
+          <tr><td>Task history</td><td><code>history.html</code></td><td>One project</td><td>Yes</td><td>Completed-work summaries.</td></tr>
+          <tr><td>Review notes</td><td><code>specs/&lt;feature-slug&gt;/review.html</code></td><td>One task</td><td>Yes</td><td>One-off findings that do not generalize.</td></tr>
+        </tbody>
+      </table>
+      <p>Global memory is the most expensive and most dangerous layer: it loads into every session of every project, so a project-specific rule written there contaminates unrelated work. Project-specific lessons therefore go to project memory by default; global memory only when the developer explicitly chooses it for a genuinely project-independent lesson.</p>
+
+      <h3>Security and privacy</h3>
+      <ul>
+        <li>Never store secrets, credentials, tokens, or connection strings in any memory layer.</li>
+        <li>Never store personal or private data unrelated to the project.</li>
+        <li>Never put project-specific rules in global memory without explicit approval of exactly that.</li>
+        <li>Everything in <code>decisions/</code>, <code>history.html</code>, or <code>CLAUDE.md</code> is visible to everyone with repo access — write accordingly.</li>
+        <li>Speculative, unconfirmed conclusions are not memorized.</li>
+      </ul>
+      <p>Memory locations verified against the Claude Code docs (2026-06): user memory <code>~/.claude/CLAUDE.md</code>; project <code>CLAUDE.md</code> / <code>CLAUDE.local.md</code>; auto memory directory with <code>MEMORY.md</code> index, managed via the <code>/memory</code> command.</p>
+    </section>
+
+    <hr>
+
+    <section id="failure-learning">
+      <h2>21. Failure learning</h2>
+      <p>When Claude makes a meaningful implementation mistake, the lesson should survive the session — without giving Claude the power to mutate memory on its own. The optional <code>failure-learning</code> pack (<a href="#skill-packs">§17</a>) implements that: Claude drafts a structured lesson, <strong>proposes</strong> it, and writes it only where the developer chooses.</p>
+
+      <h3>What counts as a memorable failure</h3>
+      <ul>
+        <li>failed tests caused by a wrong project convention;</li>
+        <li>the reviewer found an architectural violation;</li>
+        <li>the developer corrected a repeated assumption;</li>
+        <li>the wrong command or tool was used;</li>
+        <li>code was edited outside the approved scope;</li>
+        <li>the wrong API/framework pattern was used;</li>
+        <li>the same error happened more than once.</li>
+      </ul>
+
+      <h3>What is never memorized</h3>
+      <ul>
+        <li>one-off syntax mistakes or typos;</li>
+        <li>secrets — in any layer, ever;</li>
+        <li>personal/private data unrelated to the project;</li>
+        <li>speculative conclusions the developer has not confirmed;</li>
+        <li>project-specific rules in global memory, unless explicitly approved.</li>
+      </ul>
+
+      <h3>The mandatory confirmation prompt</h3>
+      <p>Before any memory write, Claude shows the exact proposed entry and asks:</p>
+      <pre><code>I found a reusable lesson from this mistake:
+
+&lt;proposed memory entry&gt;
+
+Do you want me to add this to memory?
+1. Yes, global memory.
+2. Yes, project memory only.
+3. No, keep it only in the review/history.
+4. Revise the wording first.</code></pre>
+      <p>Project memory (option 2) is the recommended default. If the developer does not answer, nothing is written.</p>
+
+      <h3>Entry format</h3>
+      <p>Entries follow <code>templates/memory/failure-learning-entry.md</code> (copied into the installed skill as <code>entry-template.md</code>): title, date, scope, trigger, what went wrong, root cause, rule to remember, where to apply, where not to apply, and the source task/spec/review.</p>
+
+      <h3>A good entry vs a bad entry</h3>
+      <pre><code># Good — specific, scoped, actionable
+Title: Service-layer tests must use the repository fakes, not DB mocks
+Trigger: failed tests (twice) · Source: TASK-042 review
+What went wrong: implemented service tests with jest DB mocks; CI integration suite failed.
+Root cause: this project tests services against the in-repo repository fakes (test/fakes/).
+Rule: when testing src/services/*, use test/fakes/ repositories; never mock the DB client.
+Where to apply: src/services tests. Where not: unit tests of pure helpers.</code></pre>
+      <pre><code># Bad — vague, unscoped, speculative (would be rejected)
+Title: Be more careful with tests
+What went wrong: tests failed.
+Rule: always double-check everything before running tests.</code></pre>
+      <p>The bad entry has no trigger, no scope boundary, no source, and no rule anyone can apply. The reviewer can recommend a failure-learning entry in <code>review.html</code>; the proposal still goes through the prompt above.</p>
+
+      <h3>Advisory hook</h3>
+      <p>An optional example hook (<code>hooks/examples/failure-learning/</code>, disabled by default like all kit hooks) watches validation commands and — when the same command fails more than once in a session — injects a reminder that the skill exists. It is strictly advisory: it never writes memory or project files, never blocks, and fails open without <code>jq</code>. See <a href="#hooks">§8</a> for the kit's general hook rules.</p>
     </section>
 
   </main>

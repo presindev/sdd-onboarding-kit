@@ -89,3 +89,24 @@ Recommended event:
 - `Notification`
 
 This is environment-specific and should be configured per OS/team.
+
+## 6. Suggest failure learning (advisory only)
+
+Purpose: when the same validation command fails more than once in a session, remind Claude that the `failure-learning` skill exists. The hook never writes memory and never blocks — any memory write goes through the skill's mandatory confirmation prompt.
+
+Recommended event:
+
+- `PostToolUse`
+
+Recommended matcher:
+
+- `Bash`
+
+Script and details:
+
+```text
+hooks/examples/failure-learning/suggest-failure-learning.sh
+hooks/examples/failure-learning/README.md
+```
+
+Only useful if the `failure-learning` skill pack is installed. Adapt the script's `watch_pattern` to the project's real test/lint commands before enabling.

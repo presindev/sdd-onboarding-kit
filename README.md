@@ -76,6 +76,10 @@ The `run-and-verify` pack is special: onboarding **generates a project-specific 
 
 The kit also includes **freshness checks for external APIs and dependencies**: changes that touch external dependencies, SDKs, APIs, or framework configuration are verified against current documentation, with the evidence recorded in the spec, and the reviewer can block high-risk changes (auth, payments, migrations, cloud infrastructure, framework upgrades, security-sensitive code) that lack it. Purely internal changes are unaffected. See [`reference/dependency-freshness-policy.md`](reference/dependency-freshness-policy.md) and the `Dependency and API freshness` section in `DOCUMENTATION.html`.
 
+## Failure learning
+
+The optional `failure-learning` pack turns real mistakes (wrong assumptions, convention violations, repeated errors) into reusable lessons. Claude drafts a structured entry and **proposes** it; the developer chooses where it lives — project decision log (preferred), review/history only, or global memory. **Claude never writes global memory without explicit user approval of the exact entry text**, and never stores secrets or personal data in any memory layer. An optional advisory hook can suggest running the skill after repeated failures, but it never writes memory itself. See [`reference/memory-policy.md`](reference/memory-policy.md) and the `Memory policy` / `Failure learning` sections in `DOCUMENTATION.html`.
+
 ## Central principle
 
 The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.
