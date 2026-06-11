@@ -200,6 +200,7 @@ This skill contains the full multi-step SDD procedure. Keep `CLAUDE.md` short an
 The core `sdd-workflow` skill is always installed. The packs under `skills/optional/` are installed only when the developer selects them (see `questions.md` §14).
 
 - For each selected pack, copy `skills/optional/<name>/` to `.claude/skills/<name>/` and adapt placeholders and project-specific details (commands, paths, doc locations). Exception: `run-and-verify` is generated from a template, not copied — see "Run and verify skill" below.
+- If `failure-learning` is selected, also copy `templates/memory/failure-learning-entry.md` to `.claude/skills/failure-learning/entry-template.md` (the skill references it), keeping its placeholder tokens — entries are instantiated per lesson, not during onboarding. Memory scope rules come from `reference/memory-policy.md`: project memory by default, never a global write without explicit approval.
 - If the repository clearly indicates applicability (e.g. a frontend for `ui-qa`), suggest the pack — but install only on confirmation.
 - Record installed and declined packs in `decisions/answers.md`.
 - In `CLAUDE.md`, list installed optional skills by name with a one-line purpose at most. Never paste skill bodies into `CLAUDE.md`: skill content loads only when invoked, which is what keeps it cheap.

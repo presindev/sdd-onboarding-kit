@@ -42,6 +42,28 @@ These snippets are examples only. Do not paste them into `.claude/settings.json`
 }
 ```
 
+## Failure-learning suggestion example (advisory only)
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/suggest-failure-learning.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+The script never writes memory and never blocks; see `hooks/examples/failure-learning/README.md`.
+
 ## Subagent lifecycle example
 
 ```json

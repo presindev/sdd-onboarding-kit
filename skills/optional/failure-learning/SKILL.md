@@ -10,9 +10,10 @@ description: Propose a reusable lesson after a meaningful implementation mistake
 Capture reusable lessons from real mistakes so they are not repeated —
 always as a **proposal** to the developer, never as a silent memory write.
 
-> Roadmap note (kit-internal): a later kit version adds the full memory
-> policy, entry template, and advisory hooks; this v1 records lessons in
-> project files only.
+> Kit source note: the full memory policy (layers, storage rules, security)
+> lives in `reference/memory-policy.md`; the entry format lives in
+> `templates/memory/failure-learning-entry.md`. When installing this pack,
+> the entry template is copied next to this file as `entry-template.md`.
 
 ## When to use
 
@@ -23,13 +24,19 @@ A memorable failure happened, such as:
 - the developer corrected a repeated assumption;
 - the wrong command/tool was used;
 - code was edited outside the approved scope;
+- the wrong API/framework pattern was used;
 - the same error happened more than once.
 
 ## When not to use
 
-- One-off syntax mistakes or typos.
-- Speculative conclusions the developer has not confirmed.
-- Anything involving secrets or personal/private data.
+Do not memorize:
+
+- one-off syntax mistakes or typos;
+- secrets, credentials, or tokens — never, in any layer;
+- personal/private data unrelated to the project;
+- speculative conclusions the developer has not confirmed;
+- project-specific rules in global memory, unless the developer explicitly
+  approved exactly that.
 
 ## Required inputs
 
@@ -38,22 +45,47 @@ A memorable failure happened, such as:
 
 ## Procedure
 
-1. Draft a short entry: what went wrong, root cause, rule to remember,
-   where it applies (and where it does not), source reference.
-2. Propose it to the developer and ask where it should live:
-   project decision log / review notes only / revise wording / discard.
-3. Write it only where the developer chose.
+1. Draft the entry using `entry-template.md` (title, date, scope, trigger,
+   what went wrong, root cause, rule to remember, where to apply, where not
+   to apply, source task/spec/review).
+2. Show the exact proposed text and ask — this prompt is mandatory before
+   any memory write:
+
+   ```text
+   I found a reusable lesson from this mistake:
+
+   <proposed memory entry>
+
+   Do you want me to add this to memory?
+   1. Yes, global memory.
+   2. Yes, project memory only.
+   3. No, keep it only in the review/history.
+   4. Revise the wording first.
+   ```
+
+3. Write only where the developer chose:
+   - **Global memory** (option 1): append to the user memory file
+     `~/.claude/CLAUDE.md`. Only after this explicit choice; verify the
+     entry is project-independent and contains no project internals.
+   - **Project memory** (option 2, the default recommendation): append to
+     the project's decision log (e.g. `decisions/failure-learnings.md`).
+   - **Review/history** (option 3): record in the task's `review.html` or
+     `history.html`; no memory write.
+   - **Revise** (option 4): rewrite and ask again.
+   If the developer does not answer, write nothing.
 4. If the same lesson is proposed twice, that is a signal it belongs in a
-   more visible place (e.g. `CLAUDE.md` rules) — suggest that explicitly.
+   more visible place (e.g. a `CLAUDE.md` rule) — suggest that explicitly,
+   still requiring approval.
 
 ## Output artifact
 
-An approved lesson entry in the project's decision log or the task's
-review notes — nothing if the developer declines.
+An approved lesson entry in the layer the developer chose — nothing if the
+developer declines.
 
 ## Safety constraints
 
 - Never write any memory (project or global) without explicit approval of
   the specific entry text.
-- Global Claude memory is out of scope for this skill; project files only.
+- Prefer project memory; global memory only via option 1 above.
 - Never record secrets, credentials, or personal data in a lesson.
+- Advisory hooks may suggest running this skill; they never write memory.
