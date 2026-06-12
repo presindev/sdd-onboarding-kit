@@ -105,6 +105,10 @@ Screenshots, mockups, and other visual evidence are first-class inputs for UI wo
 
 Some changes deserve more than the standard reviewer pass: security-sensitive code, auth, payments, database migrations, infrastructure, public APIs, large refactors, data-loss risks. For those, the kit recommends an escalation ladder — a security-focused pass, then independent adversarial reviewers, then (only if available and approved) paid deep-review modes. Deep review **supplements** the SDD reviewer, never replaces it, and the kit never assumes paid features are available. See [`reference/deep-review-policy.md`](reference/deep-review-policy.md) and the `Deep review policy` section in `DOCUMENTATION.html`.
 
+## Git safety
+
+Every mutating git action is permission-gated. The optional `git-discipline` pack adds the working rules — inspect `git status` first, never overwrite user changes, no commit/push unless asked, no force-push without documented approval, no PR merges unless instructed — plus commit-message, PR-description, and release-note templates that tie git text to SDD tasks (PR descriptions are generated from the reviewer's `review.html`). The skill supports the SDD workflow; it never bypasses it. See the `Git discipline` section in `DOCUMENTATION.html`.
+
 ## Autonomy is opt-in
 
 Autonomous workflows (loops, goals, scheduled routines, background or headless runs) are **controlled execution, not blanket permission**. They are fine for monitoring CI, checking deployment status, and repeated read-only verification — always with explicit stop conditions — but they can never deploy, migrate, merge, push to protected branches, or mark a task `done`: SDD state transitions stay human-gated. See [`reference/autonomy-policy.md`](reference/autonomy-policy.md) and the `Autonomy policy` section in `DOCUMENTATION.html`.

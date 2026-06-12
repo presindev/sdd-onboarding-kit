@@ -108,3 +108,5 @@ Return:
 - proposed decision-log entries, if any;
 - commands run;
 - next state.
+
+If the project has the `git-discipline` skill, this review's content (traceability, commands run, decision, safety notes) is the source material for PR descriptions — keep those sections complete so the PR text can be generated from `review.html` without re-deriving evidence.

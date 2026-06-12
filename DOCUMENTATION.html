@@ -119,6 +119,7 @@
         <li><a href="#autonomy-policy">26. Autonomy policy</a></li>
         <li><a href="#deep-review-policy">27. Deep review policy</a></li>
         <li><a href="#visual-evidence">28. Screenshots and visual evidence</a></li>
+        <li><a href="#git-discipline">29. Git discipline</a></li>
       </ul>
     </div>
 
@@ -1236,6 +1237,49 @@ mcpServers:
 
       <h3>Integration</h3>
       <p>The <code>ui-qa</code> skill takes the visual-evidence section as input and records comparisons in <code>Visual verification</code>; the <code>browser-tester</code> agent walks the criteria in a real browser against the referenced images; the reviewer treats a filled visual-evidence section like any other requirement source — implementation evidence required, ambiguities returned to the spec rather than guessed.</p>
+    </section>
+
+    <hr>
+
+    <section id="git-discipline">
+      <h2>29. Git discipline</h2>
+      <p>Understanding Git/GitHub is a prerequisite for serious Claude Code usage, and git is where an assistant can do the most accidental damage. The kit's baseline holds with or without any skill: <strong>every mutating git action is permission-gated</strong>. The optional <code>git-discipline</code> pack (§14 of <code>questions.md</code>) adds working rules and text templates on top — it supports the SDD workflow and never bypasses it: no git text or operation substitutes for spec approval, review, or the documentation phase.</p>
+
+      <h3>The rules</h3>
+      <ol>
+        <li>Inspect <code>git status</code> (and the relevant diff) before changes.</li>
+        <li>Never overwrite user changes — uncommitted developer work is untouchable; if it blocks the task, stop and ask.</li>
+        <li>Do not commit unless asked.</li>
+        <li>Do not push unless asked.</li>
+        <li>Do not force-push unless explicitly approved — and document what was rewritten, why, and the approval.</li>
+        <li>Do not merge PRs unless explicitly instructed (never autonomously — <a href="#autonomy-policy">§26</a>).</li>
+        <li>When commits are requested, reference the task/spec in the message, following the project's convention (<code>questions.md</code> §8).</li>
+      </ol>
+      <p>A project may pre-authorize specific operations in its git policy (e.g. "commit after each task"); everything not pre-authorized stays ask-first.</p>
+
+      <h3>Safe/unsafe command matrix</h3>
+      <table>
+        <thead>
+          <tr><th>Class</th><th>Examples</th><th>Default policy</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Read-only inspection</td><td><code>git status</code>, <code>git diff</code>, <code>git log</code>, <code>git show</code>, <code>git branch --list</code></td><td>Allowed; expected before any change.</td></tr>
+          <tr><td>Local, reversible</td><td><code>git checkout -b</code>, <code>git add</code>, <code>git stash</code> (own changes only), <code>git commit</code></td><td>Only when requested or pre-authorized by the project's git policy; never over uncommitted developer work.</td></tr>
+          <tr><td>Remote, visible</td><td><code>git push</code>, opening PRs</td><td>Only when explicitly asked; pushing publishes — treat as outward-facing.</td></tr>
+          <tr><td>Destructive / history-rewriting</td><td><code>git push --force</code>, <code>git reset --hard</code>, <code>git checkout -- &lt;file&gt;</code> over user edits, <code>git rebase</code> on shared branches, merging PRs, deleting branches</td><td>Explicit per-action approval, documented; the block-destructive-commands hook (<a href="#hooks">§8</a>) can enforce this deterministically.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Templates tied to SDD tasks</h3>
+      <p>The pack installs three templates (kit source <code>templates/git/</code> → project <code>.claude/skills/git-discipline/templates/</code>, adapted to the §8 answers during onboarding):</p>
+      <ul>
+        <li><strong>Commit message</strong> — type + imperative summary, the why in the body, and the task/spec reference. Example:<br><code>feat: add per-tenant rate limiting</code><br><code></code><br><code>Protects the public API from cross-tenant exhaustion; limits are</code><br><code>read from tenant config with a global fallback.</code><br><code></code><br><code>Task: T-042 (specs/rate-limiting/)</code></li>
+        <li><strong>PR description</strong> — Summary / Spec / Checks run / Review status / Safety notes. Generated from the task's <code>review.html</code> (traceability table → summary, <code>Commands run</code> → checks, <code>Decision</code> → review status, high-risk record + visual verification + freshness evidence → safety notes). A PR description must not claim more than the review supports — pending review reads "review pending", never implied approval.</li>
+        <li><strong>Release note / changelog snippet</strong> — user-visible behavior only, project's changelog categories, breaking changes clearly marked; internal task mechanics stay out.</li>
+      </ul>
+
+      <h3>Integration</h3>
+      <p>The reviewer keeps <code>review.html</code> sections complete so PR text can be generated without re-deriving evidence (<code>agents/reviewer.md</code>). The git policy itself is recorded during onboarding (<code>questions.md</code> §8: branch naming, commit cadence, task references, whether Claude may commit/push at all) and lives in the project's <code>CLAUDE.md</code> — the skill reads it, never overrides it. Branch protection and merge gates remain the platform's job: the skill's rules are discipline on top of, not a substitute for, repository settings.</p>
     </section>
 
   </main>

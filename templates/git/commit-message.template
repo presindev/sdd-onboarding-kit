@@ -1,0 +1,13 @@
+{{TYPE}}: {{SUMMARY_IMPERATIVE_UNDER_72_CHARS}}
+
+{{WHY_THE_CHANGE_WAS_NEEDED_AND_WHAT_IT_DOES}}
+
+Task: {{TASK_ID}} ({{SPEC_SLUG}})
+
+# Notes for the generator (delete before use):
+# - TYPE follows the project's convention (e.g. feat/fix/docs/refactor);
+#   ask if the project has none.
+# - Reference the SDD task/spec when commits are requested (git-discipline
+#   rule 7). If the project tracks issues, add its reference too.
+# - Describe the why, not a file-by-file list — the diff already shows that.
+# - Check the diff for secrets before committing.

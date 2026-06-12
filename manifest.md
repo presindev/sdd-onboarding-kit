@@ -97,6 +97,9 @@
 - `templates/architecture.html.template`
 - `templates/conventions.html.template`
 - `templates/functional/functional-brief.html.template`
+- `templates/git/commit-message.template`
+- `templates/git/pr-description.md.template`
+- `templates/git/release-note.md.template`
 - `templates/history.html.template`
 - `templates/memory/failure-learning-entry.md`
 - `templates/project-map.md.template`
