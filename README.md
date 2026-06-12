@@ -85,6 +85,10 @@ The optional `failure-learning` pack turns real mistakes (wrong assumptions, con
 
 Durable knowledge lives in versioned artifacts, not chat history. Onboarding always creates `decisions/answers.md` (the recorded onboarding answers); the optional `decision-log` pack adds `decisions/architecture-decisions.md`, `decisions/rejected-options.md`, and `decisions/workflow-decisions.md` — or uses the project's existing `docs/adr/`. When a spec or review settles something significant, Claude **proposes** an entry: trivial decisions are not logged, secrets never are, and nothing is written without approval. See the `Project memory and decision logs` section in `DOCUMENTATION.html`.
 
+## Hooks
+
+The kit ships example hooks under [`hooks/examples/`](hooks/hooks-policy.md) that support the SDD workflow deterministically: blocking implementation before spec approval, validating spec files before status changes, suggesting targeted checks after edits, detecting spec drift against the approved task scope, pre-compact capture reminders, and failure-learning suggestions. **All hooks are optional and disabled by default** — they are examples until explicitly configured in `.claude/settings.json`, and every hook is classified (advisory / blocking / mutating / dangerous) in `hooks/hooks-policy.md`. The kit ships no mutating or dangerous hooks. See the `Hooks` section in `DOCUMENTATION.html`.
+
 ## Central principle
 
 The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.

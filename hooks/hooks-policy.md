@@ -32,25 +32,41 @@ Hooks can block legitimate work if they are too broad. Keep them small, testable
 
 The example hook scripts are bash and rely on `jq` for reading hook JSON and `tasks.json`. On Windows this means Git Bash (or WSL) plus `jq` installed and on `PATH`. The examples fail open — they warn and allow the action — when `jq` is missing; switch them to fail closed only if the developer explicitly accepts that hooks will block work on machines without `jq`.
 
-## Hook modes
+## Safety classification
+
+Every hook in the kit — and any hook added during onboarding — is classified by its highest-risk behavior:
 
 ### Advisory
 
-The hook prints a warning but does not block.
-
-Use for early adoption.
+Observes and suggests. Never blocks a tool call, never writes project files or memory (a temp-directory counter at most). Safe to enable first.
 
 ### Blocking
 
-The hook exits non-zero or returns a block decision.
+Can stop a tool call (non-zero exit or a deny decision). Writes nothing. Enable once the team trusts the rule; prefer starting the same script in its warn mode where one exists.
 
-Use for mature rules such as preventing implementation before approval.
+### Mutating
 
-### Async
+Runs commands that change files or state (formatters that rewrite code, generators, anything with side effects beyond reading). **The kit ships no mutating hook.** Adding one requires explicit opt-in: the developer must approve it knowing exactly what it changes, and the hook's README must document every side effect.
 
-The hook runs in the background.
+### Dangerous
 
-Use for slow validations or notifications.
+Touches external systems, credentials, git history, deployments, or production data. **The kit ships none and recommends against them.** If a project insists, the approval must be explicit and recorded (e.g. in `decisions/workflow-decisions.md`), and the hook must be scoped as narrowly as possible.
+
+A hook is listed under its highest applicable class: a hook that suggests by default but can be switched to block is documented under both modes. Delivery can additionally be async (run in the background) for slow validations or notifications — async does not change the classification.
+
+## Classification of the kit's example hooks
+
+All of these are **examples, disabled by default**. None is enabled by installing the kit.
+
+| Hook | Class | Notes |
+|---|---|---|
+| `block-implementation-before-approval.sh` | Blocking | Exit 2 before approval; spec/harness files always allowed. |
+| `run-tests-after-edit.sh` | Advisory | Runs the configured test command after edits; never blocks. |
+| `validate-spec-before-status-change.sh` | Blocking | Blocks `spec_ready` without the three core spec files. |
+| `failure-learning/suggest-failure-learning.sh` | Advisory | Suggests the failure-learning skill; never writes memory. |
+| `pre-compact-capture/` | Advisory | Reminds before compaction that durable state belongs in artifacts; never blocks, never writes. |
+| `targeted-validation/` | Advisory | Suggests (default) or runs targeted checks for changed files; never blocks. |
+| `spec-drift/` | Blocking (opt-in) / Advisory (default) | `DRIFT_MODE=warn` warns; `DRIFT_MODE=block` blocks edits outside the approved task scope. |
 
 ## Project-specific requirement
 

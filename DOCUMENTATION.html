@@ -328,20 +328,52 @@
 
     <section id="hooks">
       <h2>8. Hooks</h2>
-      <p>Hooks are optional shell scripts that Claude Code executes automatically. <strong>Hooks are never enabled without your explicit approval.</strong></p>
+      <p>Hooks are optional shell scripts that Claude Code executes automatically on workflow events. Prompts and skills guide Claude; hooks enforce rules deterministically, whether or not Claude remembers them. <strong>All kit hooks are examples, disabled by default — none is enabled without your explicit approval.</strong> They support the SDD state machine (block before approval, return out-of-scope work to the spec, keep durable state in artifacts); no kit hook bypasses it.</p>
 
+      <h3>Safety classification</h3>
+      <p>Every hook is classified by its highest-risk behavior (full policy in <code>hooks/hooks-policy.md</code>):</p>
+      <ul>
+        <li><strong>Advisory</strong> — observes and suggests; never blocks, never writes project files or memory (a temp-directory marker at most). Safe to enable first.</li>
+        <li><strong>Blocking</strong> — can stop a tool call; writes nothing. Enable once the team trusts the rule; prefer the warn mode first where one exists.</li>
+        <li><strong>Mutating</strong> — changes files or state. <strong>The kit ships none.</strong> Adding one requires explicit opt-in with every side effect documented in the hook's README.</li>
+        <li><strong>Dangerous</strong> — touches external systems, credentials, git history, or production. <strong>The kit ships none and recommends against them.</strong> If a project insists: explicit recorded approval, narrowest possible scope.</li>
+      </ul>
+
+      <h3>The example hooks</h3>
       <table>
         <thead>
-          <tr><th>Hook</th><th>Event</th><th>Purpose</th></tr>
+          <tr><th>Hook</th><th>Event</th><th>Class</th><th>Purpose</th></tr>
         </thead>
         <tbody>
-          <tr><td>Block implementation before approval</td><td><code>PreToolUse</code> on Edit/Write</td><td>Prevents code edits when task is <code>pending</code>, <code>spec_draft</code>, or <code>spec_ready</code></td></tr>
-          <tr><td>Run tests after edits</td><td><code>PostToolUse</code> on Edit/Write</td><td>Automatically runs the test suite after any source edit</td></tr>
-          <tr><td>Validate spec before status change</td><td><code>PreToolUse</code></td><td>Ensures <code>requirements.html</code>, <code>design.html</code>, and <code>tasks.html</code> all exist before moving to <code>spec_ready</code></td></tr>
-          <tr><td>Block destructive commands</td><td><code>PreToolUse</code> on Bash</td><td>Intercepts <code>rm -rf</code>, <code>git reset --hard</code>, <code>drop database</code>, and similar</td></tr>
-          <tr><td>Notify for human approval</td><td><code>Stop</code> / <code>Notification</code></td><td>Alerts you when Claude stops waiting for spec approval</td></tr>
+          <tr><td>Block implementation before approval</td><td><code>PreToolUse</code> on Edit/Write</td><td>Blocking</td><td>Prevents code edits while an SDD task is <code>pending</code>, <code>spec_draft</code>, or <code>spec_ready</code>; spec/harness files stay editable.</td></tr>
+          <tr><td>Run tests after edits</td><td><code>PostToolUse</code> on Edit/Write</td><td>Advisory</td><td>Runs the configured test suite after source edits; never blocks.</td></tr>
+          <tr><td>Validate spec before status change</td><td><code>PreToolUse</code></td><td>Blocking</td><td>Ensures <code>requirements.html</code>, <code>design.html</code>, and <code>tasks.html</code> exist before a task moves to <code>spec_ready</code>.</td></tr>
+          <tr><td>Block destructive commands</td><td><code>PreToolUse</code> on Bash</td><td>Blocking</td><td>Intercepts <code>rm -rf</code>, <code>git reset --hard</code>, <code>drop database</code>, and similar.</td></tr>
+          <tr><td>Notify for human approval</td><td><code>Stop</code> / <code>Notification</code></td><td>Advisory</td><td>Alerts you when Claude stops waiting for spec approval (environment-specific).</td></tr>
+          <tr><td>Failure-learning suggestion (<a href="#failure-learning">§21</a>)</td><td><code>PostToolUse</code> on Bash</td><td>Advisory</td><td>After the same validation command fails twice, reminds Claude that the failure-learning skill exists; never writes memory.</td></tr>
+          <tr><td>Pre-compact capture</td><td><code>PreCompact</code> + <code>SessionStart</code> (matcher <code>compact</code>)</td><td>Advisory</td><td>Before compaction, reminds that unresolved decisions, task state, failures, and constraints belong in durable artifacts; after compaction, injects a reminder to re-read them. Optional <code>gate</code> mode blocks one manual compaction per session.</td></tr>
+          <tr><td>Targeted validation</td><td><code>PostToolUse</code> on Edit/Write</td><td>Advisory</td><td>Maps the changed file to a targeted check (frontend → frontend checks, backend → backend tests, schema → migration checks); suggests by default, opt-in <code>run</code> mode executes it. Never blocks.</td></tr>
+          <tr><td>Spec drift</td><td><code>PreToolUse</code> on Edit/Write</td><td>Advisory (warn) / Blocking (block)</td><td>Detects edits outside the approved task's <code>scope</code> globs in <code>tasks.json</code>; <code>DRIFT_MODE=warn</code> warns, <code>DRIFT_MODE=block</code> denies until the spec and scope are updated.</td></tr>
         </tbody>
       </table>
+
+      <h3>Installation</h3>
+      <ol>
+        <li>Get explicit developer approval for the specific hook and mode (<code>questions.md</code> §9). Confirm the environment has bash and <code>jq</code> (Git Bash or WSL on Windows).</li>
+        <li>Copy the script from <code>hooks/examples/</code> into the target project (e.g. <code>.claude/hooks/</code>) and make it executable.</li>
+        <li>Adapt the project-specific parts: the targeted-validation <code>RULES</code> table, the failure-learning <code>watch_pattern</code>, allowed paths. Never wire a command that was not confirmed.</li>
+        <li>Register it in <code>.claude/settings.json</code> using the matching snippet from <code>hooks/settings-snippets.md</code>.</li>
+        <li>Start in the warn/suggest mode where the hook has one; move to blocking after the team trusts it.</li>
+      </ol>
+
+      <h3>Troubleshooting</h3>
+      <ul>
+        <li><strong>Hook does not fire:</strong> check the event name and matcher in <code>.claude/settings.json</code>, the script path, and that the file is executable. Hook settings are read at session start — restart the session after changes.</li>
+        <li><strong>Hook blocks everything:</strong> the kit's blocking examples have deliberate limitations (e.g. the approval guard is project-wide, not per-task). Read the script's header comment; adapt the filter or fall back to warn mode.</li>
+        <li><strong>Windows:</strong> scripts need Git Bash or WSL plus <code>jq</code> on <code>PATH</code>. All kit hooks fail open (warn and allow) when <code>jq</code> is missing — they never block for a missing dependency.</li>
+        <li><strong>Testing a hook:</strong> run it manually with a sample JSON payload on stdin (e.g. <code>echo '{"tool_name":"Edit","tool_input":{"file_path":"src/x.ts"}}' | ./spec-drift.sh</code>) before registering it.</li>
+        <li><strong>Version drift:</strong> event names, stdin fields, and output shapes evolve with Claude Code versions. The kit's scripts were verified against the hooks docs (2026-06); re-verify against the installed version before enabling (rule in <code>hooks/settings-snippets.md</code>).</li>
+      </ul>
     </section>
 
     <hr>

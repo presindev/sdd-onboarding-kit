@@ -174,6 +174,13 @@
 
     <hr>
 
+    <section id="hooks">
+      <h2>Hooks</h2>
+      <p>The kit ships example hooks under <code>hooks/examples/</code> that support the SDD workflow deterministically: blocking implementation before spec approval, validating spec files before status changes, suggesting targeted checks after edits, detecting spec drift against the approved task scope, pre-compact capture reminders, and failure-learning suggestions. <strong>All hooks are optional and disabled by default</strong> — they are examples until explicitly configured in <code>.claude/settings.json</code>, and every hook is classified (advisory / blocking / mutating / dangerous) in <code>hooks/hooks-policy.md</code>. The kit ships no mutating or dangerous hooks. See the <code>Hooks</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+    </section>
+
+    <hr>
+
     <section id="central-principle">
       <h2>Central principle</h2>
       <p>The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.</p>

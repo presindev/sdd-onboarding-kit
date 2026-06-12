@@ -16,10 +16,11 @@ if ! command -v jq >/dev/null 2>&1; then
   exit 0
 fi
 
-tool_name=$(printf '%s' "$input" | jq -r '.tool_name // empty')
+# tr -d '\r': jq on Windows emits CRLF; a stray \r breaks comparisons.
+tool_name=$(printf '%s' "$input" | jq -r '.tool_name // empty' | tr -d '\r')
 [ "$tool_name" = "Bash" ] || exit 0
 
-cmd=$(printf '%s' "$input" | jq -r '.tool_input.command // empty')
+cmd=$(printf '%s' "$input" | jq -r '.tool_input.command // empty' | tr -d '\r')
 [ -n "$cmd" ] || exit 0
 
 # Only watch validation-style commands. Adapt this pattern to the project's
@@ -27,7 +28,7 @@ cmd=$(printf '%s' "$input" | jq -r '.tool_input.command // empty')
 watch_pattern='run-tests\.sh|run-lint\.sh|npm (run )?test|npx (vitest|jest)|pytest|go test|cargo test'
 printf '%s' "$cmd" | grep -Eq "$watch_pattern" || exit 0
 
-hook_event=$(printf '%s' "$input" | jq -r '.hook_event_name // "PostToolUse"')
+hook_event=$(printf '%s' "$input" | jq -r '.hook_event_name // "PostToolUse"' | tr -d '\r')
 
 # Failure signal. On PostToolUseFailure the call already failed; on
 # PostToolUse, look for a failure marker in the tool result. The result
@@ -41,11 +42,11 @@ else
     | if ($r | type) != "object" then "no"
       elif ($r.success? == false) then "yes"
       elif ((($r.exit_code? // 0) | tonumber?) // 0) != 0 then "yes"
-      else "no" end')
+      else "no" end' | tr -d '\r')
 fi
 [ "$failed" = "yes" ] || exit 0
 
-session_id=$(printf '%s' "$input" | jq -r '.session_id // "no-session"')
+session_id=$(printf '%s' "$input" | jq -r '.session_id // "no-session"' | tr -d '\r')
 cmd_hash=$(printf '%s' "$cmd" | cksum | awk '{print $1}')
 state_dir="${TMPDIR:-/tmp}/sdd-failure-learning"
 mkdir -p "$state_dir"
