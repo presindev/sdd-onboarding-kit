@@ -123,6 +123,8 @@
         <li><a href="#session-recovery">30. Session recovery</a></li>
         <li><a href="#onboarding-defaults">31. Onboarding questions and defaults</a></li>
         <li><a href="#templates-artifacts">32. Templates and generated artifacts</a></li>
+        <li><a href="#feature-matrix">33. Feature matrix</a></li>
+        <li><a href="#maintainer-guide">34. Maintainer guide</a></li>
       </ul>
     </div>
 
@@ -1386,6 +1388,77 @@ mcpServers:
 
       <h3>Why sections, not prose rules</h3>
       <p>A rule in a policy file depends on being remembered; a section in the artifact is in front of whoever writes or reviews it. The reviewer checklist (<code>skills/sdd-workflow/review-checklist.md</code>) and the templates mirror each other deliberately: each checklist item has a place in the artifact where its evidence lands, which is also what makes reviews auditable after the fact.</p>
+    </section>
+
+    <hr>
+
+    <section id="feature-matrix">
+      <h2>33. Feature matrix</h2>
+      <p>Every kit feature at a glance. <em>Safety level</em> uses the hook classification vocabulary (<a href="#hooks">§8</a>) generalized: <strong>advisory</strong> (observes/suggests, writes nothing), <strong>gated</strong> (acts only with explicit approval), <strong>blocking</strong> (can stop an action; writes nothing). No kit feature mutates external state or memory on its own.</p>
+      <table>
+        <thead>
+          <tr><th>Feature</th><th>Default status</th><th>Where configured</th><th>Safety level</th><th>Related files</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>SDD core workflow (spec → approval → implement → review → docs → done)</td><td>Always installed</td><td><code>questions.md</code> §1–§6</td><td>Gated (human approval; state machine)</td><td><code>skills/sdd-workflow/</code>, <code>templates/CLAUDE.md.template</code>, <code>templates/tasks.json.template</code></td></tr>
+          <tr><td>Subagents (leader, spec-author, implementer, reviewer, documenter)</td><td>Always installed</td><td>—</td><td>Gated (each respects state machine)</td><td><code>agents/*.md</code></td></tr>
+          <tr><td>Spec/review/history templates with policy sections</td><td>Always installed</td><td>—</td><td>Advisory (<code>None</code> convention)</td><td><code>templates/specs/</code>, <code>templates/history.html.template</code> (<a href="#templates-artifacts">§32</a>)</td></tr>
+          <tr><td>Project map</td><td>Generated at onboarding</td><td><code>questions.md</code> §12</td><td>Advisory</td><td><code>templates/project-map.md.template</code>, <code>skills/optional/project-map/</code></td></tr>
+          <tr><td>Documentation phase</td><td>Enabled</td><td><code>questions.md</code> §20</td><td>Blocking (no <code>done</code> with docs pending)</td><td><code>agents/documenter.md</code>, <code>agents/reviewer.md</code> (<a href="#documentation-phase">§22</a>)</td></tr>
+          <tr><td>Dependency/API freshness</td><td>Required for high-risk categories</td><td><code>questions.md</code> §16</td><td>Blocking (high-risk evidence)</td><td><code>reference/dependency-freshness-policy.md</code>, <code>skills/optional/dependency-freshness/</code> (<a href="#dependency-freshness">§19</a>)</td></tr>
+          <tr><td>Optional skill packs (10)</td><td>None installed</td><td><code>questions.md</code> §14</td><td>Advisory or gated (per pack)</td><td><code>skills/optional/</code> (<a href="#skill-packs">§17</a>)</td></tr>
+          <tr><td>Failure learning + memory proposals</td><td>Proposals on; writes never automatic</td><td><code>questions.md</code> §19</td><td>Gated (exact entry text approved)</td><td><code>reference/memory-policy.md</code>, <code>skills/optional/failure-learning/</code> (<a href="#memory-policy">§20</a>, <a href="#failure-learning">§21</a>)</td></tr>
+          <tr><td>Decision logs / ADRs</td><td>Pack not installed; propose-only when it is</td><td><code>questions.md</code> §17</td><td>Gated</td><td><code>decisions/*.template.md</code>, <code>skills/optional/decision-log/</code> (<a href="#decision-logs">§23</a>)</td></tr>
+          <tr><td>Hooks (9 examples)</td><td>All disabled</td><td><code>questions.md</code> §9; <code>.claude/settings.json</code></td><td>Advisory or blocking; none mutating/dangerous</td><td><code>hooks/hooks-policy.md</code>, <code>hooks/examples/</code> (<a href="#hooks">§8</a>)</td></tr>
+          <tr><td>MCPs</td><td>None configured</td><td><code>questions.md</code> §10</td><td>Gated (explicit approval; untrusted output)</td><td><code>mcps/mcp-policy.md</code> (<a href="#mcp-integrations">§9</a>)</td></tr>
+          <tr><td>Browser testing (Playwright)</td><td>Not installed</td><td><code>questions.md</code> §18</td><td>Gated (MCP scoped to one subagent; no credentials stored)</td><td><code>agents/optional/browser-tester.md</code>, <code>mcps/playwright-policy.md</code> (<a href="#browser-testing">§24</a>)</td></tr>
+          <tr><td>Screenshots as spec inputs</td><td>Pack not installed</td><td><code>questions.md</code> §14</td><td>Advisory (evidence-not-requirements rule)</td><td><code>skills/optional/spec-from-screenshot/</code> (<a href="#visual-evidence">§28</a>)</td></tr>
+          <tr><td>CLI vs MCP preference</td><td>Prefer narrow CLI; remote mutations per-action</td><td><code>questions.md</code> §10</td><td>Gated</td><td><code>reference/cli-vs-mcp-policy.md</code> (<a href="#cli-vs-mcp">§25</a>)</td></tr>
+          <tr><td>Autonomy (loops/goals/schedules)</td><td>Disabled except documented read-only monitoring</td><td><code>questions.md</code> §22</td><td>Gated (stop conditions; cannot advance SDD state)</td><td><code>reference/autonomy-policy.md</code> (<a href="#autonomy-policy">§26</a>)</td></tr>
+          <tr><td>Deep review</td><td>Recommended for high-risk; paid modes per-invocation</td><td><code>questions.md</code> §21</td><td>Advisory → gated (rung 3)</td><td><code>reference/deep-review-policy.md</code> (<a href="#deep-review-policy">§27</a>)</td></tr>
+          <tr><td>Git discipline + text templates</td><td>Pack not installed; mutations always ask-first</td><td><code>questions.md</code> §8, §14</td><td>Gated</td><td><code>skills/optional/git-discipline/</code>, <code>templates/git/</code> (<a href="#git-discipline">§29</a>)</td></tr>
+          <tr><td>Session recovery rule</td><td>Enabled in generated <code>CLAUDE.md</code></td><td><code>questions.md</code> §23</td><td>Advisory</td><td><code>reference/session-recovery.md</code> (<a href="#session-recovery">§30</a>)</td></tr>
+          <tr><td>Run-and-verify recipe</td><td>Pack not installed; generated when selected</td><td><code>questions.md</code> §15</td><td>Advisory (never invents commands)</td><td><code>templates/run-and-verify.md.template</code> (<a href="#run-and-verify">§18</a>)</td></tr>
+        </tbody>
+      </table>
+      <p>The corollary the matrix makes visible: <strong>no feature silently enables external access or unsafe autonomy</strong> — every row that touches the outside world (MCPs, browser, CLIs, autonomy, paid review) defaults to off/none and configures through an explicit <code>questions.md</code> answer recorded in <code>decisions/answers.md</code>.</p>
+    </section>
+
+    <hr>
+
+    <section id="maintainer-guide">
+      <h2>34. Maintainer guide</h2>
+      <p>For changing the kit itself (not a target project). The kit's own conventions follow the same philosophy it installs: canonical rules live in one place, summaries link to them, and CI enforces the mechanical invariants.</p>
+
+      <h3>End-to-end workflow (what the kit produces)</h3>
+      <pre><code>developer picks/describes task
+   → spec-author writes requirements.html + design.html + tasks.html
+        (visual evidence, freshness, security, docs targets as applicable)
+   → ⛔ human approval (spec_ready → human_approved; humans only)
+   → implementer codes within scope (gate hooks enforce if enabled)
+   → tests / lint / typecheck / run-and-verify
+   → reviewer: traceability, checklist §1–§9, spec drift, high-risk rungs
+        → review.html (+ visual verification, documentation decision, proposals)
+   → documenter updates targets → reviewer re-checks docs
+   → developer approves proposed decision-log/memory entries (or not)
+   → done → history.html entry (docs updated, decisions recorded)</code></pre>
+
+      <h3>Maintainer checklist</h3>
+      <ol>
+        <li><strong>One canonical home per rule.</strong> Deep policy goes in <code>reference/</code> or the relevant skill; <code>README</code>/<code>CLAUDE.md.template</code> carry a summary plus a link. If you are pasting the same paragraph into a third file, restructure instead.</li>
+        <li><strong>Keep the mirrors in sync:</strong> <code>README.md</code> ↔ <code>README.html</code> section for section; templates ↔ reviewer checklist ↔ reviewer agent output list; <code>questions.md</code> defaults ↔ <code>instructions.md</code> Safe default profile YAML.</li>
+        <li><strong>Append, don't renumber.</strong> New <code>questions.md</code> sections and <code>DOCUMENTATION.html</code> sections go at the end — section numbers are cited across the kit and in recorded answers.</li>
+        <li><strong>New optional feature?</strong> It needs all of: a <code>questions.md</code> entry with a safe default, an <code>instructions.md</code> install step, a row in the feature matrix (<a href="#feature-matrix">§33</a>), optionality stated in its own file, both READMEs, and a <code>DOCUMENTATION.html</code> section.</li>
+        <li><strong>New hook?</strong> Classify it in <code>hooks/hooks-policy.md</code> (advisory/blocking/mutating/dangerous), ship it disabled, add a settings snippet, fail open on missing <code>jq</code>, pipe every <code>jq -r</code> capture through <code>tr -d '\r'</code> (Windows CRLF), and shellcheck it.</li>
+        <li><strong>Verify before documenting Claude Code behavior.</strong> Hook APIs, command names, MCP scoping syntax — check against the current official docs; record names capability-level with a re-verify note. Do not document undocumented features.</li>
+        <li><strong>After adding/renaming/deleting kit files:</strong> <code>git add</code> first, then <code>scripts/update-manifest.sh</code> (it reads <code>git ls-files</code>), then commit the regenerated <code>manifest.md</code>.</li>
+        <li><strong>Run the CI checks locally</strong> before pushing: stale spec-artifact <code>.md</code> references, <code>&#123;&#123;PLACEHOLDER&#125;&#125;</code> allowlist (templates/ and a short list only — <code>&lt;angle&gt;</code> tokens elsewhere), manifest diff, shellcheck on hook/kit scripts.</li>
+        <li><strong>Safety gates are not refactorable.</strong> Any change that would let a feature write memory, mutate git/remote state, or advance SDD state without explicit approval is a design regression, not a simplification — see the matrix corollary (<a href="#feature-matrix">§33</a>).</li>
+        <li><strong>English is canonical</strong> for every reusable kit file; generated project artifacts may use the project's language.</li>
+      </ol>
+
+      <h3>Recommended configurations</h3>
+      <p>The onboarding defaults profile and the per-repository-type deviations (frontend app, backend API, library, monorepo) live in <a href="#onboarding-defaults">§31</a> — maintainers extending the kit should add new capabilities to that section's tables as well.</p>
     </section>
 
   </main>

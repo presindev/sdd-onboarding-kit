@@ -125,6 +125,28 @@
 
     <hr>
 
+    <section id="what-gets-installed">
+      <h2>What gets installed?</h2>
+      <p><strong>Installed by default</strong> (every onboarding):</p>
+      <ul>
+        <li>A short, project-specific <code>CLAUDE.md</code> generated from the kit's template — links out, never duplicates skill bodies.</li>
+        <li><code>.claude/agents/</code>: leader, spec-author, implementer, reviewer, documenter.</li>
+        <li><code>.claude/skills/sdd-workflow/</code>: the core SDD skill with workflow, state machine, review checklist, and spec templates.</li>
+        <li><code>specs/</code> (with the spec CSS/JS), <code>tasks.json</code>, <code>history.html</code>, <code>decisions/answers.md</code>, and the project map.</li>
+        <li>Validation scripts adapted to the project.</li>
+      </ul>
+      <p><strong>Optional — only with your explicit selection:</strong></p>
+      <ul>
+        <li>Any of the ten skill packs (§14 of <code>questions.md</code>).</li>
+        <li>Hooks — shipped as examples, never enabled without approval.</li>
+        <li>MCPs — none configured by default; the browser-tester agent scopes Playwright to itself when chosen.</li>
+        <li>Decision-log files, git text templates, autonomy beyond read-only monitoring, paid deep-review modes.</li>
+      </ul>
+      <p>Nothing in the kit phones home, stores credentials, or enables external access by itself — the default install is fully local.</p>
+    </section>
+
+    <hr>
+
     <section id="key-files">
       <h2>Key files</h2>
       <table>
@@ -153,7 +175,7 @@
 
     <section id="optional-skills">
       <h2>Optional skills</h2>
-      <p>Beyond the core <code>sdd-workflow</code> skill, the kit ships nine optional skill packs under <a href="skills/optional/README.md"><code>skills/optional/</code></a>: <code>context-audit</code>, <code>project-map</code>, <code>run-and-verify</code>, <code>dependency-freshness</code>, <code>git-discipline</code>, <code>decision-log</code>, <code>documentation-update</code>, <code>failure-learning</code>, and <code>ui-qa</code>. None is installed by default — onboarding asks which packs the project needs, and installed skills are listed in <code>CLAUDE.md</code> by name only (their instructions load when invoked). All packs are advisory or permission-gated. See the <code>Skill packs</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+      <p>Beyond the core <code>sdd-workflow</code> skill, the kit ships ten optional skill packs under <a href="skills/optional/README.md"><code>skills/optional/</code></a>: <code>context-audit</code>, <code>project-map</code>, <code>run-and-verify</code>, <code>dependency-freshness</code>, <code>git-discipline</code>, <code>decision-log</code>, <code>documentation-update</code>, <code>failure-learning</code>, <code>ui-qa</code>, and <code>spec-from-screenshot</code>. None is installed by default — onboarding asks which packs the project needs, and installed skills are listed in <code>CLAUDE.md</code> by name only (their instructions load when invoked). All packs are advisory or permission-gated. See the <code>Skill packs</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
       <p>The <code>run-and-verify</code> pack is special: onboarding <strong>generates a project-specific run/verify recipe</strong> — the project's real dev-server/test/lint/typecheck/build commands, required services, environment variable names (never secret values), and how to verify UI or API behavior. Unknown commands are recorded as TODOs, never invented, and the reviewer validates implementations through this recipe. See the <code>Run and verify skill</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
       <p>The kit also includes <strong>freshness checks for external APIs and dependencies</strong>: changes that touch external dependencies, SDKs, APIs, or framework configuration are verified against current documentation, with the evidence recorded in the spec, and the reviewer can block high-risk changes (auth, payments, migrations, cloud infrastructure, framework upgrades, security-sensitive code) that lack it. Purely internal changes are unaffected. See <a href="reference/dependency-freshness-policy.md"><code>reference/dependency-freshness-policy.md</code></a> and the <code>Dependency and API freshness</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
     </section>

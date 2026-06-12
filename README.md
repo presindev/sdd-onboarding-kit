@@ -50,6 +50,25 @@ Read `sdd-onboarding-kit/instructions.md` and configure this repository to use S
 
 Claude Code will inspect the repository, ask you the configuration questions from `questions.md`, and generate a complete project-specific SDD harness.
 
+## What gets installed?
+
+**Installed by default** (every onboarding):
+
+- A short, project-specific `CLAUDE.md` generated from the kit's template — links out, never duplicates skill bodies.
+- `.claude/agents/`: leader, spec-author, implementer, reviewer, documenter.
+- `.claude/skills/sdd-workflow/`: the core SDD skill with workflow, state machine, review checklist, and spec templates.
+- `specs/` (with the spec CSS/JS), `tasks.json`, `history.html`, `decisions/answers.md`, and the project map.
+- Validation scripts adapted to the project.
+
+**Optional — only with your explicit selection:**
+
+- Any of the ten skill packs (§14 of `questions.md`).
+- Hooks — shipped as examples, never enabled without approval.
+- MCPs — none configured by default; the browser-tester agent scopes Playwright to itself when chosen.
+- Decision-log files, git text templates, autonomy beyond read-only monitoring, paid deep-review modes.
+
+Nothing in the kit phones home, stores credentials, or enables external access by itself — the default install is fully local.
+
 ## Key files
 
 | File | Purpose |
@@ -71,7 +90,7 @@ Claude Code will inspect the repository, ask you the configuration questions fro
 
 ## Optional skills
 
-Beyond the core `sdd-workflow` skill, the kit ships nine optional skill packs under [`skills/optional/`](skills/optional/README.md): `context-audit`, `project-map`, `run-and-verify`, `dependency-freshness`, `git-discipline`, `decision-log`, `documentation-update`, `failure-learning`, and `ui-qa`. None is installed by default — onboarding asks which packs the project needs, and installed skills are listed in `CLAUDE.md` by name only (their instructions load when invoked). All packs are advisory or permission-gated. See the `Skill packs` section in `DOCUMENTATION.html`.
+Beyond the core `sdd-workflow` skill, the kit ships ten optional skill packs under [`skills/optional/`](skills/optional/README.md): `context-audit`, `project-map`, `run-and-verify`, `dependency-freshness`, `git-discipline`, `decision-log`, `documentation-update`, `failure-learning`, `ui-qa`, and `spec-from-screenshot`. None is installed by default — onboarding asks which packs the project needs, and installed skills are listed in `CLAUDE.md` by name only (their instructions load when invoked). All packs are advisory or permission-gated. See the `Skill packs` section in `DOCUMENTATION.html`.
 
 The `run-and-verify` pack is special: onboarding **generates a project-specific run/verify recipe** — the project's real dev-server/test/lint/typecheck/build commands, required services, environment variable names (never secret values), and how to verify UI or API behavior. Unknown commands are recorded as TODOs, never invented, and the reviewer validates implementations through this recipe. See the `Run and verify skill` section in `DOCUMENTATION.html`.
 
@@ -87,7 +106,7 @@ Durable knowledge lives in versioned artifacts, not chat history. Onboarding alw
 
 ## Hooks
 
-The kit ships example hooks under [`hooks/examples/`](hooks/hooks-policy.md) that support the SDD workflow deterministically: blocking implementation before spec approval, validating spec files before status changes, suggesting targeted checks after edits, detecting spec drift against the approved task scope, pre-compact capture reminders, and failure-learning suggestions. **All hooks are optional and disabled by default** — they are examples until explicitly configured in `.claude/settings.json`, and every hook is classified (advisory / blocking / mutating / dangerous) in `hooks/hooks-policy.md`. The kit ships no mutating or dangerous hooks. See the `Hooks` section in `DOCUMENTATION.html`.
+The kit ships example hooks under `hooks/examples/` (policy: [`hooks/hooks-policy.md`](hooks/hooks-policy.md)) that support the SDD workflow deterministically: blocking implementation before spec approval, validating spec files before status changes, suggesting targeted checks after edits, detecting spec drift against the approved task scope, pre-compact capture reminders, and failure-learning suggestions. **All hooks are optional and disabled by default** — they are examples until explicitly configured in `.claude/settings.json`, and every hook is classified (advisory / blocking / mutating / dangerous) in `hooks/hooks-policy.md`. The kit ships no mutating or dangerous hooks. See the `Hooks` section in `DOCUMENTATION.html`.
 
 ## Optional browser testing
 

@@ -159,17 +159,22 @@
           <tbody>
             <tr>
               <td><span class="badge badge-ok">approved</span></td>
-              <td>Task can move to <code>done</code>.</td>
-              <td>☐</td>
-            </tr>
-            <tr>
-              <td><span class="badge badge-blocking">rejected</span></td>
-              <td>Blocking defects found; return to <code>in_progress</code>.</td>
+              <td>Task can move to <code>done</code> (once documentation is <code>updated</code> or <code>not_required</code> and non-blocking findings are resolved or explicitly deferred).</td>
               <td>☐</td>
             </tr>
             <tr>
               <td><span class="badge badge-warning">needs_changes</span></td>
-              <td>Non-blocking fixes required before <code>done</code>.</td>
+              <td>Implementation defects; return to <code>in_progress</code>.</td>
+              <td>☐</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-blocking">spec_revision_required</span></td>
+              <td>Spec is wrong or incomplete; return to <code>spec_draft</code>.</td>
+              <td>☐</td>
+            </tr>
+            <tr>
+              <td><span class="badge badge-warning">blocked</span></td>
+              <td>External input needed; set status to <code>blocked</code>.</td>
               <td>☐</td>
             </tr>
           </tbody>
