@@ -51,6 +51,7 @@
 - `reference/claude-code-primitives.md`
 - `reference/cli-vs-mcp-policy.md`
 - `reference/context-economy.md`
+- `reference/deep-review-policy.md`
 - `reference/dependency-freshness-policy.md`
 - `reference/harness-engineering.md`
 - `reference/memory-policy.md`

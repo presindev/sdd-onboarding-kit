@@ -195,6 +195,13 @@
 
     <hr>
 
+    <section id="deep-review">
+      <h2>High-risk changes get deeper review</h2>
+      <p>Some changes deserve more than the standard reviewer pass: security-sensitive code, auth, payments, database migrations, infrastructure, public APIs, large refactors, data-loss risks. For those, the kit recommends an escalation ladder — a security-focused pass, then independent adversarial reviewers, then (only if available and approved) paid deep-review modes. Deep review <strong>supplements</strong> the SDD reviewer, never replaces it, and the kit never assumes paid features are available. See <a href="reference/deep-review-policy.md"><code>reference/deep-review-policy.md</code></a> and the <code>Deep review policy</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+    </section>
+
+    <hr>
+
     <section id="autonomy">
       <h2>Autonomy is opt-in</h2>
       <p>Autonomous workflows (loops, goals, scheduled routines, background or headless runs) are <strong>controlled execution, not blanket permission</strong>. They are fine for monitoring CI, checking deployment status, and repeated read-only verification — always with explicit stop conditions — but they can never deploy, migrate, merge, push to protected branches, or mark a task <code>done</code>: SDD state transitions stay human-gated. See <a href="reference/autonomy-policy.md"><code>reference/autonomy-policy.md</code></a> and the <code>Autonomy policy</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>

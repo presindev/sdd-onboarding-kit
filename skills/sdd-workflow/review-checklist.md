@@ -67,7 +67,21 @@ For every functional requirement:
 - [ ] No trivial decisions were flagged; proposed entries contain no secrets or sensitive operational data.
 - [ ] Nothing was written to a decision log without developer approval of the entry text.
 
-## 9. Decision
+## 9. High-risk review
+
+Applies when the change touches a high-risk category: security-sensitive
+code, authentication/authorization, payment flows, database migrations,
+infrastructure/deployment, public API changes, large cross-cutting
+refactors, or data-loss risks (full policy:
+`reference/deep-review-policy.md`).
+
+- [ ] High-risk categories touched by this change are identified, or `None` is recorded.
+- [ ] For each category touched, a deeper review ran: at minimum a security-focused pass for security-relevant changes, and an adversarial second pass (independent reviewer per lens: security, correctness/edge cases, performance) where feasible.
+- [ ] Paid/limited review modes (cloud deep review, automated PR review services) were used only with explicit developer approval — and their absence did not block the task (the adversarial pass is the accepted substitute, with the substitution noted).
+- [ ] The deep-review output covers: security findings, performance findings, edge cases, reproduction attempts (reproduced vs theoretical, labeled), and a remediation plan with severities.
+- [ ] A high-risk change reviewed only at the standard level has the reason recorded in `review.html`.
+
+## 10. Decision
 
 Choose exactly one:
 

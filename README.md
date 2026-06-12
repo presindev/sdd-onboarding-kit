@@ -97,6 +97,10 @@ For projects with a browser UI, onboarding can install a **browser-tester subage
 
 The kit is **local-first**: it works fully with no external MCP and no external CLI. MCPs are optional and configured only on explicit approval. Where both could do a job, the kit prefers the narrower tool — a single permission-gated CLI call for one-off reads (PR metadata, deployment status), a scoped MCP for structured or repeated access — and any CLI command that mutates remote state requires explicit per-action permission. See [`reference/cli-vs-mcp-policy.md`](reference/cli-vs-mcp-policy.md) and the `CLI vs MCP` section in `DOCUMENTATION.html`.
 
+## High-risk changes get deeper review
+
+Some changes deserve more than the standard reviewer pass: security-sensitive code, auth, payments, database migrations, infrastructure, public APIs, large refactors, data-loss risks. For those, the kit recommends an escalation ladder — a security-focused pass, then independent adversarial reviewers, then (only if available and approved) paid deep-review modes. Deep review **supplements** the SDD reviewer, never replaces it, and the kit never assumes paid features are available. See [`reference/deep-review-policy.md`](reference/deep-review-policy.md) and the `Deep review policy` section in `DOCUMENTATION.html`.
+
 ## Autonomy is opt-in
 
 Autonomous workflows (loops, goals, scheduled routines, background or headless runs) are **controlled execution, not blanket permission**. They are fine for monitoring CI, checking deployment status, and repeated read-only verification — always with explicit stop conditions — but they can never deploy, migrate, merge, push to protected branches, or mark a task `done`: SDD state transitions stay human-gated. See [`reference/autonomy-policy.md`](reference/autonomy-policy.md) and the `Autonomy policy` section in `DOCUMENTATION.html`.
