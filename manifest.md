@@ -14,6 +14,7 @@
 - `agents/documenter.md`
 - `agents/implementer.md`
 - `agents/leader.md`
+- `agents/optional/browser-tester.md`
 - `agents/reviewer.md`
 - `agents/spec-author.md`
 - `decisions/answers.template.md`
@@ -43,6 +44,7 @@
 - `mcps/local-filesystem.md`
 - `mcps/mcp-policy.md`
 - `mcps/memory.md`
+- `mcps/playwright-policy.md`
 - `output-project-structure.md`
 - `questions.md`
 - `reference/claude-code-primitives.md`

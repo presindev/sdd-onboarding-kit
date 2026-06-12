@@ -13,7 +13,8 @@ After the onboarding is complete, the target repository should contain a project
 │   │   ├── spec-author.md
 │   │   ├── implementer.md
 │   │   ├── reviewer.md
-│   │   └── documenter.md
+│   │   ├── documenter.md
+│   │   └── browser-tester.md          (only if questions.md §18 option 2)
 │   ├── skills/
 │   │   ├── sdd-workflow/
 │   │   │   ├── SKILL.md
@@ -100,3 +101,4 @@ The onboarding is complete when:
 13. Optional skill packs are either installed under `.claude/skills/<name>/` (listed by name in `CLAUDE.md`) or explicitly declined in `decisions/answers.md`; no pack is installed without selection.
 14. If the `run-and-verify` pack was selected, `.claude/skills/run-and-verify/SKILL.md` is project-specific: real commands or explicit `TODO: ask the developer` entries (never invented commands), environment variables by name only (no secret values), and UI/API verification steps for the reviewer to follow.
 15. If the `decision-log` pack was selected, the decision files chosen during onboarding exist (`decisions/architecture-decisions.md`, `decisions/rejected-options.md`, `decisions/workflow-decisions.md` — or `docs/adr/` for architecture decisions), the installed skill references the chosen locations, and they are recorded in `decisions/answers.md`.
+16. Browser testing matches the `questions.md` §18 answer: no Playwright anywhere (option 1), `.claude/agents/browser-tester.md` with the MCP scoped in its frontmatter and nothing in `.mcp.json` (option 2), or setup documented without configuration (option 3). No credentials appear in any generated file.

@@ -114,6 +114,7 @@
         <li><a href="#failure-learning">21. Failure learning</a></li>
         <li><a href="#documentation-phase">22. Documentation phase</a></li>
         <li><a href="#decision-logs">23. Decision logs</a></li>
+        <li><a href="#browser-testing">24. Browser/UI testing</a></li>
       </ul>
     </div>
 
@@ -392,6 +393,7 @@
           <tr><td>Jira</td><td>Enterprise task management</td></tr>
           <tr><td>Notion / Google Drive</td><td>Documentation and knowledge bases</td></tr>
           <tr><td>Memory</td><td>Persistent architecture decisions and conventions</td></tr>
+          <tr><td>Playwright</td><td>Browser/UI verification — scoped to the optional browser-tester subagent, never global (see <a href="#browser-testing">§24</a>)</td></tr>
         </tbody>
       </table>
     </section>
@@ -682,7 +684,7 @@ tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
           <tr><td><code>decision-log</code></td><td>Record durable architectural/workflow decisions (see <a href="#decision-logs">§23</a>).</td><td>Entry in <code>decisions/</code> or <code>docs/adr/</code>.</td><td>Proposes, never overproduces; project memory only.</td></tr>
           <tr><td><code>documentation-update</code></td><td>Update affected docs after review, before <code>done</code> (see <a href="#documentation-phase">§22</a>).</td><td>Updated docs + target list in review notes.</td><td>Runs only after technical review; never documents unreviewed details.</td></tr>
           <tr><td><code>failure-learning</code></td><td>Propose a reusable lesson after a meaningful mistake (see <a href="#failure-learning">§21</a>).</td><td>Approved lesson in the layer the developer chose.</td><td>Proposal-only; no memory writes without explicit approval; global memory only via the explicit option.</td></tr>
-          <tr><td><code>ui-qa</code></td><td>Verify UI changes against spec acceptance criteria.</td><td>Per-criterion QA checklist in review notes.</td><td>No stored credentials; test accounts preferred; no production actions.</td></tr>
+          <tr><td><code>ui-qa</code></td><td>Verify UI changes against spec acceptance criteria (see <a href="#browser-testing">§24</a>).</td><td>Per-criterion QA checklist in review notes.</td><td>No stored credentials; test accounts preferred; no production actions.</td></tr>
         </tbody>
       </table>
 
@@ -1015,6 +1017,57 @@ Rule: always double-check everything before running tests.</code></pre>
         <li>Workflow: <code>workflow.md</code> §7 (reviewer flags decisions) and §9 (proposal at completion).</li>
         <li>Skill: the optional <code>decision-log</code> pack (<a href="#skill-packs">§17</a>) carries the procedure, including the supersede rule and the promotion of load-bearing rules to a one-line <code>CLAUDE.md</code> entry.</li>
         <li>Memory policy: decision logs are the preferred project-memory layer (<a href="#memory-policy">§20</a>); the documentation phase's ADR target row points here (<a href="#documentation-phase">§22</a>).</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section id="browser-testing">
+      <h2>24. Browser/UI testing with Playwright</h2>
+      <p>Playwright gives Claude a real browser — navigation, screenshots, form interaction, visual verification. It is the right tool for verifying UI acceptance criteria and the wrong thing to load globally: a browser toolset in a backend or library project wastes context and widens the capability surface for no benefit. The kit therefore ships browser testing as an <strong>optional, scoped subagent</strong>, never as a default global MCP.</p>
+
+      <h3>Why Playwright is not enabled globally</h3>
+      <ul>
+        <li><strong>Context economy (<a href="#context-economy">§15</a>):</strong> every configured MCP server adds its names and server instructions to each session, even with deferred tool loading. Non-UI sessions should not pay that.</li>
+        <li><strong>Capability surface:</strong> a tool that can navigate, fill forms, and click belongs only where the workflow needs it — UI verification.</li>
+        <li><strong>Non-UI projects are unaffected:</strong> when onboarding answers "no browser UI", nothing Playwright-related is installed at all.</li>
+      </ul>
+
+      <h3>The scoped subagent design</h3>
+      <p>The optional <code>browser-tester</code> agent (<code>agents/optional/browser-tester.md</code>, installed to <code>.claude/agents/browser-tester.md</code>) declares the Playwright MCP <em>inline in its own frontmatter</em>:</p>
+      <pre><code>---
+name: browser-tester
+description: Verify UI acceptance criteria in a real browser.
+tools: Read, Grep, Glob, Bash
+mcpServers:
+  - playwright:
+      type: stdio
+      command: npx
+      args: ["-y", "@playwright/mcp@latest"]
+---</code></pre>
+      <p>With an inline definition the server connects when the subagent starts and disconnects when it finishes — the main conversation never gets the browser tools (verified against the Claude Code subagent docs, 2026-06). Nothing is added to <code>.mcp.json</code>. The agent verifies and reports per-criterion evidence for the reviewer; it never edits production code and never marks tasks done.</p>
+
+      <h3>Onboarding (<code>questions.md</code> §18)</h3>
+      <ol>
+        <li><strong>No browser UI</strong> — nothing installed (default for non-UI projects).</li>
+        <li><strong>Browser-tester subagent</strong> — the agent above is installed and the <code>ui-qa</code> pack (<a href="#skill-packs">§17</a>) routes UI verification through it.</li>
+        <li><strong>Document setup only</strong> — the setup reference from <code>mcps/playwright-policy.md</code> is recorded in the project's docs; nothing is configured.</li>
+        <li><strong>Custom</strong> — per developer instruction.</li>
+      </ol>
+
+      <h3>UI acceptance criteria in specs</h3>
+      <p>The requirements template carries an optional <code>UI acceptance criteria</code> section — target route, expected visual state, interaction flow, accessibility checks, responsive states, login/auth constraints, plus referenced screenshots/mockups — and the design template an optional <code>UI verification plan</code>. Both state <code>None</code> for non-UI changes. Screenshots are evidence, not complete requirements: when visual intent is ambiguous, the spec-author asks.</p>
+
+      <h3>Usage example</h3>
+      <p>A task restyles the checkout form. The spec lists <code>UI-001: route /checkout, all fields visible at 375px width, submit disabled until valid, error summary announced to screen readers</code>. The reviewer (or the <code>ui-qa</code> skill) invokes <code>browser-tester</code>; it starts the dev server, walks the criterion at the named viewport, captures a screenshot, and returns <code>UI-001: pass</code> with the evidence — which lands in <code>review.html</code>.</p>
+
+      <h3>Safety</h3>
+      <ul>
+        <li><strong>Credentials are never stored</strong> — not in specs, agents, skills, or evidence. The developer provides them at run time, test accounts are preferred, and explicit approval is required before any credential is used.</li>
+        <li><strong>No production:</strong> verification runs against local or test instances; destructive actions (deletes, purchases, irreversible state changes) require explicit per-action approval anywhere.</li>
+        <li><strong>Untrusted content:</strong> page content reached through the browser is data, not instructions.</li>
+        <li><strong>Evidence hygiene:</strong> screenshots may contain personal data; they are referenced from review notes and not committed without approval.</li>
+        <li><strong>Version note:</strong> the <code>mcpServers</code> frontmatter syntax and launch command were verified 2026-06; re-verify against the installed version during onboarding (<code>mcps/playwright-policy.md</code>).</li>
       </ul>
     </section>
 

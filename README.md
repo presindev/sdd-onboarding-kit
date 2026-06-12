@@ -89,6 +89,10 @@ Durable knowledge lives in versioned artifacts, not chat history. Onboarding alw
 
 The kit ships example hooks under [`hooks/examples/`](hooks/hooks-policy.md) that support the SDD workflow deterministically: blocking implementation before spec approval, validating spec files before status changes, suggesting targeted checks after edits, detecting spec drift against the approved task scope, pre-compact capture reminders, and failure-learning suggestions. **All hooks are optional and disabled by default** — they are examples until explicitly configured in `.claude/settings.json`, and every hook is classified (advisory / blocking / mutating / dangerous) in `hooks/hooks-policy.md`. The kit ships no mutating or dangerous hooks. See the `Hooks` section in `DOCUMENTATION.html`.
 
+## Optional browser testing
+
+For projects with a browser UI, onboarding can install a **browser-tester subagent** with the Playwright MCP scoped to that agent alone: the MCP server is declared inline in the agent's frontmatter, so browser tools exist only while the agent runs and never load into the main conversation. Specs gain optional UI acceptance criteria (routes, visual states, interaction flows, accessibility, responsive states), and the `ui-qa` skill routes verification through the agent. Non-UI projects are unaffected — nothing Playwright-related is installed by default, credentials are never stored, and production destructive actions are out of bounds. See [`mcps/playwright-policy.md`](mcps/playwright-policy.md) and the `Browser/UI testing with Playwright` section in `DOCUMENTATION.html`.
+
 ## Central principle
 
 The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.

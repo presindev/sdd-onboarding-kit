@@ -101,7 +101,8 @@ After the developer answers, create or update the following in the target reposi
 │   │   ├── spec-author.md
 │   │   ├── implementer.md
 │   │   ├── reviewer.md
-│   │   └── documenter.md
+│   │   ├── documenter.md
+│   │   └── <browser-tester.md, if questions.md §18 selected it>
 │   ├── skills/
 │   │   ├── sdd-workflow/
 │   │   │   ├── SKILL.md
@@ -188,6 +189,10 @@ Copy and adapt:
 - `agents/documenter.md` to `.claude/agents/documenter.md`
 
 If the project already has agents with these names, merge carefully or ask before overwriting.
+
+### Optional browser tester
+
+Only if the developer chose option 2 in `questions.md` §18, copy and adapt `agents/optional/browser-tester.md` to `.claude/agents/browser-tester.md`. The Playwright MCP stays declared inline in the agent's frontmatter — do not add it to `.mcp.json` (see `mcps/playwright-policy.md`). Verify the frontmatter `mcpServers` syntax and the Playwright launch command against the installed Claude Code version before finalizing the file. For option 3, record the setup reference in the project's docs without configuring anything.
 
 ### Skill
 

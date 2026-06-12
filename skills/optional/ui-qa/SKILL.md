@@ -11,10 +11,15 @@ Check that UI changes match their spec's acceptance criteria — routes,
 visual states, interaction flows, responsive behavior, and accessibility —
 and record the evidence.
 
-> Roadmap note (kit-internal): a later kit version adds an optional
-> browser-tester subagent with a scoped Playwright MCP; this v1 uses the
-> verification means already available in the project (dev server, manual
-> steps, existing UI test commands, developer-provided screenshots).
+Two execution paths:
+
+- **Browser-tester agent** (when installed — `questions.md` §18 option 2):
+  invoke the `browser-tester` subagent to walk the criteria in a real
+  browser through its scoped Playwright MCP. Browser tools exist only
+  inside that agent (see `mcps/playwright-policy.md` in the kit).
+- **Manual path** (always available): use the verification means already
+  in the project — dev server, manual steps, existing UI test commands,
+  developer-provided screenshots.
 
 ## When to use
 
@@ -39,6 +44,11 @@ and record the evidence.
 
 ## Procedure
 
+0. If the project has the `browser-tester` agent installed
+   (`.claude/agents/browser-tester.md`), invoke it with the spec's UI
+   acceptance criteria — it executes steps 1–3 in a real browser and
+   returns the per-criterion checklist. Continue manually only for
+   criteria it could not verify.
 1. Start the UI with the project's dev command (or use the running
    instance the developer points to).
 2. Walk each acceptance criterion: navigate to the target route, perform
