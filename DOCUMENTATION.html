@@ -121,6 +121,7 @@
         <li><a href="#visual-evidence">28. Screenshots and visual evidence</a></li>
         <li><a href="#git-discipline">29. Git discipline</a></li>
         <li><a href="#session-recovery">30. Session recovery</a></li>
+        <li><a href="#onboarding-defaults">31. Onboarding questions and defaults</a></li>
       </ul>
     </div>
 
@@ -1317,6 +1318,48 @@ mcpServers:
 
       <h3>SDD constraints</h3>
       <p>Rewind and resume never change task state: transitions go through the normal workflow only (<a href="#task-lifecycle">§5</a>). Restored context does not revive expired approvals — if the spec changed after the restored checkpoint, the spec on disk is authoritative and approval status is whatever <code>tasks.json</code> says. Recovery features are session conveniences, not audit trails: the artifacts and git history remain the record.</p>
+    </section>
+
+    <hr>
+
+    <section id="onboarding-defaults">
+      <h2>31. Onboarding questions and defaults</h2>
+      <p>The kit does not assume every project needs every capability. Onboarding decides — per repository — what to install, what to leave documented, and what to omit. <code>questions.md</code> now covers all of it (§1–§23: SDD scope through session recovery), and three mechanics keep it from overwhelming anyone: questions are asked <strong>section by section</strong> with inferred answers batched for one confirmation; sections for unselected packs/features are skipped entirely; and a <strong>recommended defaults profile</strong> is offered as a single question up front.</p>
+
+      <h3>The recommended defaults profile, with rationale</h3>
+      <table>
+        <thead>
+          <tr><th>Default</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Local-first</strong> — no external MCPs or CLIs required</td><td>The harness must work everywhere; external access is capability added on top, never a dependency (<a href="#cli-vs-mcp">§25</a>).</td></tr>
+          <tr><td><strong>Human approval required</strong> before implementation</td><td>The approval gate is what makes SDD specs meaningful; without it the state machine is decoration (<a href="#task-lifecycle">§5</a>).</td></tr>
+          <tr><td><strong>Reviewer required</strong> before <code>done</code></td><td>Traceability is verified, not assumed (<a href="#subagents">§7</a>).</td></tr>
+          <tr><td><strong>Docs phase enabled</strong></td><td>Documentation drift is the default failure mode of fast iteration; the phase makes "done" include docs (<a href="#documentation-phase">§22</a>).</td></tr>
+          <tr><td><strong>Failure-learning proposals enabled, no automatic writes</strong></td><td>Lessons are cheap to propose and dangerous to auto-write; memory stays under explicit approval, global memory doubly so (<a href="#memory-policy">§20</a>, <a href="#failure-learning">§21</a>).</td></tr>
+          <tr><td><strong>Playwright disabled</strong> unless frontend detected and opted in</td><td>Non-UI projects should carry zero browser surface; UI projects get it scoped to one subagent (<a href="#browser-testing">§24</a>).</td></tr>
+          <tr><td><strong>External MCPs disabled</strong> unless opted in</td><td>Standing tool surface costs context and trust; add it when a workflow earns it (<a href="#mcp-integrations">§9</a>, <a href="#cli-vs-mcp">§25</a>).</td></tr>
+          <tr><td><strong>Autonomy disabled</strong> except documented read-only monitoring</td><td>Autonomy is controlled execution; monitoring with stop conditions is the only rung that is safe by construction (<a href="#autonomy-policy">§26</a>).</td></tr>
+          <tr><td><strong>Git mutations require explicit permission</strong></td><td>Git is where an assistant does the most accidental damage; reads are free, writes are asked (<a href="#git-discipline">§29</a>).</td></tr>
+        </tbody>
+      </table>
+      <p>Accepting the profile reduces onboarding to what genuinely cannot be defaulted: the project's commands (<code>questions.md</code> §7), protected files (§11), SDD scope (§1), and any section the developer flags as a deviation. The acceptance itself is recorded in <code>decisions/answers.md</code>.</p>
+
+      <h3>Example profiles</h3>
+      <table>
+        <thead>
+          <tr><th>Repository</th><th>Typical deviations from the defaults</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Frontend app</strong></td><td>Browser testing on (§18 option 2: browser-tester + scoped Playwright MCP) with <code>ui-qa</code> + <code>spec-from-screenshot</code> packs; visual acceptance criteria in specs; everything else stays default.</td></tr>
+          <tr><td><strong>Backend API</strong></td><td><code>run-and-verify</code> + <code>dependency-freshness</code> packs; freshness strictness often raised to "all external changes" (§16 option 2); deep review required (not just recommended) for auth/payments/migrations (§21); no Playwright.</td></tr>
+          <tr><td><strong>Library</strong></td><td>Docs phase strict (public API docs + changelog are first-class targets); deep review recommended for public API changes; task storage often external (issues); no browser testing, minimal hooks.</td></tr>
+          <tr><td><strong>Monorepo</strong></td><td>Protected areas per package (§11); targeted-validation hook mapping file paths to per-package checks (§8); project map pack strongly suggested; SDD scope often narrowed to <code>sdd: true</code> tasks to avoid spec overhead on small cross-package chores.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Where each capability is asked</h3>
+      <p>For reference: optional packs §14, project map §12, run/verify generation §15, freshness strictness §16, decision logs/ADRs §17, browser testing §18, failure learning and memory scope §19, documentation phase §20, deep review §21, autonomy §22, session recovery §23, CLI-vs-MCP preference §10, git policy §8, hooks §9. New capabilities land as new numbered sections so existing answer records stay valid.</p>
     </section>
 
   </main>

@@ -2,7 +2,22 @@
 
 Claude Code must use this file to ask the developer about project-specific SDD decisions.
 
-Ask only unanswered questions. If the repository already provides a reliable answer, state the inferred answer and ask for confirmation only if the decision is risky.
+Ask only unanswered questions. If the repository already provides a reliable answer, state the inferred answer and ask for confirmation only if the decision is risky. Keep onboarding concise: ask section by section (not question by question), batch inferred answers into a single confirmation list, and skip sections whose packs/features were not selected.
+
+## Recommended defaults profile
+
+Before walking the sections, offer the profile in one question: *"Apply the recommended defaults and only go through the questions where you want something different?"* The profile (full YAML in `instructions.md`, `Safe default profile`):
+
+- **Local-first** — no external MCPs, no external CLIs required; everything works from local artifacts.
+- **Human approval required** before implementation; reviewer required before `done`.
+- **Documentation phase enabled** — a task is not `done` while required docs are pending.
+- **Failure-learning proposals enabled**, but no memory write ever happens automatically — and never to global memory without explicit approval of the exact entry.
+- **Playwright/browser testing disabled** unless a frontend is detected *and* the developer opts in (§18).
+- **External MCPs disabled** unless explicitly opted in (§10).
+- **Autonomy disabled** except documented read-only monitoring with explicit stop conditions (§22).
+- **Git mutations require explicit permission** — no commit/push/merge unless asked (§8).
+
+If the developer accepts the profile, ask only: the §7 commands (never inferable safely), §11 protected files, §1 SDD scope, and any section they flag as a deviation. Record the acceptance in `decisions/answers.md`.
 
 ## 1. Scope of SDD
 
@@ -295,3 +310,72 @@ Notes:
   explicit approval before any credential is used; no production
   destructive actions.
 - Record the choice in `decisions/answers.md`.
+
+## 19. Failure learning and memory scope
+
+Memory rules come from `reference/memory-policy.md`: no memory write —
+project or global — without explicit approval of the exact entry text.
+
+1. Should Claude propose a reusable lesson after a meaningful mistake?
+   (Default: yes — proposals only; the `failure-learning` pack from §14
+   adds the procedure and the suggestion hook is separate, §9.)
+2. Where should accepted lessons live? (Default: project memory —
+   `decisions/failure-learnings.md`; global memory only when the
+   developer explicitly approves that specific entry for all projects.)
+3. May Claude ever write memory without showing the exact entry text
+   first? (Default: no. This default should not be weakened.)
+
+## 20. Documentation phase
+
+1. Should the documentation phase be enabled — reviewer decides whether
+   docs are required, documenter updates them, task is not `done` while
+   required docs are pending? (Default: yes.)
+2. Which documentation targets exist in this project (README, API docs,
+   setup docs, changelog, ADRs, migration notes, user-facing docs)?
+   Inferred from the repository; confirm the list.
+3. For prototypes/solo projects: should the phase be relaxed to
+   advisory? (Default: no; if relaxed, record it in
+   `decisions/workflow-decisions.md`.)
+
+## 21. Deep review
+
+Policy: `reference/deep-review-policy.md`. Deep review supplements the
+SDD reviewer; rungs 1–2 of the escalation ladder use included features
+only.
+
+1. Keep deep review recommended (not required) for the high-risk
+   categories? (Default: yes — recommended; the reviewer records which
+   rungs ran.)
+2. Should any category *require* the adversarial second pass (rung 2)
+   instead of just recommending it? (Default: no; common stricter
+   choice: auth/payments/migrations.)
+3. May paid/limited review modes (cloud deep review, automated PR
+   review) ever be used? (Default: only with explicit developer
+   approval per invocation; never assumed available.)
+
+## 22. Autonomy
+
+Policy: `reference/autonomy-policy.md`. Autonomy is controlled
+execution, not blanket permission; no autonomous workflow can advance
+SDD state or mark work complete.
+
+1. Are autonomous workflows (loops, goals, scheduled routines,
+   background/headless runs) allowed at all? (Default: only documented
+   read-only monitoring — CI watching, deployment status, repeated
+   read-only verification — each with explicit stop conditions.)
+2. Which monitoring use cases apply to this project, if any?
+3. Any relaxation beyond read-only monitoring requires a recorded
+   entry in `decisions/workflow-decisions.md` — who may approve it?
+   (Default: the developer, per workflow.)
+
+## 23. Session recovery
+
+Guidance: `reference/session-recovery.md`. The generated `CLAUDE.md`
+carries the standing rule (inspect durable artifacts after
+resume/rewind/compaction; the artifact wins).
+
+1. Keep the session-recovery rule in the project's `CLAUDE.md`?
+   (Default: yes.)
+2. Should the pre-compact capture hook also be enabled to remind about
+   durable artifacts before compaction? (Default: no — hooks are
+   opt-in; decide in §9.)

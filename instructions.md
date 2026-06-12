@@ -65,9 +65,12 @@ You must not assume:
 - whether to create branches, commits or pull requests;
 - whether tasks may be skipped as too small for SDD;
 - which optional skill packs to install;
-- how strictly dependency/API freshness verification should be enforced.
+- how strictly dependency/API freshness verification should be enforced;
+- whether autonomous workflows are allowed beyond read-only monitoring;
+- whether deep review is required (vs recommended) for any category;
+- whether the documentation phase may be relaxed.
 
-If the developer wants a default recommendation, propose the safe default profile in this file.
+If the developer wants a default recommendation, propose the safe default profile in this file (offered as a single question first — see the `Recommended defaults profile` block at the top of `questions.md`; if accepted, ask only the §7 commands, §11 protected files, §1 SDD scope, and flagged deviations).
 
 ## Safe default profile
 
@@ -80,13 +83,22 @@ requirements_format: EARS
 task_storage: local_tasks_json
 spec_storage: specs/<feature-slug>/
 history_storage: history.html
-mcp_profile: none_by_default
+local_first: true                  # no external MCPs or CLIs required
+mcp_profile: none_by_default       # external MCPs only on explicit opt-in
 hooks_profile: recommend_but_do_not_enable_without_approval
 git_branch_policy: ask_before_creating_branch
 git_commit_policy: ask_before_committing
+git_mutations: explicit_permission_per_action
 tests_required_before_done: true
 reviewer_required_before_done: true
+documentation_phase: enabled       # not done while required docs pending
 dependency_freshness_policy: required_for_high_risk_categories
+failure_learning: proposals_enabled_no_automatic_writes
+memory_scope: project_default_global_only_with_explicit_approval
+browser_testing: disabled_unless_frontend_detected_and_opted_in
+autonomy: disabled_except_documented_readonly_monitoring
+deep_review: recommended_for_high_risk_paid_modes_per_invocation_approval
+session_recovery_rule: enabled_in_claude_md
 ```
 
 ## Phase 3 — Generate the project SDD harness
