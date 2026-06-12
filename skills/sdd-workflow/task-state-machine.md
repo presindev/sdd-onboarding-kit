@@ -67,7 +67,15 @@ Allowed next states:
 
 ### `review`
 
-Implementation is complete and under validation.
+Implementation is complete and under validation. The documentation phase also happens in this state: after approving the implementation, the reviewer decides whether documentation is required, the documenter updates the listed targets, and the reviewer re-checks them. The phase is tracked with task fields, not extra states:
+
+```json
+{
+  "documentation_required": true,
+  "documentation_status": "pending|updated|not_required",
+  "documentation_targets": []
+}
+```
 
 Allowed next states:
 
@@ -110,6 +118,7 @@ Allowed next states:
 
 - Never transition from `spec_ready` to `in_progress` directly if human approval is mandatory.
 - Never transition to `done` without reviewer approval.
+- Never transition to `done` while `documentation_required` is `true` and `documentation_status` is `pending`.
 - Never transition to `done` with failing tests unless the developer explicitly accepts this exception.
 - Record human approval metadata when moving to `human_approved`.
 - Record reviewer decision when moving to `done`, `rejected` or `in_progress` after review.

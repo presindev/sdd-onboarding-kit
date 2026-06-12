@@ -27,6 +27,9 @@
         "approved_at": null,
         "notes": null
       },
+      "documentation_required": null,
+      "documentation_status": "pending",
+      "documentation_targets": [],
       "links": {
         "issue": null,
         "pr": null,

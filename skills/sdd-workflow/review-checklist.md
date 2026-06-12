@@ -53,7 +53,15 @@ For every functional requirement:
 - [ ] External inputs are validated.
 - [ ] External dependency/SDK/API/framework changes carry freshness evidence (docs checked with source and date, version constraints, deprecated APIs avoided) in the design's `External dependencies and freshness` section or in the review. Purely internal changes state `None`.
 
-## 7. Decision
+## 7. Documentation
+
+- [ ] A documentation decision is recorded: required (with targets) or not required.
+- [ ] If required: each target was updated by the documenter or justified as unaffected.
+- [ ] Updated docs match the reviewed implementation — no unmerged, rejected, or speculative details.
+- [ ] No secrets or internal-only URLs appear in updated documentation.
+- [ ] The task is not marked `done` while `documentation_status` is `pending` and documentation is required.
+
+## 8. Decision
 
 Choose exactly one:
 
@@ -62,4 +70,4 @@ Choose exactly one:
 - `spec_revision_required`
 - `blocked`
 
-A review cannot be `approved` if a blocking requirement has no implementation or test evidence, or if a high-risk external change (auth, payments, database migrations, cloud infrastructure, framework upgrades, security-sensitive code) lacks the required freshness evidence.
+A review cannot be `approved` if a blocking requirement has no implementation or test evidence, or if a high-risk external change (auth, payments, database migrations, cloud infrastructure, framework upgrades, security-sensitive code) lacks the required freshness evidence. A task cannot be marked `done` while required documentation is pending.

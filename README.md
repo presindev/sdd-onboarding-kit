@@ -30,7 +30,8 @@ When the harness is installed, Claude Code works like this:
 4. Claude implements only against the approved spec.
 5. Claude runs tests and validation.
 6. Claude reviews traceability between requirements, design, tasks, code and tests.
-7. The task is marked done or returned for correction.
+7. When the change affects documentation, a documenter updates the affected docs after review — a task is not complete while required documentation is stale.
+8. The task is marked done or returned for correction.
 
 ## How to use this kit
 
@@ -55,7 +56,7 @@ Claude Code will inspect the repository, ask you the configuration questions fro
 |---|---|
 | `instructions.md` | Step-by-step procedure Claude Code follows to install the harness |
 | `questions.md` | Project-specific decisions Claude must ask before writing files |
-| `agents/` | Subagent templates: leader, spec-author, implementer, reviewer |
+| `agents/` | Subagent templates: leader, spec-author, implementer, reviewer, documenter |
 | `skills/sdd-workflow/` | Full SDD workflow skill (copied to `.claude/skills/`) |
 | `skills/optional/` | Optional skill packs, installed only when selected during onboarding |
 | `hooks/` | Hook policies, settings snippets and example hook scripts |

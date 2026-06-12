@@ -112,6 +112,7 @@
         <li><a href="#dependency-freshness">19. Dependency freshness</a></li>
         <li><a href="#memory-policy">20. Memory policy</a></li>
         <li><a href="#failure-learning">21. Failure learning</a></li>
+        <li><a href="#documentation-phase">22. Documentation phase</a></li>
       </ul>
     </div>
 
@@ -152,7 +153,7 @@
       <p>When you run the onboarding prompt, Claude Code reads the kit, inspects your repository, asks you project-specific questions, and generates:</p>
       <ul>
         <li>A <code>CLAUDE.md</code> tailored to your project.</li>
-        <li>Four Claude subagents (leader, spec-author, implementer, reviewer).</li>
+        <li>Five Claude subagents (leader, spec-author, implementer, reviewer, documenter).</li>
         <li>The full SDD workflow skill.</li>
         <li>Local task and spec storage.</li>
         <li>Optional hooks and MCP integrations.</li>
@@ -263,8 +264,8 @@
           <tr><td><code>spec_ready</code></td>     <td>Spec complete, awaiting approval</td>       <td>Claude (sets after finishing spec)</td></tr>
           <tr><td><code>human_approved</code></td> <td>Developer approved the spec</td>            <td>Developer only</td></tr>
           <tr><td><code>in_progress</code></td>    <td>Implementation underway</td>                <td>Claude</td></tr>
-          <tr><td><code>review</code></td>         <td>Implementation complete, under validation</td><td>Claude</td></tr>
-          <tr><td><code>done</code></td>           <td>Complete</td>                               <td>Reviewer (after passing tests)</td></tr>
+          <tr><td><code>review</code></td>         <td>Implementation complete, under validation; the documentation phase (<a href="#documentation-phase">§22</a>) also happens here</td><td>Claude</td></tr>
+          <tr><td><code>done</code></td>           <td>Complete</td>                               <td>Reviewer (after passing tests and the docs check)</td></tr>
           <tr><td><code>blocked</code></td>        <td>Waiting on external input</td>              <td>Either party</td></tr>
           <tr><td><code>rejected</code></td>       <td>Review found blocking defects</td>          <td>Reviewer</td></tr>
         </tbody>
@@ -304,7 +305,7 @@
 
     <section id="subagents">
       <h2>7. Subagents</h2>
-      <p>The harness installs four Claude subagents under <code>.claude/agents/</code>:</p>
+      <p>The harness installs five Claude subagents under <code>.claude/agents/</code>:</p>
 
       <h3>Leader</h3>
       <p>The routing advisor. Reads task state and returns which specialist the main conversation should invoke next (subagents cannot invoke other subagents in Claude Code, so orchestration happens in the main conversation, guided by the <code>sdd-workflow</code> skill). Never writes production code, recommends stopping for human approval at <code>spec_ready</code>.</p>
@@ -316,7 +317,10 @@
       <p>The only agent allowed to write production code. Implements in task order, adds tests, runs validation, marks tasks complete. Does not deviate from the spec without asking.</p>
 
       <h3>Reviewer</h3>
-      <p>Validates that the implementation satisfies the spec. Checks requirement coverage, test coverage, design adherence, conventions. Writes <code>review.html</code> with one of: <span class="badge badge-ok">approved</span>, <span class="badge badge-blocking">rejected</span>, <span class="badge badge-warning">needs_changes</span>.</p>
+      <p>Validates that the implementation satisfies the spec. Checks requirement coverage, test coverage, design adherence, conventions. Writes <code>review.html</code> with one of: <span class="badge badge-ok">approved</span>, <span class="badge badge-blocking">rejected</span>, <span class="badge badge-warning">needs_changes</span>. After approving, decides whether documentation updates are required and re-checks them before the task can become <code>done</code> (see <a href="#documentation-phase">§22</a>).</p>
+
+      <h3>Documenter</h3>
+      <p>Updates the documentation affected by a reviewed task — after technical review (so docs describe the implementation as reviewed) and before <code>done</code> (so docs are not forgotten). Updates only the targets the reviewer listed, cites the source spec/task, never documents unreviewed details, and reports back for the reviewer's docs re-check (see <a href="#documentation-phase">§22</a>).</p>
     </section>
 
     <hr>
@@ -409,7 +413,7 @@
           <tr><td><code>questions.md</code></td>              <td>All project-specific decisions Claude must ask</td></tr>
           <tr><td><code>output-project-structure.md</code></td><td>Expected structure of the target project after onboarding</td></tr>
           <tr><td><code>manifest.md</code></td>               <td>Complete list of all files in the kit</td></tr>
-          <tr><td><code>agents/</code></td>                   <td>Leader, spec-author, implementer, reviewer subagent templates</td></tr>
+          <tr><td><code>agents/</code></td>                   <td>Leader, spec-author, implementer, reviewer, documenter subagent templates</td></tr>
           <tr><td><code>skills/sdd-workflow/</code></td>      <td>Full SDD workflow skill</td></tr>
           <tr><td><code>hooks/</code></td>                    <td>Hook policies, settings snippets, example scripts</td></tr>
           <tr><td><code>mcps/</code></td>                     <td>MCP selection policy and integration notes</td></tr>
@@ -642,7 +646,7 @@ tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
           <tr><td><code>dependency-freshness</code></td><td>Check current docs before external dependency/API changes (see <a href="#dependency-freshness">§19</a>).</td><td>Freshness evidence in the design spec or review.</td><td>No installs/upgrades without approval; fetched content treated as untrusted.</td></tr>
           <tr><td><code>git-discipline</code></td><td>Clean branches, commits, and PR text tied to SDD tasks.</td><td>Requested commits/branches/PR descriptions.</td><td>All mutations permission-gated; no force-push; checks diffs for secrets.</td></tr>
           <tr><td><code>decision-log</code></td><td>Record durable architectural/workflow decisions.</td><td>Entry in <code>decisions/</code> or <code>docs/adr/</code>.</td><td>Proposes, never overproduces; project memory only.</td></tr>
-          <tr><td><code>documentation-update</code></td><td>Update affected docs after review, before <code>done</code>.</td><td>Updated docs + target list in review notes.</td><td>Runs only after technical review; never documents unreviewed details.</td></tr>
+          <tr><td><code>documentation-update</code></td><td>Update affected docs after review, before <code>done</code> (see <a href="#documentation-phase">§22</a>).</td><td>Updated docs + target list in review notes.</td><td>Runs only after technical review; never documents unreviewed details.</td></tr>
           <tr><td><code>failure-learning</code></td><td>Propose a reusable lesson after a meaningful mistake (see <a href="#failure-learning">§21</a>).</td><td>Approved lesson in the layer the developer chose.</td><td>Proposal-only; no memory writes without explicit approval; global memory only via the explicit option.</td></tr>
           <tr><td><code>ui-qa</code></td><td>Verify UI changes against spec acceptance criteria.</td><td>Per-criterion QA checklist in review notes.</td><td>No stored credentials; test accounts preferred; no production actions.</td></tr>
         </tbody>
@@ -843,6 +847,75 @@ Rule: always double-check everything before running tests.</code></pre>
 
       <h3>Advisory hook</h3>
       <p>An optional example hook (<code>hooks/examples/failure-learning/</code>, disabled by default like all kit hooks) watches validation commands and — when the same command fails more than once in a session — injects a reminder that the skill exists. It is strictly advisory: it never writes memory or project files, never blocks, and fails open without <code>jq</code>. See <a href="#hooks">§8</a> for the kit's general hook rules.</p>
+    </section>
+
+    <hr>
+
+    <section id="documentation-phase">
+      <h2>22. Documentation phase</h2>
+      <p>A task is not truly complete if the documentation it affects is stale. The harness therefore adds a formal documentation step <strong>after technical review</strong> (implementation may change during review, so documenting earlier risks describing code that never ships) and <strong>before <code>done</code></strong> (so it is not forgotten). The task state machine is unchanged — the phase is tracked with three task fields:</p>
+      <pre><code>{
+  "documentation_required": true,
+  "documentation_status": "pending|updated|not_required",
+  "documentation_targets": []
+}</code></pre>
+      <p>This is the roadmap's low-disruption option; a dedicated <code>docs_update</code> state can be introduced later if a project needs it.</p>
+
+      <h3>Flow</h3>
+      <ol>
+        <li>The reviewer approves the implementation.</li>
+        <li>The reviewer decides: documentation <strong>required</strong> (sets the fields, lists targets) or <strong>not required</strong> (<code>not_required</code> — the phase costs nothing).</li>
+        <li>If required, the <code>documenter</code> agent updates the listed targets and reports updated vs unaffected.</li>
+        <li>The reviewer runs a lightweight docs re-check and sets <code>documentation_status: "updated"</code>.</li>
+        <li>Only then can the task become <code>done</code>.</li>
+      </ol>
+
+      <h3>Responsibilities: reviewer vs documenter</h3>
+      <table>
+        <thead>
+          <tr><th>Reviewer</th><th>Documenter</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Decides whether documentation is required and lists the exact targets in <code>review.html</code> and the task fields.</td><td>Updates only the listed targets (plus factually stale docs it discovers — reported as additions).</td></tr>
+          <tr><td>Blocks <code>done</code> while required documentation is pending.</td><td>Describes the implementation as reviewed — never unmerged, rejected, or speculative details.</td></tr>
+          <tr><td>Re-checks the updated docs: targets covered or justified, text matches the reviewed implementation, no secrets.</td><td>Cites/links the source spec/task where the format allows; appends the <code>history.html</code> entry; never exposes secrets.</td></tr>
+          <tr><td>Sets the final <code>documentation_status</code>.</td><td>Reports updated vs unaffected targets for the re-check; never marks the task <code>done</code>.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>When documentation is required vs not</h3>
+      <ul>
+        <li><strong>Required:</strong> a new CLI flag (README + user docs), a changed API response (API docs + changelog), a new required environment variable (setup docs), a moved entrypoint (project map), a schema migration (migration notes).</li>
+        <li><strong>Not required:</strong> an internal refactor with unchanged behavior, a test-only change, a bug fix that restores documented behavior (a changelog entry may still be worth proposing), dependency bumps with no usage change.</li>
+      </ul>
+
+      <h3>Documentation target matrix</h3>
+      <table>
+        <thead>
+          <tr><th>Target</th><th>Update when the task…</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>README</td><td>changes quick start, installation, top-level usage, or feature overview.</td></tr>
+          <tr><td>API docs</td><td>changes endpoints, request/response shapes, public function signatures, or error semantics.</td></tr>
+          <tr><td>Setup docs</td><td>changes required services, environment variable names, install steps, or local dev workflow.</td></tr>
+          <tr><td>Changelog / history</td><td>completes any user-visible change; <code>history.html</code> always gets the completed-task entry.</td></tr>
+          <tr><td>ADRs</td><td>made or reversed an architectural decision (see the decision-log skill).</td></tr>
+          <tr><td>Migration notes</td><td>requires action from users/operators when upgrading (schema, config, breaking changes).</td></tr>
+          <tr><td>Project map</td><td>changed structure significantly: new top-level directory, moved entrypoint, changed commands, new protected area.</td></tr>
+          <tr><td>User-facing docs</td><td>changes what end users see or do (guides, help pages, UI copy references).</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Usage example</h3>
+      <p>A task adds a <code>--json</code> flag to a CLI. The reviewer approves the code and sets <code>documentation_required: true</code> with targets <code>["README", "user docs", "history.html"]</code>. The documenter updates the README flag table and the usage guide, appends the history entry citing the task ID, and reports that API docs were unaffected (no API change). The reviewer re-checks the three targets, sets <code>documentation_status: "updated"</code>, and marks the task <code>done</code>.</p>
+
+      <h3>Safety</h3>
+      <ul>
+        <li>The documenter never runs before technical review.</li>
+        <li>No secrets, credentials, or internal-only URLs in documentation — ever.</li>
+        <li>Docs describe reviewed reality, not intentions; rejected alternatives belong in decision logs, not user docs.</li>
+        <li>The optional <code>documentation-update</code> skill pack (<a href="#skill-packs">§17</a>) carries this same procedure for projects that want it invocable on demand.</li>
+      </ul>
     </section>
 
   </main>

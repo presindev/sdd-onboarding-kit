@@ -106,6 +106,7 @@
         <li>Claude implements only against the approved spec.</li>
         <li>Claude runs tests and validation.</li>
         <li>Claude reviews traceability between requirements, design, tasks, code and tests.</li>
+        <li>When the change affects documentation, a documenter updates the affected docs after review — a task is not complete while required documentation is stale.</li>
         <li>The task is marked done or returned for correction.</li>
       </ol>
     </section>
@@ -133,7 +134,7 @@
         <tbody>
           <tr><td><code>instructions.md</code></td><td>Step-by-step procedure Claude Code follows to install the harness</td></tr>
           <tr><td><code>questions.md</code></td><td>Project-specific decisions Claude must ask before writing files</td></tr>
-          <tr><td><code>agents/</code></td><td>Subagent templates: leader, spec-author, implementer, reviewer</td></tr>
+          <tr><td><code>agents/</code></td><td>Subagent templates: leader, spec-author, implementer, reviewer, documenter</td></tr>
           <tr><td><code>skills/sdd-workflow/</code></td><td>Full SDD workflow skill (copied to <code>.claude/skills/</code>)</td></tr>
           <tr><td><code>skills/optional/</code></td><td>Optional skill packs, installed only when selected during onboarding</td></tr>
           <tr><td><code>hooks/</code></td><td>Hook policies, settings snippets and example hook scripts</td></tr>

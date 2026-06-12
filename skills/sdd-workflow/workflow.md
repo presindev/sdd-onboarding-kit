@@ -89,12 +89,23 @@ The reviewer validates:
 
 Write `review.html`.
 
-## 8. Complete
+## 8. Documentation phase
 
-If reviewer approves:
+Runs after the reviewer approves and before the task is marked `done`. The state machine is unchanged; the phase is tracked with the task fields `documentation_required`, `documentation_status` (`pending|updated|not_required`), and `documentation_targets`.
+
+1. The reviewer decides whether documentation is required and lists the targets (see the review checklist §7).
+2. If not required: set `documentation_required: false`, `documentation_status: "not_required"`, and continue to completion.
+3. If required: invoke the `documenter` agent. It updates only the listed targets, cites the source spec/task where possible, appends the `history.html` entry, and reports updated vs unaffected targets.
+4. The reviewer runs a lightweight docs re-check and sets `documentation_status: "updated"` — or returns the gaps to the documenter.
+
+The documenter never runs before technical review; docs must describe the implementation as reviewed.
+
+## 9. Complete
+
+If reviewer approves and documentation is `updated` or `not_required`:
 
 1. Set task status to `done`.
-2. Append to `history.html`.
+2. Append to `history.html` (skip if the documenter already did).
 3. Include changed files and commands run.
 
 If reviewer rejects:
@@ -102,7 +113,7 @@ If reviewer rejects:
 1. Set status to `in_progress`, `spec_draft` or `blocked`.
 2. List exact corrections.
 
-## 9. History entry format
+## 10. History entry format
 
 Append to `history.html` by copying the commented entry block from the file itself
 (the format lives in `templates/history.html.template`) and inserting the filled-in

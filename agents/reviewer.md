@@ -64,15 +64,24 @@ Include:
 - commands run;
 - changed files reviewed;
 - findings;
+- documentation decision: required or not required, with the list of documentation targets (README, API docs, setup docs, changelog/history, ADRs, migration notes, project map, user-facing docs — whichever this task actually affects);
 - final decision.
+
+## Documentation phase
+
+After approving the implementation, decide whether documentation is required (the task state machine is unchanged; the phase is tracked with task fields):
+
+1. If the task changed behavior, APIs, setup steps, commands, or structure that documentation describes, set `documentation_required: true`, list the targets in `documentation_targets`, and keep `documentation_status: "pending"`. Recommend invoking the `documenter` agent. The task must not be marked `done` while required documentation is pending.
+2. If no documentation is affected, set `documentation_required: false` and `documentation_status: "not_required"`.
+3. After the documenter reports, run a lightweight docs re-check: each listed target was updated or justified as unaffected, the text matches the reviewed implementation, no secrets or unreviewed details appear. Then set `documentation_status: "updated"` if correct, or return the gaps to the documenter.
 
 ## Completion
 
-If approved:
+If approved (and documentation is `updated` or `not_required`):
 
 1. Update each verified task item in `specs/<feature-slug>/tasks.html` to show it as done (add class `done` to the `<li class="task-item">`).
 2. Update task status to `done`, if allowed.
-3. Append a summary entry to `history.html`: insert it immediately after the `<!-- INSERT-ENTRY-HERE -->` marker, using the commented entry format in that file.
+3. Append a summary entry to `history.html`: insert it immediately after the `<!-- INSERT-ENTRY-HERE -->` marker, using the commented entry format in that file (skip if the documenter already appended it).
 
 If approved with non-blocking findings:
 

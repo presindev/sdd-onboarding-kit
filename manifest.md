@@ -11,6 +11,7 @@
 - `LICENSE`
 - `README.html`
 - `README.md`
+- `agents/documenter.md`
 - `agents/implementer.md`
 - `agents/leader.md`
 - `agents/reviewer.md`
