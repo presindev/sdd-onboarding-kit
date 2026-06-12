@@ -1,0 +1,17 @@
+## {{VERSION_OR_DATE}}
+
+### {{CHANGE_CATEGORY}}
+
+- {{USER_VISIBLE_BEHAVIOR_CHANGE}} ({{TASK_ID}})
+
+<!-- Notes for the generator (delete before use):
+- One bullet per user-visible change; write what the USER sees or must
+  do, not internal task mechanics or file names.
+- CHANGE_CATEGORY follows the project's changelog convention
+  (e.g. Added / Changed / Fixed / Deprecated / Removed / Security);
+  ask if the project has none.
+- Breaking changes and migration steps get their own clearly marked
+  entry.
+- The task reference is optional in public changelogs — follow the
+  project's policy on internal references.
+-->

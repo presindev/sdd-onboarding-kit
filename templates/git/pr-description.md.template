@@ -1,0 +1,31 @@
+# {{PR_TITLE}}
+
+## Summary
+
+{{WHAT_CHANGED_AND_WHY}}
+
+## Spec
+
+- Task: `{{TASK_ID}}` — spec: `specs/{{SPEC_SLUG}}/`
+- Requirements covered: {{REQUIREMENT_IDS_OR_SHORT_LIST}}
+
+## Checks run
+
+{{COMMANDS_RUN_FROM_REVIEW_HTML}}
+
+## Review status
+
+{{REVIEW_DECISION_AND_DEFERRED_FINDINGS}}
+
+## Safety notes
+
+{{HIGH_RISK_RECORD_VISUAL_VERIFICATION_FRESHNESS_OR_NONE}}
+
+<!-- Notes for the generator (delete before use):
+- Build this from the task's review.html when it exists (git-discipline
+  skill: reviewer-output mapping) instead of re-deriving.
+- Review status must not claim more than the review supports — if review
+  is pending, say "review pending", never imply approval.
+- Safety notes cover: high-risk review record, visual verification,
+  dependency-freshness evidence; write "None" when none apply.
+-->
