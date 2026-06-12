@@ -61,7 +61,13 @@ For every functional requirement:
 - [ ] No secrets or internal-only URLs appear in updated documentation.
 - [ ] The task is not marked `done` while `documentation_status` is `pending` and documentation is required.
 
-## 8. Decision
+## 8. Project memory and decisions
+
+- [ ] Significant decisions settled by this task (architectural choices, rejected alternatives, workflow rules) were proposed for the decision log, or `None` is recorded in the review.
+- [ ] No trivial decisions were flagged; proposed entries contain no secrets or sensitive operational data.
+- [ ] Nothing was written to a decision log without developer approval of the entry text.
+
+## 9. Decision
 
 Choose exactly one:
 

@@ -81,6 +81,10 @@ The kit also includes **freshness checks for external APIs and dependencies**: c
 
 The optional `failure-learning` pack turns real mistakes (wrong assumptions, convention violations, repeated errors) into reusable lessons. Claude drafts a structured entry and **proposes** it; the developer chooses where it lives — project decision log (preferred), review/history only, or global memory. **Claude never writes global memory without explicit user approval of the exact entry text**, and never stores secrets or personal data in any memory layer. An optional advisory hook can suggest running the skill after repeated failures, but it never writes memory itself. See [`reference/memory-policy.md`](reference/memory-policy.md) and the `Memory policy` / `Failure learning` sections in `DOCUMENTATION.html`.
 
+## Project memory and decision logs
+
+Durable knowledge lives in versioned artifacts, not chat history. Onboarding always creates `decisions/answers.md` (the recorded onboarding answers); the optional `decision-log` pack adds `decisions/architecture-decisions.md`, `decisions/rejected-options.md`, and `decisions/workflow-decisions.md` — or uses the project's existing `docs/adr/`. When a spec or review settles something significant, Claude **proposes** an entry: trivial decisions are not logged, secrets never are, and nothing is written without approval. See the `Project memory and decision logs` section in `DOCUMENTATION.html`.
+
 ## Central principle
 
 The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.

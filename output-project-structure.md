@@ -54,7 +54,10 @@ After the onboarding is complete, the target repository should contain a project
 │       ├── spec.css
 │       └── spec.js
 ├── decisions/
-│   └── answers.md
+│   ├── answers.md
+│   ├── architecture-decisions.md   (decision-log pack; or docs/adr/ instead)
+│   ├── rejected-options.md         (decision-log pack)
+│   └── workflow-decisions.md       (decision-log pack)
 ├── tasks.json
 ├── history.html
 └── scripts/
@@ -96,3 +99,4 @@ The onboarding is complete when:
 12. A project map exists at the configured location (default `.claude/context/project-map.md`) and is linked from `CLAUDE.md`, or a documented TODO defers its generation.
 13. Optional skill packs are either installed under `.claude/skills/<name>/` (listed by name in `CLAUDE.md`) or explicitly declined in `decisions/answers.md`; no pack is installed without selection.
 14. If the `run-and-verify` pack was selected, `.claude/skills/run-and-verify/SKILL.md` is project-specific: real commands or explicit `TODO: ask the developer` entries (never invented commands), environment variables by name only (no secret values), and UI/API verification steps for the reviewer to follow.
+15. If the `decision-log` pack was selected, the decision files chosen during onboarding exist (`decisions/architecture-decisions.md`, `decisions/rejected-options.md`, `decisions/workflow-decisions.md` — or `docs/adr/` for architecture decisions), the installed skill references the chosen locations, and they are recorded in `decisions/answers.md`.

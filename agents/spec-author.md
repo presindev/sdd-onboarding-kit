@@ -99,6 +99,9 @@ Return:
 - spec files created or updated;
 - key requirements;
 - key design decisions;
+- significant decisions or rejected alternatives worth recording in the
+  project's decision log (proposed only — the developer decides; skip
+  trivial choices);
 - open questions;
 - whether the spec is ready for human approval.
 

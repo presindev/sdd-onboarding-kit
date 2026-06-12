@@ -17,6 +17,9 @@
 - `agents/reviewer.md`
 - `agents/spec-author.md`
 - `decisions/answers.template.md`
+- `decisions/architecture-decisions.template.md`
+- `decisions/rejected-options.template.md`
+- `decisions/workflow-decisions.template.md`
 - `hooks/examples/block-implementation-before-approval.sh`
 - `hooks/examples/failure-learning/README.md`
 - `hooks/examples/failure-learning/suggest-failure-learning.sh`
