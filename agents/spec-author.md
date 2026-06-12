@@ -49,6 +49,9 @@ specs/<feature-slug>/review.html
 ## Design rules
 
 - Identify files likely to change.
+- If the project uses the spec-drift hook, also record those files as
+  glob patterns in the task's optional `scope` array in `tasks.json` —
+  the hook enforces only what is recorded there.
 - Identify files that should not change.
 - Explain interfaces, contracts and data changes.
 - Include test strategy.

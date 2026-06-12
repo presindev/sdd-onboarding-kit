@@ -21,6 +21,7 @@
       "sdd": true,
       "status": "pending",
       "spec_path": "specs/example-sdd-task",
+      "scope": [],
       "approval": {
         "required": true,
         "approved_by": null,

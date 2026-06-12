@@ -22,8 +22,9 @@ if [[ ! -f "$TASKS_FILE" ]]; then
 fi
 
 # Read file path from hook input.
+# tr -d '\r': jq on Windows emits CRLF; a stray \r breaks pattern matching.
 INPUT=$(cat)
-FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty' 2>/dev/null || true)
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty' 2>/dev/null | tr -d '\r' || true)
 
 # Allow edits to SDD spec/config files regardless of task status.
 # These are the files that must be editable during spec_draft and spec_ready phases.

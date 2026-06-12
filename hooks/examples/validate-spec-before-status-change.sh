@@ -18,7 +18,8 @@ if ! command -v jq >/dev/null 2>&1; then
 fi
 
 # Only act on edits that target tasks.json.
-FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty' 2>/dev/null || true)
+# tr -d '\r': jq on Windows emits CRLF; a stray \r breaks pattern matching.
+FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty' 2>/dev/null | tr -d '\r' || true)
 case "$FILE_PATH" in
   */tasks.json|tasks.json) ;;
   *) exit 0 ;;
@@ -38,9 +39,9 @@ fi
 # For every task that is (or is being moved to) spec_ready, require the three
 # core spec files. Slugs are read from the existing tasks.json; for a full-file
 # Write we also try to parse slugs out of the proposed content itself.
-SLUGS=$(jq -r '.tasks[]? | select(.sdd == true) | .slug // empty' "$TASKS_FILE" 2>/dev/null || true)
+SLUGS=$(jq -r '.tasks[]? | select(.sdd == true) | .slug // empty' "$TASKS_FILE" 2>/dev/null | tr -d '\r' || true)
 if echo "$NEW_CONTENT" | jq -e . >/dev/null 2>&1; then
-  SLUGS_NEW=$(echo "$NEW_CONTENT" | jq -r '.tasks[]? | select(.status == "spec_ready") | .slug // empty' 2>/dev/null || true)
+  SLUGS_NEW=$(echo "$NEW_CONTENT" | jq -r '.tasks[]? | select(.status == "spec_ready") | .slug // empty' 2>/dev/null | tr -d '\r' || true)
   SLUGS=$(printf '%s\n%s\n' "$SLUGS" "$SLUGS_NEW" | sort -u)
 fi
 
@@ -50,7 +51,7 @@ for slug in $SLUGS; do
   # Only enforce for tasks that the new content marks as spec_ready, when we
   # can tell; otherwise check every SDD task slug mentioned alongside spec_ready.
   if echo "$NEW_CONTENT" | jq -e . >/dev/null 2>&1; then
-    STATUS=$(echo "$NEW_CONTENT" | jq -r --arg slug "$slug" '.tasks[]? | select(.slug == $slug) | .status // empty' 2>/dev/null | head -1)
+    STATUS=$(echo "$NEW_CONTENT" | jq -r --arg slug "$slug" '.tasks[]? | select(.slug == $slug) | .status // empty' 2>/dev/null | head -1 | tr -d '\r')
     [[ "$STATUS" != "spec_ready" ]] && continue
   fi
   SPEC_DIR="$PROJECT_DIR/specs/$slug"

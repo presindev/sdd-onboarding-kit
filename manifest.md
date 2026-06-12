@@ -23,7 +23,14 @@
 - `hooks/examples/block-implementation-before-approval.sh`
 - `hooks/examples/failure-learning/README.md`
 - `hooks/examples/failure-learning/suggest-failure-learning.sh`
+- `hooks/examples/pre-compact-capture/README.md`
+- `hooks/examples/pre-compact-capture/post-compact-reorient.sh`
+- `hooks/examples/pre-compact-capture/pre-compact-capture.sh`
 - `hooks/examples/run-tests-after-edit.sh`
+- `hooks/examples/spec-drift/README.md`
+- `hooks/examples/spec-drift/spec-drift.sh`
+- `hooks/examples/targeted-validation/README.md`
+- `hooks/examples/targeted-validation/targeted-validation.sh`
 - `hooks/examples/validate-spec-before-status-change.sh`
 - `hooks/hooks-policy.md`
 - `hooks/recommended-hooks.md`

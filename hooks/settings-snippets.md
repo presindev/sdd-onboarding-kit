@@ -64,6 +64,83 @@ These snippets are examples only. Do not paste them into `.claude/settings.json`
 
 The script never writes memory and never blocks; see `hooks/examples/failure-learning/README.md`.
 
+## Pre-compact capture example (advisory)
+
+```json
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "manual",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/pre-compact-capture.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/post-compact-reorient.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+See `hooks/examples/pre-compact-capture/README.md`; gate mode goes on the `manual` matcher only.
+
+## Targeted validation example (advisory)
+
+```json
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/targeted-validation.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Adapt the script's `RULES` table first; see `hooks/examples/targeted-validation/README.md`.
+
+## Spec-drift example (warn by default, block opt-in)
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/spec-drift.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Requires `scope` globs on active tasks in `tasks.json`; see `hooks/examples/spec-drift/README.md`.
+
 ## Subagent lifecycle example
 
 ```json
