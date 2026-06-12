@@ -122,6 +122,7 @@
         <li><a href="#git-discipline">29. Git discipline</a></li>
         <li><a href="#session-recovery">30. Session recovery</a></li>
         <li><a href="#onboarding-defaults">31. Onboarding questions and defaults</a></li>
+        <li><a href="#templates-artifacts">32. Templates and generated artifacts</a></li>
       </ul>
     </div>
 
@@ -1360,6 +1361,31 @@ mcpServers:
 
       <h3>Where each capability is asked</h3>
       <p>For reference: optional packs §14, project map §12, run/verify generation §15, freshness strictness §16, decision logs/ADRs §17, browser testing §18, failure learning and memory scope §19, documentation phase §20, deep review §21, autonomy §22, session recovery §23, CLI-vs-MCP preference §10, git policy §8, hooks §9. New capabilities land as new numbered sections so existing answer records stay valid.</p>
+    </section>
+
+    <hr>
+
+    <section id="templates-artifacts">
+      <h2>32. Templates and generated artifacts</h2>
+      <p>A harness is only effective if its rules show up in the artifacts Claude actually writes and reviews. The spec templates (kit source <code>templates/specs/</code>, installed to <code>.claude/skills/sdd-workflow/templates/</code>) therefore carry every policy as a section in the generated files. Two conventions keep simple tasks simple: <strong>every optional section accepts <code>None</code></strong> (one word, not an empty table), and the optional closing tasks ship as a commented block that is copied in only when the design says it applies.</p>
+
+      <h3>requirements.html</h3>
+      <p>Always: summary, functional/non-functional requirements, edge cases, error states, acceptance criteria, requirement-to-test mapping. Optional (fill or <code>None</code>): <strong>UI acceptance criteria</strong> and <strong>Visual evidence</strong> (<a href="#visual-evidence">§28</a>) when a browser UI or images are involved; <strong>External dependencies and APIs</strong> — the requirements-level inventory of touched systems (verification evidence lives in the design); <strong>Documentation expectations</strong> — which docs the feature will likely affect (the reviewer decides finally); <strong>Memory and decision implications</strong> — expected decision-log candidates (<a href="#decision-logs">§23</a>), proposed at review time only.</p>
+
+      <h3>design.html</h3>
+      <p>Always: technical summary, data flow, files to change / not to change, interfaces, data model changes, test design, risks, rollback plan. Optional: <strong>Project map references</strong> — orient against the map instead of re-describing structure, and flag map staleness; <strong>External dependencies and freshness</strong> (<a href="#dependency-freshness">§19</a>) — mandatory evidence for high-risk categories; <strong>Security and permissions</strong> — trust boundaries, authz, secrets handling, permission-gated operations, and whether the deep-review ladder applies (<a href="#deep-review-policy">§27</a>); <strong>UI verification plan</strong> (<a href="#browser-testing">§24</a>); <strong>Documentation targets</strong> — feeds the review's documentation decision.</p>
+
+      <h3>tasks.html</h3>
+      <p>Always: the implementation task timeline (tests first, smallest change, edge cases, validation) and the validation checklist — which now includes the documentation decision. Optional closing tasks (commented block, copy in what applies): update affected documentation, update the project map, propose decision-log entries, run UI QA, run the dependency freshness check. The design's optional sections say which apply — a task list without UI work gets no UI QA task.</p>
+
+      <h3>review.html</h3>
+      <p>Always: traceability table (implementation + test evidence per requirement), commands run, blocking/non-blocking findings, decision, notes. Policy sections: <strong>Spec drift check</strong> — out-of-scope file changes listed with justification or <code>None</code> (unjustified drift is blocking; pairs with the spec-drift hook, <a href="#hooks">§8</a>); <strong>High-risk and deep review</strong> — categories touched, escalation rungs run, and the five deep-review outputs (<a href="#deep-review-policy">§27</a>); <strong>Visual verification</strong> (<a href="#visual-evidence">§28</a>); <strong>Documentation decision</strong> — required (with a target-by-target updated/justified table) or not required; the task is not <code>done</code> while required docs are pending (<a href="#documentation-phase">§22</a>); <strong>Proposals</strong> — decision-log and failure-learning entries, propose-only, never written without developer approval (<a href="#decision-logs">§23</a>, <a href="#failure-learning">§21</a>).</p>
+
+      <h3>history.html</h3>
+      <p>One entry per completed task, newest first: date, task/slug, summary, files changed, tests run, reviewer decision, human approval reference — plus <strong>Docs updated</strong> (targets updated, or "not required") and <strong>Decisions recorded</strong> (accepted decision-log/memory entries, or "none"), so the project's timeline shows not just what was built but what it changed in the documentation and the decision record.</p>
+
+      <h3>Why sections, not prose rules</h3>
+      <p>A rule in a policy file depends on being remembered; a section in the artifact is in front of whoever writes or reviews it. The reviewer checklist (<code>skills/sdd-workflow/review-checklist.md</code>) and the templates mirror each other deliberately: each checklist item has a place in the artifact where its evidence lands, which is also what makes reviews auditable after the fact.</p>
     </section>
 
   </main>
