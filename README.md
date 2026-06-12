@@ -97,6 +97,10 @@ For projects with a browser UI, onboarding can install a **browser-tester subage
 
 The kit is **local-first**: it works fully with no external MCP and no external CLI. MCPs are optional and configured only on explicit approval. Where both could do a job, the kit prefers the narrower tool — a single permission-gated CLI call for one-off reads (PR metadata, deployment status), a scoped MCP for structured or repeated access — and any CLI command that mutates remote state requires explicit per-action permission. See [`reference/cli-vs-mcp-policy.md`](reference/cli-vs-mcp-policy.md) and the `CLI vs MCP` section in `DOCUMENTATION.html`.
 
+## Autonomy is opt-in
+
+Autonomous workflows (loops, goals, scheduled routines, background or headless runs) are **controlled execution, not blanket permission**. They are fine for monitoring CI, checking deployment status, and repeated read-only verification — always with explicit stop conditions — but they can never deploy, migrate, merge, push to protected branches, or mark a task `done`: SDD state transitions stay human-gated. See [`reference/autonomy-policy.md`](reference/autonomy-policy.md) and the `Autonomy policy` section in `DOCUMENTATION.html`.
+
 ## Central principle
 
 The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.
