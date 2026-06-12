@@ -93,6 +93,10 @@ The kit ships example hooks under [`hooks/examples/`](hooks/hooks-policy.md) tha
 
 For projects with a browser UI, onboarding can install a **browser-tester subagent** with the Playwright MCP scoped to that agent alone: the MCP server is declared inline in the agent's frontmatter, so browser tools exist only while the agent runs and never load into the main conversation. Specs gain optional UI acceptance criteria (routes, visual states, interaction flows, accessibility, responsive states), and the `ui-qa` skill routes verification through the agent. Non-UI projects are unaffected — nothing Playwright-related is installed by default, credentials are never stored, and production destructive actions are out of bounds. See [`mcps/playwright-policy.md`](mcps/playwright-policy.md) and the `Browser/UI testing with Playwright` section in `DOCUMENTATION.html`.
 
+## CLIs and MCPs
+
+The kit is **local-first**: it works fully with no external MCP and no external CLI. MCPs are optional and configured only on explicit approval. Where both could do a job, the kit prefers the narrower tool — a single permission-gated CLI call for one-off reads (PR metadata, deployment status), a scoped MCP for structured or repeated access — and any CLI command that mutates remote state requires explicit per-action permission. See [`reference/cli-vs-mcp-policy.md`](reference/cli-vs-mcp-policy.md) and the `CLI vs MCP` section in `DOCUMENTATION.html`.
+
 ## Central principle
 
 The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.

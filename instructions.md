@@ -42,7 +42,8 @@ Identify:
 - existing `README`, `docs`, `Makefile`, `package.json`, `pyproject.toml`, `Cargo.toml`, `go.mod`, `pom.xml`, `build.gradle`, or equivalent;
 - existing `CLAUDE.md`, `.claude/`, `.mcp.json`, task files, issue references, CI config;
 - existing architecture/conventions documentation;
-- existing git branch and cleanliness status.
+- existing git branch and cleanliness status;
+- available external CLIs (`gh`, `vercel`, `supabase`, cloud CLIs): detect which exist so narrow CLI calls can be preferred over broad MCP loading (`reference/cli-vs-mcp-policy.md`) — do not require, install, or authenticate any of them, and record nothing about credentials beyond authenticated yes/no.
 
 Do not overwrite existing files without first reading them.
 

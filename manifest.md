@@ -48,6 +48,7 @@
 - `output-project-structure.md`
 - `questions.md`
 - `reference/claude-code-primitives.md`
+- `reference/cli-vs-mcp-policy.md`
 - `reference/context-economy.md`
 - `reference/dependency-freshness-policy.md`
 - `reference/harness-engineering.md`

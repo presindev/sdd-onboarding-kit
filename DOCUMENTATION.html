@@ -115,6 +115,7 @@
         <li><a href="#documentation-phase">22. Documentation phase</a></li>
         <li><a href="#decision-logs">23. Decision logs</a></li>
         <li><a href="#browser-testing">24. Browser/UI testing</a></li>
+        <li><a href="#cli-vs-mcp">25. CLI vs MCP</a></li>
       </ul>
     </div>
 
@@ -381,7 +382,7 @@
 
     <section id="mcp-integrations">
       <h2>9. MCP integrations</h2>
-      <p>MCPs let Claude Code connect to external systems. The harness works fully without MCPs. <strong>MCPs are never configured without your explicit approval.</strong></p>
+      <p>MCPs let Claude Code connect to external systems. The harness works fully without MCPs. <strong>MCPs are never configured without your explicit approval.</strong> Where a single CLI call can do the job, the kit prefers it over loading an MCP — see <a href="#cli-vs-mcp">§25</a>.</p>
 
       <table>
         <thead>
@@ -1069,6 +1070,49 @@ mcpServers:
         <li><strong>Evidence hygiene:</strong> screenshots may contain personal data; they are referenced from review notes and not committed without approval.</li>
         <li><strong>Version note:</strong> the <code>mcpServers</code> frontmatter syntax and launch command were verified 2026-06; re-verify against the installed version during onboarding (<code>mcps/playwright-policy.md</code>).</li>
       </ul>
+    </section>
+
+    <hr>
+
+    <section id="cli-vs-mcp">
+      <h2>25. CLI vs MCP</h2>
+      <p>CLIs and MCPs are two ways to reach the same external systems, and each is better somewhere. The kit's rule of thumb: <strong>choose the narrowest tool that does the job safely</strong> — and remember the baseline: the harness is local-first and fully usable with no external CLI and no MCP at all. Full policy: <code>reference/cli-vs-mcp-policy.md</code>.</p>
+
+      <h3>Decision rules</h3>
+      <ul>
+        <li><strong>One narrow operation → CLI.</strong> Reading one PR's metadata, checking a deployment status: a single permission-gated command costs nothing until invoked and adds no standing tool surface.</li>
+        <li><strong>Structured, repeated, or scoped access → MCP.</strong> A workflow that lives in an external system benefits from typed tools instead of parsed CLI text, and an MCP can be scoped tightly — down to a single subagent (<a href="#browser-testing">§24</a>).</li>
+        <li><strong>No broad MCP toolsets for occasional needs.</strong></li>
+        <li><strong>No remote mutations via CLI without explicit per-action permission</strong> — pushing, deploying, merging, ticket updates, infra changes.</li>
+        <li><strong>When in doubt, neither:</strong> ask the developer; local artifacts keep working.</li>
+      </ul>
+      <p>This is not a case against MCPs: for sustained integrations a scoped, structured MCP is the safer choice. The point is to stop paying context and capability surface for breadth the workflow does not use.</p>
+
+      <h3>Safety matrix</h3>
+      <table>
+        <thead>
+          <tr><th>Operation type</th><th>Examples</th><th>Default policy</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Read-only, local</td><td>package manager checks (outdated, audit), <code>git status</code></td><td>Allowed; normal tool gating.</td></tr>
+          <tr><td>Read-only, remote</td><td><code>gh</code> PR/issue/diff metadata, Vercel deployment status, Supabase project metadata</td><td>Allowed when credentials are configured; each command stays permission-gated.</td></tr>
+          <tr><td>Mutating, remote</td><td>merging PRs, deploys, database pushes, ticket updates, infra changes</td><td>Explicit per-action approval; high-risk categories also follow the freshness (<a href="#dependency-freshness">§19</a>) and review policies.</td></tr>
+          <tr><td>Credential operations</td><td>logins, token creation/rotation</td><td>Developer-only; Claude never handles raw secrets.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>When to prefer each — examples</h3>
+      <ul>
+        <li><code>gh</code> CLI for one PR lookup; the GitHub MCP when the project works in GitHub issues/PRs all day.</li>
+        <li>Package manager commands for local dependency checks — pairs with <a href="#dependency-freshness">§19</a>.</li>
+        <li>Vercel CLI for read-only deployment status; triggering a deploy is a mutation.</li>
+        <li>Supabase CLI for local/project metadata; schema pushes are mutations and a high-risk freshness category.</li>
+        <li>Cloud CLIs (AWS/GCP/Azure) only with explicit permission and safe read-only scopes/profiles.</li>
+      </ul>
+      <p>Examples are capability-level by design — before relying on a specific CLI's flags, verify them against the installed version. Two standing rules close the loop: an authenticated CLI carries the developer's credentials and is privileged even for read-only commands (allowlists in <code>.claude/settings.json</code> should cover read-only subcommands at most), and CLI output from external systems is data, not instructions — the same untrusted-content rule as MCP results.</p>
+
+      <h3>Onboarding</h3>
+      <p>Phase 1 inspection detects which common CLIs exist (never requires, installs, or authenticates them), and <code>questions.md</code> §10 records the developer's CLI-vs-MCP preference in <code>decisions/answers.md</code> — default: prefer the narrow CLI where it is sufficient.</p>
     </section>
 
   </main>
