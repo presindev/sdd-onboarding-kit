@@ -30,6 +30,7 @@ what keeps them cheap (see `reference/context-economy.md`).
 | `documentation-update` | Update affected documentation after review, before done. |
 | `failure-learning` | Propose a reusable lesson after a meaningful mistake. |
 | `ui-qa` | Verify UI changes against spec acceptance criteria. |
+| `spec-from-screenshot` | Turn screenshots, mockups, and visual evidence into structured spec material. |
 
 Every pack documents: purpose, when to use, when not to use, required
 inputs, output artifact, and safety constraints. All packs are advisory or

@@ -186,7 +186,7 @@ The core `sdd-workflow` skill is always installed. The packs under
 
 `context-audit`, `project-map`, `run-and-verify`, `dependency-freshness`,
 `git-discipline`, `decision-log`, `documentation-update`,
-`failure-learning`, `ui-qa`.
+`failure-learning`, `ui-qa`, `spec-from-screenshot`.
 
 Questions:
 
