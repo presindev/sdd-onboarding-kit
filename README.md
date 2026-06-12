@@ -113,6 +113,10 @@ Every mutating git action is permission-gated. The optional `git-discipline` pac
 
 Autonomous workflows (loops, goals, scheduled routines, background or headless runs) are **controlled execution, not blanket permission**. They are fine for monitoring CI, checking deployment status, and repeated read-only verification — always with explicit stop conditions — but they can never deploy, migrate, merge, push to protected branches, or mark a task `done`: SDD state transitions stay human-gated. See [`reference/autonomy-policy.md`](reference/autonomy-policy.md) and the `Autonomy policy` section in `DOCUMENTATION.html`.
 
+## Resumable work
+
+Work survives interruptions because state lives in artifacts, not in chat: `tasks.json`, specs, reviews, decision logs, and `history.html` are the source of truth. Claude Code's recap, rewind, and resume features are conveniences for reorienting — after any resume, rewind, or compaction, the kit's rule is to inspect the durable artifacts before continuing, and when conversation memory disagrees with an artifact, the artifact wins. See [`reference/session-recovery.md`](reference/session-recovery.md) and the `Session recovery` section in `DOCUMENTATION.html`.
+
 ## Central principle
 
 The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.

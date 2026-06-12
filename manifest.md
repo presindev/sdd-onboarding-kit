@@ -56,6 +56,7 @@
 - `reference/harness-engineering.md`
 - `reference/memory-policy.md`
 - `reference/sdd-theory.md`
+- `reference/session-recovery.md`
 - `scripts/init.sh`
 - `scripts/run-lint.sh.template`
 - `scripts/run-tests.sh.template`

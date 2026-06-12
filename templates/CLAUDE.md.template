@@ -160,6 +160,10 @@ The context window is a scarce resource. Rules:
 - Delegate noisy, many-file exploration to subagents; keep only conclusions in the main conversation.
 - Durable truth lives in artifacts (`tasks.json`, `specs/`, decision logs, `history.html`), not in chat history.
 
+## Session recovery
+
+If unsure after resuming a session, a rewind, or a compaction: inspect the durable artifacts before continuing — `tasks.json` for task state, the active spec for what is approved, the latest review for open findings, `git status` for actual changes. When conversation memory and an artifact disagree, the artifact wins.
+
 ## Final rule
 
 Prefer a clear spec over a clever implementation. If the spec is ambiguous, ask or revise the spec before coding.
