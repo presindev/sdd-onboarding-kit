@@ -144,6 +144,10 @@ Questions:
 - Are credentials already configured?
 - Should MCPs be project-scoped or user-scoped?
 - Should external content be treated as untrusted until reviewed?
+- Where both a CLI and an MCP can do the job, should Claude prefer the
+  narrow CLI call? (Default: yes — see `reference/cli-vs-mcp-policy.md`;
+  remote-mutating CLI commands always need explicit per-action
+  permission.)
 
 ## 11. Protected files and boundaries
 

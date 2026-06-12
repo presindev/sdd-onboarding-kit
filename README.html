@@ -188,6 +188,13 @@
 
     <hr>
 
+    <section id="cli-vs-mcp">
+      <h2>CLIs and MCPs</h2>
+      <p>The kit is <strong>local-first</strong>: it works fully with no external MCP and no external CLI. MCPs are optional and configured only on explicit approval. Where both could do a job, the kit prefers the narrower tool — a single permission-gated CLI call for one-off reads (PR metadata, deployment status), a scoped MCP for structured or repeated access — and any CLI command that mutates remote state requires explicit per-action permission. See <a href="reference/cli-vs-mcp-policy.md"><code>reference/cli-vs-mcp-policy.md</code></a> and the <code>CLI vs MCP</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+    </section>
+
+    <hr>
+
     <section id="central-principle">
       <h2>Central principle</h2>
       <p>The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.</p>
