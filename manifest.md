@@ -70,6 +70,7 @@
 - `skills/optional/git-discipline/SKILL.md`
 - `skills/optional/project-map/SKILL.md`
 - `skills/optional/run-and-verify/SKILL.md`
+- `skills/optional/spec-from-screenshot/SKILL.md`
 - `skills/optional/ui-qa/SKILL.md`
 - `skills/sdd-workflow/SKILL.md`
 - `skills/sdd-workflow/assumptions-policy.md`

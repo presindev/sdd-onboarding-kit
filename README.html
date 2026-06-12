@@ -195,6 +195,13 @@
 
     <hr>
 
+    <section id="screenshots">
+      <h2>Screenshots as spec inputs</h2>
+      <p>Screenshots, mockups, and other visual evidence are first-class inputs for UI work: the optional <code>spec-from-screenshot</code> pack turns them into structured spec material (image inventory with provenance, observed vs expected behavior, UI acceptance criteria), and reviews compare the implemented UI against the same images. Two rules apply throughout: screenshots are evidence, not automatically complete requirements, and Claude asks when the visual intent is ambiguous. See the <code>Screenshots and visual evidence</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+    </section>
+
+    <hr>
+
     <section id="deep-review">
       <h2>High-risk changes get deeper review</h2>
       <p>Some changes deserve more than the standard reviewer pass: security-sensitive code, auth, payments, database migrations, infrastructure, public APIs, large refactors, data-loss risks. For those, the kit recommends an escalation ladder — a security-focused pass, then independent adversarial reviewers, then (only if available and approved) paid deep-review modes. Deep review <strong>supplements</strong> the SDD reviewer, never replaces it, and the kit never assumes paid features are available. See <a href="reference/deep-review-policy.md"><code>reference/deep-review-policy.md</code></a> and the <code>Deep review policy</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>

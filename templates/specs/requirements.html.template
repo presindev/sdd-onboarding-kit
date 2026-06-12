@@ -100,6 +100,23 @@
         <p>Screenshots/mockups provided: TODO (file names or links, or <code>None</code>).</p>
       </section>
 
+      <section id="visual-evidence">
+        <h2>Visual evidence</h2>
+        <p>TODO: Fill only when screenshots, mockups, or other images are inputs for this task; otherwise state <code>None</code>. Screenshots are evidence, not automatically complete requirements — ask when the visual intent is ambiguous. If an image contains secrets or personal data, flag it and never transcribe them here.</p>
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Image (file/link)</th><th>Shows</th><th>Provenance (route, environment, viewport)</th><th>Intent</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="req-id ac">IMG-001</span></td><td>TODO</td><td>TODO</td><td>TODO (or unknown)</td><td>design to build / bug evidence / regression before-after / acceptance criterion</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Affected routes/components:</strong> TODO.</p>
+        <p><strong>Observed behavior</strong> (what the images show, facts only): TODO.</p>
+        <p><strong>Expected behavior</strong> (confirmed intent — not inferred from pixels alone): TODO.</p>
+        <p>Testable visual expectations, accessibility concerns, and responsive behavior go to the <a href="#ui-acceptance-criteria">UI acceptance criteria</a> table, referencing the image IDs above. Unresolved visual questions go to <code>open-questions.html</code>.</p>
+      </section>
+
       <section id="requirement-to-test-mapping">
         <h2>Requirement-to-test mapping</h2>
         <table>

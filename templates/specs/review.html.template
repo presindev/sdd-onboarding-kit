@@ -97,6 +97,19 @@
         </div>
       </section>
 
+      <section id="visual-verification">
+        <h2>Visual verification</h2>
+        <p>TODO: Fill when the spec's <code>Visual evidence</code> or <code>UI acceptance criteria</code> sections contain entries; otherwise state <code>None</code>. Compare the implemented UI against the referenced images (via the <code>ui-qa</code> skill / <code>browser-tester</code> agent when installed, manually otherwise).</p>
+        <table>
+          <thead>
+            <tr><th>Criterion / image</th><th>Evidence (what was compared, how)</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>UI-001 / IMG-001</td><td>TODO</td><td>pass / fail (observed difference) / not verifiable (why)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
       <section id="decision">
         <h2>Decision</h2>
         <p>Reviewer selects one:</p>

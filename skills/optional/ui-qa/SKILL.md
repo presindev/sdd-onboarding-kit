@@ -37,6 +37,10 @@ Two execution paths:
 
 - The spec's UI acceptance criteria: target route/component, expected
   visual state, interaction flow; screenshots or mockups if provided.
+- The spec's `Visual evidence` section, when present (filled by the
+  `spec-from-screenshot` skill if installed): image inventory with IDs,
+  observed/expected behavior, affected routes. For bug fixes, compare
+  the *before* screenshot with the implemented *after* state.
 - How to run the UI locally (dev server command from `CLAUDE.md` / the
   project map).
 - Test account credentials **names** if auth is required — provided by the
@@ -62,7 +66,9 @@ Two execution paths:
 ## Output artifact
 
 A UI QA checklist in the task's review notes: criterion → result →
-evidence (screenshot reference or description).
+evidence (screenshot reference or description). When the spec has visual
+evidence, record the comparisons in the `Visual verification` section of
+`review.html` (criterion/image → evidence → result).
 
 ## Safety constraints
 

@@ -118,6 +118,7 @@
         <li><a href="#cli-vs-mcp">25. CLI vs MCP</a></li>
         <li><a href="#autonomy-policy">26. Autonomy policy</a></li>
         <li><a href="#deep-review-policy">27. Deep review policy</a></li>
+        <li><a href="#visual-evidence">28. Screenshots and visual evidence</a></li>
       </ul>
     </div>
 
@@ -1203,6 +1204,38 @@ mcpServers:
         <li><strong>Documentation phase (<a href="#documentation-phase">§22</a>):</strong> unchanged — deep-review findings that alter behavior or APIs feed the documentation targets like any other finding.</li>
         <li><strong>State machine (<a href="#task-lifecycle">§5</a>):</strong> unchanged — <code>review → done</code> still requires the reviewer's decision plus the docs check, and autonomous workflows still cannot perform the transition (<a href="#autonomy-policy">§26</a>).</li>
       </ul>
+    </section>
+
+    <hr>
+
+    <section id="visual-evidence">
+      <h2>28. Screenshots and visual evidence</h2>
+      <p>Screenshots often communicate UI expectations or bugs better than prose, so the kit treats them as first-class spec inputs. Two rules govern everything: <strong>screenshots are evidence, not automatically complete requirements</strong> — an image shows one state of one screen at one moment, not intent, edge cases, or other viewports — and <strong>Claude asks clarifying questions when the visual intent is ambiguous</strong> instead of guessing which parts of an image are binding.</p>
+
+      <h3>The spec-from-screenshot pack</h3>
+      <p>The optional <code>spec-from-screenshot</code> skill (installed like any pack from §14 of <code>questions.md</code>; suggested for frontend repositories) converts visual inputs into structured spec material: inventory every image with provenance (route, environment, viewport — or <code>unknown</code>, never invented), classify its intent, extract observable facts (separating visible from inferred — inferences become questions), ask about ambiguities (hover/empty/error/loading states, other viewports, accessibility), then map the results into the spec. Images that contain secrets or personal data are flagged — credentials are never transcribed into any artifact.</p>
+
+      <h3>Where the evidence lives</h3>
+      <ul>
+        <li><strong><code>requirements.html</code> — <code>Visual evidence</code> section:</strong> image inventory (ID, what it shows, provenance, intent), affected routes/components, observed behavior, expected behavior. Testable expectations go to the <code>UI acceptance criteria</code> table (<a href="#browser-testing">§24</a>), referencing image IDs; unresolved visual questions go to <code>open-questions.html</code>.</li>
+        <li><strong><code>review.html</code> — <code>Visual verification</code> section:</strong> criterion/image → evidence → result (pass / fail with the observed difference / not verifiable with why), so UI changes are reviewed against the same screenshots the spec was built from.</li>
+      </ul>
+
+      <h3>The four input kinds</h3>
+      <table>
+        <thead>
+          <tr><th>Input</th><th>Example</th><th>What the workflow does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Design inspiration / mockup</td><td>"Build this settings page" + Figma export</td><td>Inventory the mockup, confirm which parts are binding vs illustrative, derive requirements and UI acceptance criteria; record fidelity honestly (mockup ≠ production screenshot).</td></tr>
+          <tr><td>Visual bug report</td><td>Screenshot of an overlapping dropdown on mobile</td><td>Record observed behavior from the image, confirm expected behavior with the developer, fix, then compare before/after in the review.</td></tr>
+          <tr><td>Regression check</td><td>Before/after pair from two releases</td><td>Both images enter the inventory; the acceptance criterion is restoring (or intentionally keeping) the changed state, verified in <code>Visual verification</code>.</td></tr>
+          <tr><td>UI acceptance criteria</td><td>"Done looks like this" image attached to a feature request</td><td>Derive UI-AC rows referencing the image ID; the <code>ui-qa</code> skill (and <code>browser-tester</code> agent, when installed — <a href="#browser-testing">§24</a>) verifies the implementation against it.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Integration</h3>
+      <p>The <code>ui-qa</code> skill takes the visual-evidence section as input and records comparisons in <code>Visual verification</code>; the <code>browser-tester</code> agent walks the criteria in a real browser against the referenced images; the reviewer treats a filled visual-evidence section like any other requirement source — implementation evidence required, ambiguities returned to the spec rather than guessed.</p>
     </section>
 
   </main>
