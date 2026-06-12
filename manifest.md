@@ -47,6 +47,7 @@
 - `mcps/playwright-policy.md`
 - `output-project-structure.md`
 - `questions.md`
+- `reference/autonomy-policy.md`
 - `reference/claude-code-primitives.md`
 - `reference/cli-vs-mcp-policy.md`
 - `reference/context-economy.md`

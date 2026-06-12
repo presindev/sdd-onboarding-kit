@@ -116,6 +116,7 @@
         <li><a href="#decision-logs">23. Decision logs</a></li>
         <li><a href="#browser-testing">24. Browser/UI testing</a></li>
         <li><a href="#cli-vs-mcp">25. CLI vs MCP</a></li>
+        <li><a href="#autonomy-policy">26. Autonomy policy</a></li>
       </ul>
     </div>
 
@@ -330,7 +331,7 @@
 
     <section id="hooks">
       <h2>8. Hooks</h2>
-      <p>Hooks are optional shell scripts that Claude Code executes automatically on workflow events. Prompts and skills guide Claude; hooks enforce rules deterministically, whether or not Claude remembers them. <strong>All kit hooks are examples, disabled by default — none is enabled without your explicit approval.</strong> They support the SDD state machine (block before approval, return out-of-scope work to the spec, keep durable state in artifacts); no kit hook bypasses it.</p>
+      <p>Hooks are optional shell scripts that Claude Code executes automatically on workflow events. Prompts and skills guide Claude; hooks enforce rules deterministically, whether or not Claude remembers them. <strong>All kit hooks are examples, disabled by default — none is enabled without your explicit approval.</strong> They support the SDD state machine (block before approval, return out-of-scope work to the spec, keep durable state in artifacts); no kit hook bypasses it. Hooks also fire in headless and background runs, which makes them the enforcement layer for autonomous workflows (<a href="#autonomy-policy">§26</a>).</p>
 
       <h3>Safety classification</h3>
       <p>Every hook is classified by its highest-risk behavior (full policy in <code>hooks/hooks-policy.md</code>):</p>
@@ -1113,6 +1114,62 @@ mcpServers:
 
       <h3>Onboarding</h3>
       <p>Phase 1 inspection detects which common CLIs exist (never requires, installs, or authenticates them), and <code>questions.md</code> §10 records the developer's CLI-vs-MCP preference in <code>decisions/answers.md</code> — default: prefer the narrow CLI where it is sufficient.</p>
+    </section>
+
+    <hr>
+
+    <section id="autonomy-policy">
+      <h2>26. Autonomy policy</h2>
+      <p>Claude Code can keep working without a human in the loop: timed loops, condition-based goals, scheduled routines, background agents, headless runs. These are useful for monitoring and repeated verification — and dangerous when they mutate code, deploy, merge, or mark tasks done with nobody watching. The kit's stance: <strong>autonomy is controlled execution, not blanket permission</strong>. Every autonomous workflow is opt-in, scoped, bounded by an explicit stop condition, and unable to advance SDD state on its own. Full policy: <code>reference/autonomy-policy.md</code>.</p>
+
+      <h3>What exists</h3>
+      <p>Capability-level summary (names verified against the official docs in June 2026 — these features move fast, so re-verify before relying on exact syntax): <code>/loop</code> repeats a prompt on a fixed or self-paced interval inside an open session; <code>/goal</code> keeps working until a stated condition is met; <code>/schedule</code> creates cloud-hosted routines (cron, API, or GitHub-webhook triggered); background agents run detached from the terminal; headless mode (<code>claude -p</code>) serves scripts and CI with turn and budget caps; <code>Stop</code>/<code>SubagentStop</code> hooks can force continuation; and an official GitHub Action runs Claude Code on repository events.</p>
+
+      <h3>Allowed: read-only, bounded</h3>
+      <ul>
+        <li>Monitoring CI and reporting the outcome.</li>
+        <li>Checking deployment status — poll until it settles; report, never trigger.</li>
+        <li>Waiting for external checks (reviews, scans, long test suites).</li>
+        <li>Repeated read-only verification: re-running tests, linters, validation scripts and summarizing drift.</li>
+        <li>Non-destructive maintenance with a defined end state.</li>
+      </ul>
+      <p>Allowed use cases still run under the normal permission gates — an autonomous loop gets no tool access an interactive session would not get.</p>
+
+      <h3>Never autonomous (default-blocked)</h3>
+      <ul>
+        <li>Production deploys, database migrations.</li>
+        <li>Payment, authentication, or security-relevant changes.</li>
+        <li>Merging PRs; pushing to protected branches; editing protected files.</li>
+        <li><strong>Marking a task <code>done</code></strong> — or any SDD status advance — without the reviewer and the documentation phase having run with a human checkpoint.</li>
+      </ul>
+      <p>These stay human-gated even if a hook or permission mode would technically allow them; a project may relax an item only by recording an explicit decision in <code>decisions/workflow-decisions.md</code>.</p>
+
+      <h3>Stop conditions are mandatory</h3>
+      <p>Every autonomous workflow declares, before it starts: a <strong>success condition</strong> (what state ends the run), a <strong>bound</strong> (max iterations, duration, or budget), and a <strong>failure threshold</strong> (after N consecutive failures, stop and report instead of retrying forever). An unbounded loop is a policy violation even when every iteration is read-only.</p>
+
+      <h3>Safe and unsafe examples</h3>
+      <table>
+        <thead>
+          <tr><th>Workflow</th><th>Verdict</th><th>Why</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Loop: watch the CI run for this branch every few minutes; stop and summarize when it finishes or after 2 hours</td><td>Safe</td><td>Read-only, success condition + time bound, deliverable is a report.</td></tr>
+          <tr><td>Goal: keep fixing until the test suite passes, on a feature branch, within the approved task's scope</td><td>Conditional</td><td>Acceptable only inside an approved <code>in_progress</code> SDD task with scope globs set; the goal ends at "tests pass", not at "task done" — review and docs still follow.</td></tr>
+          <tr><td>Scheduled routine: nightly dependency-audit report</td><td>Safe</td><td>Read-only with a natural end; pairs with <a href="#dependency-freshness">§19</a>.</td></tr>
+          <tr><td>Goal: "keep working until the PR is merged"</td><td>Unsafe</td><td>Merging is human-gated; the condition incentivizes bypassing review.</td></tr>
+          <tr><td>Loop that retries a failing deploy until it succeeds</td><td>Unsafe</td><td>Production deploy, no failure threshold, mutation with nobody watching.</td></tr>
+          <tr><td>Headless run with permissions bypassed on the developer machine</td><td>Unsafe</td><td>Full bypass is for disposable, credential-free sandboxes only.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Relationship to the rest of the harness</h3>
+      <ul>
+        <li><strong>Hooks (<a href="#hooks">§8</a>):</strong> all hook types fire in headless and background runs, so the gate hooks (block-before-approval, spec validation, spec drift) keep enforcing the state machine when nobody is watching. Disabling hooks so an autonomous run can proceed is a policy violation, not a workaround.</li>
+        <li><strong>Tasks (<a href="#task-lifecycle">§5</a>):</strong> <code>tasks.json</code> states are the protected resource. Only a human moves a spec to <code>human_approved</code>; an autonomous run never writes a status forward.</li>
+        <li><strong>Reviewer (<a href="#subagents">§7</a>):</strong> autonomous runs may <em>prepare</em> review material — test results, verification summaries, prepared diffs on a branch — but the review verdict and the <code>review → done</code> transition need the reviewer plus a human checkpoint.</li>
+        <li><strong>Documentation phase (<a href="#documentation-phase">§22</a>):</strong> <code>done</code> requires the docs check; since an autonomous workflow cannot complete that phase's human confirmation, it can never mark work complete by itself — by construction, not just by rule.</li>
+      </ul>
+      <p>Permission posture: never run autonomous workflows with permissions fully bypassed outside a disposable sandbox; prefer read-only allowlists for monitoring and deny-by-default modes for CI; scope routine/CI credentials read-only unless a recorded decision says otherwise; and treat everything an autonomous run ingests (CI logs, webhook payloads, fetched pages) as data, not instructions — there is no human watching to catch a prompt injection.</p>
     </section>
 
   </main>
