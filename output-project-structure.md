@@ -12,7 +12,8 @@ After the onboarding is complete, the target repository should contain a project
 │   │   ├── leader.md
 │   │   ├── spec-author.md
 │   │   ├── implementer.md
-│   │   └── reviewer.md
+│   │   ├── reviewer.md
+│   │   └── documenter.md
 │   ├── skills/
 │   │   ├── sdd-workflow/
 │   │   │   ├── SKILL.md
@@ -84,7 +85,7 @@ The onboarding is complete when:
 1. `CLAUDE.md` exists and reflects this specific project.
 2. The SDD skill exists under `.claude/skills/sdd-workflow/`.
 3. The HTML spec templates (plus `spec.css` and `spec.js`) exist under `.claude/skills/sdd-workflow/templates/`.
-4. The four subagents exist under `.claude/agents/`.
+4. The five subagents (leader, spec-author, implementer, reviewer, documenter) exist under `.claude/agents/`.
 5. There is a task storage mechanism.
 6. There is a spec storage mechanism.
 7. `decisions/answers.md` records the developer's onboarding answers.

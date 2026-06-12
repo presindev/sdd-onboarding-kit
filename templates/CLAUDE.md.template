@@ -92,8 +92,9 @@ For each SDD task:
 4. Implement only after approval.
 5. Run tests and validation.
 6. Run reviewer.
-7. Mark done only if requirements, implementation and tests are aligned.
-8. Append a summary to `history.html`.
+7. If the reviewer requires documentation updates, run documenter, then the reviewer re-checks the docs.
+8. Mark done only if requirements, implementation, tests and required docs are aligned.
+9. Append a summary to `history.html`.
 
 ## SDD skill
 
@@ -122,7 +123,8 @@ Use project subagents when appropriate:
 - `leader`: inspects task state and recommends which agent to invoke next (subagents cannot invoke each other; the main conversation orchestrates).
 - `spec-author`: creates requirements, design and implementation tasks.
 - `implementer`: writes code from approved specs.
-- `reviewer`: validates implementation against specs.
+- `reviewer`: validates implementation against specs; decides whether documentation updates are required.
+- `documenter`: updates affected documentation after review approval, before a task is marked done.
 
 ## Human approval policy
 

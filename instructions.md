@@ -18,12 +18,13 @@ Read these files in this order before writing project files:
 8. `agents/spec-author.md`
 9. `agents/implementer.md`
 10. `agents/reviewer.md`
-11. `skills/sdd-workflow/SKILL.md`
-12. `skills/sdd-workflow/workflow.md`
-13. `skills/sdd-workflow/spec-format.md`
-14. `skills/sdd-workflow/review-checklist.md`
-15. `hooks/hooks-policy.md`
-16. `mcps/mcp-policy.md`
+11. `agents/documenter.md`
+12. `skills/sdd-workflow/SKILL.md`
+13. `skills/sdd-workflow/workflow.md`
+14. `skills/sdd-workflow/spec-format.md`
+15. `skills/sdd-workflow/review-checklist.md`
+16. `hooks/hooks-policy.md`
+17. `mcps/mcp-policy.md`
 
 If any of these files are missing, stop and tell the developer which file is missing.
 
@@ -99,7 +100,8 @@ After the developer answers, create or update the following in the target reposi
 │   │   ├── leader.md
 │   │   ├── spec-author.md
 │   │   ├── implementer.md
-│   │   └── reviewer.md
+│   │   ├── reviewer.md
+│   │   └── documenter.md
 │   ├── skills/
 │   │   ├── sdd-workflow/
 │   │   │   ├── SKILL.md
@@ -182,6 +184,7 @@ Copy and adapt:
 - `agents/spec-author.md` to `.claude/agents/spec-author.md`
 - `agents/implementer.md` to `.claude/agents/implementer.md`
 - `agents/reviewer.md` to `.claude/agents/reviewer.md`
+- `agents/documenter.md` to `.claude/agents/documenter.md`
 
 If the project already has agents with these names, merge carefully or ask before overwriting.
 
