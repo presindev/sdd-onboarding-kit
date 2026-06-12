@@ -117,6 +117,10 @@ Autonomous workflows (loops, goals, scheduled routines, background or headless r
 
 Work survives interruptions because state lives in artifacts, not in chat: `tasks.json`, specs, reviews, decision logs, and `history.html` are the source of truth. Claude Code's recap, rewind, and resume features are conveniences for reorienting — after any resume, rewind, or compaction, the kit's rule is to inspect the durable artifacts before continuing, and when conversation memory disagrees with an artifact, the artifact wins. See [`reference/session-recovery.md`](reference/session-recovery.md) and the `Session recovery` section in `DOCUMENTATION.html`.
 
+## Templates carry the policies
+
+The spec templates make the kit's policies visible where work actually happens: generated requirements ask about external dependencies, documentation expectations, and decision-log implications; designs carry freshness evidence, security/permissions, project-map references, and docs targets; reviews record the documentation decision, spec-drift check, high-risk/deep-review results, and propose-only decision/failure-learning entries; history entries capture docs updates and recorded decisions. Every optional section has a `None` convention, so simple tasks stay simple. See the `Templates and generated artifacts` section in `DOCUMENTATION.html`.
+
 ## Recommended defaults
 
 Onboarding offers a safe default profile in a single question, so nobody has to answer twenty sections to get started: local-first (no external MCPs/CLIs required), human approval and reviewer required, documentation phase enabled, failure-learning proposals without automatic memory writes, Playwright disabled unless a frontend is detected and the developer opts in, external MCPs off unless opted in, autonomy limited to documented read-only monitoring, and git mutations requiring explicit permission. Accepting the profile reduces onboarding to the genuinely project-specific questions (commands, protected files, SDD scope). See `questions.md` and the `Onboarding questions and defaults` section in `DOCUMENTATION.html`.

@@ -83,6 +83,8 @@
         <dt>Tests run</dt>         <dd>…</dd>
         <dt>Reviewer decision</dt> <dd><span class="badge badge-ok">approved</span></dd>
         <dt>Human approval ref</dt><dd>…</dd>
+        <dt>Docs updated</dt>      <dd>… (targets updated, or "not required")</dd>
+        <dt>Decisions recorded</dt><dd>… (decision-log/memory entries accepted by the developer, or "none")</dd>
         <dt>Follow-ups</dt>        <dd>…</dd>
       </dl>
     </div>

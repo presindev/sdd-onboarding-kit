@@ -62,6 +62,11 @@
         </div>
       </section>
 
+      <section id="project-map-references">
+        <h2>Project map references</h2>
+        <p>TODO: Which areas of the project map does this change touch (modules, entrypoints, protected areas)? Reference the map instead of re-describing the structure; if the change will make the map stale, add the map update to the closing tasks. State <code>None</code> if the project has no map.</p>
+      </section>
+
       <section id="files-to-change">
         <h2>Files to change</h2>
         <table>
@@ -124,6 +129,16 @@
             <tr><td>TODO</td><td>TODO</td><td>TODO</td><td>TODO</td><td>TODO</td></tr>
           </tbody>
         </table>
+      </section>
+
+      <section id="security-and-permissions">
+        <h2>Security and permissions</h2>
+        <p>TODO: If this change touches trust boundaries, authentication/authorization, secrets handling, input validation on external data, or operations that need explicit permission (destructive commands, remote mutations, protected files) — describe each and how it is gated. High-risk categories trigger the deep-review escalation ladder (<code>reference/deep-review-policy.md</code>). If none apply, state <code>None</code>.</p>
+      </section>
+
+      <section id="documentation-targets">
+        <h2>Documentation targets</h2>
+        <p>TODO: Which documentation will this design affect when implemented (README, API docs, setup docs, changelog, ADRs, migration notes, project map)? List the targets or state <code>None expected</code>. The reviewer confirms the final list in the review's <code>Documentation decision</code>.</p>
       </section>
 
       <section id="test-design">

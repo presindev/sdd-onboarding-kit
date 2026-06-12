@@ -117,6 +117,21 @@
         <p>Testable visual expectations, accessibility concerns, and responsive behavior go to the <a href="#ui-acceptance-criteria">UI acceptance criteria</a> table, referencing the image IDs above. Unresolved visual questions go to <code>open-questions.html</code>.</p>
       </section>
 
+      <section id="external-dependencies">
+        <h2>External dependencies and APIs</h2>
+        <p>TODO: List the external systems, SDKs, APIs, or framework features this feature interacts with — or state <code>None</code>. This is the requirements-level inventory; the verification evidence (docs checked, versions, deprecations) belongs in the design's <code>External dependencies and freshness</code> section.</p>
+      </section>
+
+      <section id="documentation-expectations">
+        <h2>Documentation expectations</h2>
+        <p>TODO: Which documentation is this feature expected to affect (README, API docs, setup docs, changelog, user-facing docs)? State <code>None expected</code> if none — the reviewer makes the final documentation decision either way.</p>
+      </section>
+
+      <section id="memory-decision-implications">
+        <h2>Memory and decision implications</h2>
+        <p>TODO: Will this feature settle a significant decision (architecture choice, rejected alternative, workflow rule) that belongs in the decision log? Name the expected candidates or state <code>None</code>. Entries are proposed at review time, never written without developer approval; trivial decisions are not logged.</p>
+      </section>
+
       <section id="requirement-to-test-mapping">
         <h2>Requirement-to-test mapping</h2>
         <table>

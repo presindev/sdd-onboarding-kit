@@ -230,6 +230,13 @@
 
     <hr>
 
+    <section id="templates-policies">
+      <h2>Templates carry the policies</h2>
+      <p>The spec templates make the kit's policies visible where work actually happens: generated requirements ask about external dependencies, documentation expectations, and decision-log implications; designs carry freshness evidence, security/permissions, project-map references, and docs targets; reviews record the documentation decision, spec-drift check, high-risk/deep-review results, and propose-only decision/failure-learning entries; history entries capture docs updates and recorded decisions. Every optional section has a <code>None</code> convention, so simple tasks stay simple. See the <code>Templates and generated artifacts</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+    </section>
+
+    <hr>
+
     <section id="recommended-defaults">
       <h2>Recommended defaults</h2>
       <p>Onboarding offers a safe default profile in a single question, so nobody has to answer twenty sections to get started: local-first (no external MCPs/CLIs required), human approval and reviewer required, documentation phase enabled, failure-learning proposals without automatic memory writes, Playwright disabled unless a frontend is detected and the developer opts in, external MCPs off unless opted in, autonomy limited to documented read-only monitoring, and git mutations requiring explicit permission. Accepting the profile reduces onboarding to the genuinely project-specific questions (commands, protected files, SDD scope). See <code>questions.md</code> and the <code>Onboarding questions and defaults</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
