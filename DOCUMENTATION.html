@@ -113,6 +113,7 @@
         <li><a href="#memory-policy">20. Memory policy</a></li>
         <li><a href="#failure-learning">21. Failure learning</a></li>
         <li><a href="#documentation-phase">22. Documentation phase</a></li>
+        <li><a href="#decision-logs">23. Decision logs</a></li>
       </ul>
     </div>
 
@@ -417,6 +418,7 @@
           <tr><td><code>skills/sdd-workflow/</code></td>      <td>Full SDD workflow skill</td></tr>
           <tr><td><code>hooks/</code></td>                    <td>Hook policies, settings snippets, example scripts</td></tr>
           <tr><td><code>mcps/</code></td>                     <td>MCP selection policy and integration notes</td></tr>
+          <tr><td><code>decisions/</code></td>                <td>Templates for the onboarding answers file and the decision-log files</td></tr>
           <tr><td><code>templates/specs/</code></td>          <td>HTML spec templates (requirements, design, tasks, review, …)</td></tr>
           <tr><td><code>templates/functional/</code></td>     <td>Functional brief HTML template</td></tr>
           <tr><td><code>scripts/validate-sdd-structure.sh</code></td><td>Validates that all required harness files are present</td></tr>
@@ -645,7 +647,7 @@ tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
           <tr><td><code>run-and-verify</code></td><td>Run the project and verify behavior with its real commands.</td><td>Verification evidence in review notes.</td><td>Never invents commands; no destructive ops without approval; no secrets stored.</td></tr>
           <tr><td><code>dependency-freshness</code></td><td>Check current docs before external dependency/API changes (see <a href="#dependency-freshness">§19</a>).</td><td>Freshness evidence in the design spec or review.</td><td>No installs/upgrades without approval; fetched content treated as untrusted.</td></tr>
           <tr><td><code>git-discipline</code></td><td>Clean branches, commits, and PR text tied to SDD tasks.</td><td>Requested commits/branches/PR descriptions.</td><td>All mutations permission-gated; no force-push; checks diffs for secrets.</td></tr>
-          <tr><td><code>decision-log</code></td><td>Record durable architectural/workflow decisions.</td><td>Entry in <code>decisions/</code> or <code>docs/adr/</code>.</td><td>Proposes, never overproduces; project memory only.</td></tr>
+          <tr><td><code>decision-log</code></td><td>Record durable architectural/workflow decisions (see <a href="#decision-logs">§23</a>).</td><td>Entry in <code>decisions/</code> or <code>docs/adr/</code>.</td><td>Proposes, never overproduces; project memory only.</td></tr>
           <tr><td><code>documentation-update</code></td><td>Update affected docs after review, before <code>done</code> (see <a href="#documentation-phase">§22</a>).</td><td>Updated docs + target list in review notes.</td><td>Runs only after technical review; never documents unreviewed details.</td></tr>
           <tr><td><code>failure-learning</code></td><td>Propose a reusable lesson after a meaningful mistake (see <a href="#failure-learning">§21</a>).</td><td>Approved lesson in the layer the developer chose.</td><td>Proposal-only; no memory writes without explicit approval; global memory only via the explicit option.</td></tr>
           <tr><td><code>ui-qa</code></td><td>Verify UI changes against spec acceptance criteria.</td><td>Per-criterion QA checklist in review notes.</td><td>No stored credentials; test accounts preferred; no production actions.</td></tr>
@@ -771,7 +773,7 @@ tasks.json · specs/&lt;feature-slug&gt;/ · history.html · decisions/
           <tr><td>Global (user) memory</td><td><code>~/.claude/CLAUDE.md</code></td><td>All projects of this user</td><td>No</td><td>Personal, project-independent preferences — only with explicit approval.</td></tr>
           <tr><td>Auto memory</td><td><code>~/.claude/projects/&lt;project&gt;/memory/</code></td><td>One project, one user</td><td>No</td><td>Claude Code's own session memory; under this policy, durable project knowledge goes to versioned artifacts instead.</td></tr>
           <tr><td>Project memory — instructions</td><td><code>CLAUDE.md</code> (team) / <code>CLAUDE.local.md</code> (personal, gitignored)</td><td>One project</td><td>Yes / No</td><td>Short load-bearing rules every session needs.</td></tr>
-          <tr><td>Project memory — decision logs</td><td><code>decisions/</code></td><td>One project</td><td>Yes</td><td>Reusable lessons, architectural and workflow decisions. <strong>Preferred default.</strong></td></tr>
+          <tr><td>Project memory — decision logs</td><td><code>decisions/</code></td><td>One project</td><td>Yes</td><td>Reusable lessons, architectural and workflow decisions (see <a href="#decision-logs">§23</a>). <strong>Preferred default.</strong></td></tr>
           <tr><td>Task history</td><td><code>history.html</code></td><td>One project</td><td>Yes</td><td>Completed-work summaries.</td></tr>
           <tr><td>Review notes</td><td><code>specs/&lt;feature-slug&gt;/review.html</code></td><td>One task</td><td>Yes</td><td>One-off findings that do not generalize.</td></tr>
         </tbody>
@@ -899,7 +901,7 @@ Rule: always double-check everything before running tests.</code></pre>
           <tr><td>API docs</td><td>changes endpoints, request/response shapes, public function signatures, or error semantics.</td></tr>
           <tr><td>Setup docs</td><td>changes required services, environment variable names, install steps, or local dev workflow.</td></tr>
           <tr><td>Changelog / history</td><td>completes any user-visible change; <code>history.html</code> always gets the completed-task entry.</td></tr>
-          <tr><td>ADRs</td><td>made or reversed an architectural decision (see the decision-log skill).</td></tr>
+          <tr><td>ADRs</td><td>made or reversed an architectural decision (see <a href="#decision-logs">§23</a>).</td></tr>
           <tr><td>Migration notes</td><td>requires action from users/operators when upgrading (schema, config, breaking changes).</td></tr>
           <tr><td>Project map</td><td>changed structure significantly: new top-level directory, moved entrypoint, changed commands, new protected area.</td></tr>
           <tr><td>User-facing docs</td><td>changes what end users see or do (guides, help pages, UI copy references).</td></tr>
@@ -915,6 +917,72 @@ Rule: always double-check everything before running tests.</code></pre>
         <li>No secrets, credentials, or internal-only URLs in documentation — ever.</li>
         <li>Docs describe reviewed reality, not intentions; rejected alternatives belong in decision logs, not user docs.</li>
         <li>The optional <code>documentation-update</code> skill pack (<a href="#skill-packs">§17</a>) carries this same procedure for projects that want it invocable on demand.</li>
+      </ul>
+    </section>
+
+    <hr>
+
+    <section id="decision-logs">
+      <h2>23. Project memory and decision logs</h2>
+      <p>Architectural and workflow decisions must survive context compaction and new sessions. Chat history does not survive either; versioned files do. The kit therefore treats <code>decisions/</code> as the project's memory of <em>why things are the way they are</em> — and the SDD workflow proposes entries at the moments decisions actually get settled: when a spec is ready and when a review completes.</p>
+
+      <h3>Structure</h3>
+      <pre><code>decisions/
+  answers.md                  # onboarding answers (always created)
+  architecture-decisions.md   # durable architectural choices
+  rejected-options.md         # alternatives considered and rejected
+  workflow-decisions.md       # agreed workflow rules ("from now on, X")</code></pre>
+      <p><code>answers.md</code> always exists. The other three are created when the <code>decision-log</code> pack (<a href="#skill-packs">§17</a>) is selected, from the kit's <code>decisions/*.template.md</code> files. If the project already uses ADRs, architecture decisions go to <code>docs/adr/</code> in the project's existing format and numbering instead — onboarding asks (<code>questions.md</code> §17), and the chosen locations are recorded in <code>decisions/answers.md</code>.</p>
+
+      <h3>How entries get proposed</h3>
+      <ol>
+        <li>The <strong>spec-author</strong> reports significant decisions and rejected alternatives when a spec is ready for approval.</li>
+        <li>The <strong>reviewer</strong> flags decisions settled during implementation or review in <code>review.html</code> (or records <code>None</code> — review checklist §8).</li>
+        <li>At completion, Claude proposes the exact entry text; the developer approves, revises, or declines. <strong>Nothing is written without approval.</strong></li>
+        <li>A decision that replaces an earlier one marks the old entry as superseded — entries are never silently deleted.</li>
+      </ol>
+
+      <h3>What gets logged — and what does not</h3>
+      <ul>
+        <li><strong>Logged:</strong> architectural choices, explicitly rejected alternatives, agreed workflow rules, answers to questions that keep being re-asked across sessions.</li>
+        <li><strong>Not logged:</strong> trivial choices with no future consequence, one-off instructions for a single task, speculative conclusions the developer has not confirmed.</li>
+        <li><strong>Never logged:</strong> secrets, credentials, or sensitive operational data — <code>decisions/</code> is versioned and visible to everyone with repo access.</li>
+        <li>Claude proposes but does not overproduce: when in doubt, it asks whether the decision is worth logging.</li>
+      </ul>
+
+      <h3>One artifact per question</h3>
+      <table>
+        <thead>
+          <tr><th>Artifact</th><th>Answers the question</th><th>Written when</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Decision logs (<code>decisions/</code>, <code>docs/adr/</code>)</td><td>Why is it built this way? What was rejected and why?</td><td>A spec, review, or discussion settles a durable decision.</td></tr>
+          <tr><td>Failure-learning entries (<a href="#failure-learning">§21</a>)</td><td>What mistake must not be repeated?</td><td>After a meaningful mistake, via the confirmation prompt.</td></tr>
+          <tr><td><code>history.html</code></td><td>What was done, when, by which task?</td><td>Every task completion.</td></tr>
+          <tr><td><code>specs/&lt;feature-slug&gt;/</code></td><td>What was required and designed for one feature?</td><td>During the spec phase of that feature.</td></tr>
+          <tr><td>Global memory (<a href="#memory-policy">§20</a>)</td><td>What does this user prefer across all projects?</td><td>Only with explicit approval; never project-specific rules.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>A good entry</h3>
+      <pre><code>## 2026-03-14 — Use PostgreSQL for the persistence layer
+
+- Status: accepted
+- Context: the task queue needs transactional guarantees alongside
+  relational reporting queries.
+- Decision: PostgreSQL 16 on the existing cluster; no second datastore.
+- Alternatives rejected: DynamoDB — no cross-entity transactions for our
+  access pattern (details in rejected-options.md).
+- Consequences: schema changes follow the migration policy; reporting
+  joins stay in SQL.
+- Source: TASK-031 design review.</code></pre>
+      <p>It is dated, scoped, explains the why, names what lost, and points back to its source. A bad entry ("we decided to use Postgres") records the what without the why — exactly the part future sessions cannot reconstruct.</p>
+
+      <h3>Integration with the rest of the harness</h3>
+      <ul>
+        <li>Workflow: <code>workflow.md</code> §7 (reviewer flags decisions) and §9 (proposal at completion).</li>
+        <li>Skill: the optional <code>decision-log</code> pack (<a href="#skill-packs">§17</a>) carries the procedure, including the supersede rule and the promotion of load-bearing rules to a one-line <code>CLAUDE.md</code> entry.</li>
+        <li>Memory policy: decision logs are the preferred project-memory layer (<a href="#memory-policy">§20</a>); the documentation phase's ADR target row points here (<a href="#documentation-phase">§22</a>).</li>
       </ul>
     </section>
 

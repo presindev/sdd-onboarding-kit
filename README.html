@@ -167,6 +167,13 @@
 
     <hr>
 
+    <section id="decision-logs">
+      <h2>Project memory and decision logs</h2>
+      <p>Durable knowledge lives in versioned artifacts, not chat history. Onboarding always creates <code>decisions/answers.md</code> (the recorded onboarding answers); the optional <code>decision-log</code> pack adds <code>decisions/architecture-decisions.md</code>, <code>decisions/rejected-options.md</code>, and <code>decisions/workflow-decisions.md</code> — or uses the project's existing <code>docs/adr/</code>. When a spec or review settles something significant, Claude <strong>proposes</strong> an entry: trivial decisions are not logged, secrets never are, and nothing is written without approval. See the <code>Project memory and decision logs</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+    </section>
+
+    <hr>
+
     <section id="central-principle">
       <h2>Central principle</h2>
       <p>The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.</p>

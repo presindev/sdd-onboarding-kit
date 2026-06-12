@@ -156,9 +156,9 @@ Questions:
 ## 12. Documentation and history
 
 1. Should every completed task append to `history.html`?
-2. Should architectural decisions be stored in `docs/adr/`?
+2. Where should architectural decisions be recorded? (Detailed in §17.)
 3. Should specs remain permanently, or be archived after completion?
-4. Should rejected design options be recorded?
+4. Should rejected design options be recorded? (Detailed in §17.)
 5. Should Claude maintain a changelog?
 6. Where should the project map live: `.claude/context/project-map.md`
    (default, harness-internal) or `docs/project-map.md` (visible in docs)?
@@ -236,3 +236,31 @@ Notes:
   installed: the design template, spec-author rules, and reviewer checklist
   enforce it. The pack adds the step-by-step procedure.
 - Record the chosen strictness in `decisions/answers.md`.
+
+## 17. Decision logs and project memory
+
+Durable decisions live in versioned files, not chat history.
+`decisions/answers.md` always exists (it records the onboarding answers).
+Beyond it, ask:
+
+1. Should architectural decisions be recorded? Where?
+   1. `decisions/architecture-decisions.md` (default when the
+      `decision-log` pack is selected; created from the kit's template).
+   2. `docs/adr/` — if the project already uses ADRs, keep using them in
+      the project's existing format and numbering.
+   3. Not recorded: decisions live only in specs and `history.html`.
+2. Should rejected options/designs be recorded in
+   `decisions/rejected-options.md`? (Default: yes when the pack is
+   selected — rejected alternatives are what future sessions most often
+   re-litigate.)
+3. Should workflow decisions ("from now on, X") be recorded in
+   `decisions/workflow-decisions.md`? (Default: yes when the pack is
+   selected.)
+
+Notes:
+
+- The `decision-log` pack (§14) adds the proposal procedure; without it,
+  decisions can still be recorded manually in the same files.
+- Only significant decisions are logged — never trivial choices.
+- Never log secrets or sensitive operational data.
+- Record the chosen locations in `decisions/answers.md`.

@@ -87,6 +87,10 @@ The reviewer validates:
 - validation commands pass;
 - no unauthorized scope creep.
 
+The reviewer also flags significant decisions settled by the spec,
+implementation, or review (architectural choices, rejected alternatives,
+workflow rules) for the decision log — see §9.
+
 Write `review.html`.
 
 ## 8. Documentation phase
@@ -107,6 +111,13 @@ If reviewer approves and documentation is `updated` or `not_required`:
 1. Set task status to `done`.
 2. Append to `history.html` (skip if the documenter already did).
 3. Include changed files and commands run.
+4. If the spec or review settled a significant decision, propose a
+   decision-log entry: architectural choices →
+   `decisions/architecture-decisions.md` (or `docs/adr/` if configured),
+   rejected alternatives → `decisions/rejected-options.md`, workflow rules
+   → `decisions/workflow-decisions.md`. Propose only — the developer
+   approves the entry text. Do not log trivial decisions; never log
+   secrets or sensitive operational data.
 
 If reviewer rejects:
 

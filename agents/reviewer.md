@@ -65,6 +65,7 @@ Include:
 - changed files reviewed;
 - findings;
 - documentation decision: required or not required, with the list of documentation targets (README, API docs, setup docs, changelog/history, ADRs, migration notes, project map, user-facing docs — whichever this task actually affects);
+- decision log proposal: significant decisions settled during implementation or review (architectural choices, rejected alternatives, workflow rules) that should be recorded in the project's decision log, or `None`. Proposed only — never written without developer approval; trivial decisions are not flagged;
 - final decision.
 
 ## Documentation phase
@@ -102,5 +103,6 @@ Return:
 - evidence;
 - blocking issues;
 - non-blocking issues (must be resolved before `done`);
+- proposed decision-log entries, if any;
 - commands run;
 - next state.
