@@ -65,6 +65,13 @@ specs/<feature-slug>/review.html
   not optional, for high-risk categories (auth, payments, database
   migrations, cloud infrastructure, framework upgrades, security-sensitive
   code). For purely internal changes, state `None` — do not add overhead.
+- If the change touches a high-risk category (security-sensitive code,
+  auth/authz, payments, database migrations, infrastructure/deployment,
+  public APIs, large cross-cutting refactors, data-loss risks), say so
+  explicitly in the design's risks section and note that the reviewer
+  will apply the deep-review escalation ladder
+  (`reference/deep-review-policy.md`) — visible before implementation
+  starts, so nobody is surprised at review time.
 
 ## Task rules
 

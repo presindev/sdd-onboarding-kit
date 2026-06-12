@@ -117,6 +117,7 @@
         <li><a href="#browser-testing">24. Browser/UI testing</a></li>
         <li><a href="#cli-vs-mcp">25. CLI vs MCP</a></li>
         <li><a href="#autonomy-policy">26. Autonomy policy</a></li>
+        <li><a href="#deep-review-policy">27. Deep review policy</a></li>
       </ul>
     </div>
 
@@ -1170,6 +1171,38 @@ mcpServers:
         <li><strong>Documentation phase (<a href="#documentation-phase">§22</a>):</strong> <code>done</code> requires the docs check; since an autonomous workflow cannot complete that phase's human confirmation, it can never mark work complete by itself — by construction, not just by rule.</li>
       </ul>
       <p>Permission posture: never run autonomous workflows with permissions fully bypassed outside a disposable sandbox; prefer read-only allowlists for monitoring and deny-by-default modes for CI; scope routine/CI credentials read-only unless a recorded decision says otherwise; and treat everything an autonomous run ingests (CI logs, webhook payloads, fetched pages) as data, not instructions — there is no human watching to catch a prompt injection.</p>
+    </section>
+
+    <hr>
+
+    <section id="deep-review-policy">
+      <h2>27. Deep review policy</h2>
+      <p>Every SDD task gets the standard reviewer pass (<a href="#subagents">§7</a>). Some changes deserve more. Two rules frame the policy: <strong>deep review supplements the SDD reviewer — it never replaces it</strong>, and deep review is <strong>recommended, not required</strong> unless the project records a stricter rule. The kit never assumes paid or limited features are available: every escalation step has an included-cost fallback. Full policy: <code>reference/deep-review-policy.md</code>.</p>
+
+      <h3>High-risk categories</h3>
+      <p>Recommend a deep review when the change touches: security-sensitive code; authentication/authorization; payment flows; database migrations; infrastructure/deployment; public API changes; large cross-cutting refactors; or data-loss risks. These are the same categories the dependency-freshness policy (<a href="#dependency-freshness">§19</a>) treats as high-risk — the spec-author marks them in the design's risks section, so the escalation is visible before implementation starts.</p>
+
+      <h3>What exists</h3>
+      <p>Capability-level summary (names verified against the official docs in June 2026 — re-verify before relying on exact syntax): a read-only PR review command; a code-review command over the current diff with selectable effort levels, whose <code>ultra</code> mode runs a multi-agent cloud review (paid beyond free runs); a security-review command for pending branch changes; extended reasoning via session effort levels or a one-turn keyword; adversarial/parallel review with independent subagents or agent teams; and automated PR review services (GitHub App — plan-dependent, paid per review).</p>
+
+      <h3>Escalation ladder</h3>
+      <ol>
+        <li><strong>Always:</strong> the SDD reviewer with the <code>High-risk review</code> checklist section at raised effort, including a security-focused pass for security-relevant changes.</li>
+        <li><strong>Recommended:</strong> an adversarial second pass — at least one independent reviewer subagent per relevant lens (security, correctness/edge cases, performance), each trying to refute the implementation rather than confirm it.</li>
+        <li><strong>Optional, if available and the developer approves the cost:</strong> cloud deep review or an automated PR review service — never run without explicit approval per invocation.</li>
+      </ol>
+      <p>Rungs 1–2 use only included features, so the policy works on every plan. If a paid mode is unavailable or declined, rung 2 is the accepted substitute — noted in <code>review.html</code>; a missing paid feature never blocks a task.</p>
+
+      <h3>Output expectations</h3>
+      <p>Whatever the mode, a deep review reports explicitly: <strong>security findings</strong> (<code>None found</code> is a valid result, silence is not), <strong>performance findings</strong>, <strong>edge cases</strong> (each mapped to a requirement or flagged as a spec gap), <strong>reproduction attempts</strong> (reproduced vs theoretical, labeled), and a <strong>remediation plan</strong> (per finding: severity, suggested fix, blocking or not). Blocking findings return the task to <code>in_progress</code>; the rest follow the normal resolve-or-defer rule before <code>done</code>.</p>
+
+      <h3>Integration with the workflow</h3>
+      <ul>
+        <li><strong>Spec-author:</strong> marks high-risk categories in the design (<code>agents/spec-author.md</code>) so the recommendation precedes implementation.</li>
+        <li><strong>Reviewer (<a href="#subagents">§7</a>):</strong> runs checklist §9 <code>High-risk review</code>, recommends the rung, records which rungs ran and their findings in <code>review.html</code> — one review record per task, whatever mix of modes produced it. A high-risk change reviewed only at rung 1 without a recorded reason is a checklist failure.</li>
+        <li><strong>Documentation phase (<a href="#documentation-phase">§22</a>):</strong> unchanged — deep-review findings that alter behavior or APIs feed the documentation targets like any other finding.</li>
+        <li><strong>State machine (<a href="#task-lifecycle">§5</a>):</strong> unchanged — <code>review → done</code> still requires the reviewer's decision plus the docs check, and autonomous workflows still cannot perform the transition (<a href="#autonomy-policy">§26</a>).</li>
+      </ul>
     </section>
 
   </main>

@@ -40,6 +40,7 @@ At minimum, verify:
 8. No obvious security, data loss or API compatibility issue was introduced.
 9. If the project has a `run-and-verify` skill, applicable checks were run through it and the evidence (commands run, results, unverified items) is recorded in `review.html`.
 10. If the change touches external dependencies, SDKs, APIs, or framework configuration, the `External dependencies and freshness` section of `design.html` (or `review.html`) records the evidence: docs checked (source and date), version constraints, deprecated APIs avoided, compatibility notes. For high-risk categories (auth, payments, database migrations, cloud infrastructure, framework upgrades, security-sensitive code), missing evidence is blocking. Purely internal changes only need `None` there.
+11. If the change touches a high-risk category (security-sensitive code, auth/authz, payments, database migrations, infrastructure/deployment, public APIs, large cross-cutting refactors, data-loss risks), apply the `High-risk review` section of the checklist and the escalation ladder in `reference/deep-review-policy.md`: a security-focused pass for security-relevant changes, an adversarial second pass where feasible, and paid deep-review modes only with explicit developer approval. Record which rungs ran — a high-risk change reviewed only at the standard level needs a recorded reason. Deep review supplements this review; it never replaces it.
 
 ## Review outcomes
 
@@ -64,6 +65,7 @@ Include:
 - commands run;
 - changed files reviewed;
 - findings;
+- high-risk review record: categories touched (or `None`), which escalation rungs ran (standard / security pass / adversarial pass / paid deep review), and — for high-risk changes — security findings, performance findings, edge cases, reproduction attempts, and the remediation plan;
 - documentation decision: required or not required, with the list of documentation targets (README, API docs, setup docs, changelog/history, ADRs, migration notes, project map, user-facing docs — whichever this task actually affects);
 - decision log proposal: significant decisions settled during implementation or review (architectural choices, rejected alternatives, workflow rules) that should be recorded in the project's decision log, or `None`. Proposed only — never written without developer approval; trivial decisions are not flagged;
 - final decision.
