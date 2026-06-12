@@ -86,6 +86,20 @@
         </div>
       </section>
 
+      <section id="ui-acceptance-criteria">
+        <h2>UI acceptance criteria</h2>
+        <p>TODO: Fill only when the change affects a browser UI; otherwise state <code>None</code>. Screenshots and mockups are evidence, not complete requirements — ask when the visual intent is ambiguous. Never record credentials here: login/auth constraints name the account type (e.g. <code>test account with admin role</code>), never secrets.</p>
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Target route</th><th>Expected visual state</th><th>Interaction flow</th><th>Accessibility checks</th><th>Responsive states</th><th>Login/auth constraints</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="req-id ac">UI-001</span></td><td>TODO</td><td>TODO</td><td>TODO</td><td>TODO</td><td>TODO</td><td>TODO</td></tr>
+          </tbody>
+        </table>
+        <p>Screenshots/mockups provided: TODO (file names or links, or <code>None</code>).</p>
+      </section>
+
       <section id="requirement-to-test-mapping">
         <h2>Requirement-to-test mapping</h2>
         <table>

@@ -264,3 +264,30 @@ Notes:
 - Only significant decisions are logged — never trivial choices.
 - Never log secrets or sensitive operational data.
 - Record the chosen locations in `decisions/answers.md`.
+
+## 18. Browser/UI testing with Playwright
+
+```text
+Does this project have a browser UI that Claude should be allowed to inspect with Playwright?
+1. No browser UI.
+2. Yes, add a browser-tester subagent with Playwright MCP scoped to that subagent.
+3. Yes, document setup only; do not configure it.
+4. Custom.
+```
+
+Notes:
+
+- Default: option 1 for projects without a browser UI — nothing related
+  to Playwright is installed, and the project is unaffected.
+- If the repository clearly has a frontend, suggest option 2 (and the
+  `ui-qa` pack from §14, which routes UI verification through the
+  agent) — but install only on confirmation.
+- Option 2 installs `agents/optional/browser-tester.md` with the
+  Playwright MCP declared inline in the agent's frontmatter — the main
+  conversation never gets browser tools (see `mcps/playwright-policy.md`).
+- Option 3 records the setup reference from `mcps/playwright-policy.md`
+  in the project's docs without configuring anything.
+- Credentials are never stored anywhere; test accounts preferred;
+  explicit approval before any credential is used; no production
+  destructive actions.
+- Record the choice in `decisions/answers.md`.

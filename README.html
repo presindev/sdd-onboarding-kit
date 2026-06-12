@@ -181,6 +181,13 @@
 
     <hr>
 
+    <section id="browser-testing">
+      <h2>Optional browser testing</h2>
+      <p>For projects with a browser UI, onboarding can install a <strong>browser-tester subagent</strong> with the Playwright MCP scoped to that agent alone: the MCP server is declared inline in the agent's frontmatter, so browser tools exist only while the agent runs and never load into the main conversation. Specs gain optional UI acceptance criteria (routes, visual states, interaction flows, accessibility, responsive states), and the <code>ui-qa</code> skill routes verification through the agent. Non-UI projects are unaffected — nothing Playwright-related is installed by default, credentials are never stored, and production destructive actions are out of bounds. See <a href="mcps/playwright-policy.md"><code>mcps/playwright-policy.md</code></a> and the <code>Browser/UI testing with Playwright</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
+    </section>
+
+    <hr>
+
     <section id="central-principle">
       <h2>Central principle</h2>
       <p>The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.</p>

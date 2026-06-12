@@ -131,6 +131,11 @@
         <p>TODO: Explain which tests will be added or updated and how they map to requirements.</p>
       </section>
 
+      <section id="ui-verification-plan">
+        <h2>UI verification plan</h2>
+        <p>TODO: If the change affects a browser UI, describe how its acceptance criteria will be verified — the <code>browser-tester</code> agent (when installed) or the manual <code>ui-qa</code> procedure: routes to open, states to reach, screenshots to compare, viewports to check. If no UI is affected, state <code>None</code>. Never include credentials; local/test instances only.</p>
+      </section>
+
       <section id="risks-and-trade-offs">
         <h2>Risks and trade-offs</h2>
         <p>TODO: List risks, rejected alternatives and trade-offs.</p>
