@@ -1,313 +1,526 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SDD Onboarding Kit for Claude Code</title>
-  <style>
-    :root {
-      --c-accent: #2563eb; --c-accent-bg: #eff6ff;
-      --c-ok: #27ae60; --c-ok-bg: #eafaf1;
-      --c-border: #d1d5db; --c-bg-alt: #f9fafb;
-      --c-text: #111827; --c-text-muted: #6b7280;
-      --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font-sans); font-size: 15px; line-height: 1.65; color: var(--c-text); background: #fff; }
-    .hero { background: #0f172a; color: #f8fafc; padding: 3rem 2rem 2.5rem; }
-    .hero h1 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .hero p { color: #94a3b8; font-size: 1.05rem; max-width: 620px; }
-    .content { max-width: 860px; margin: 0 auto; padding: 2rem 1.5rem; }
-    h2 { font-size: 1.2rem; font-weight: 700; margin: 2.25rem 0 0.75rem; padding-bottom: 0.3rem; border-bottom: 2px solid var(--c-border); }
-    h3 { font-size: 1rem; font-weight: 600; margin: 1.25rem 0 0.5rem; }
-    p { margin: 0.65rem 0; }
-    ul, ol { padding-left: 1.5rem; margin: 0.5rem 0; }
-    li { margin: 0.3rem 0; }
-    code { font-family: var(--font-mono); font-size: 0.875em; background: #e5e7eb; padding: 0.15em 0.4em; border-radius: 3px; }
-    pre { background: #1e1e2e; color: #cdd6f4; padding: 1rem 1.25rem; border-radius: 6px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.85rem; margin: 1rem 0; }
-    pre code { background: none; padding: 0; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.875rem; margin: 1rem 0; }
-    th, td { border: 1px solid var(--c-border); padding: 0.5rem 0.75rem; text-align: left; }
-    th { background: var(--c-bg-alt); font-weight: 600; }
-    a { color: var(--c-accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .step-list { list-style: none; padding: 0; counter-reset: steps; }
-    .step-list li {
-      counter-increment: steps;
-      display: flex;
-      gap: 1rem;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid var(--c-border);
-    }
-    .step-list li::before {
-      content: counter(steps);
-      background: var(--c-accent);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.85rem;
-      width: 1.6rem;
-      height: 1.6rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 0.15rem;
-    }
-    .prompt-box {
-      background: #f0fdf4;
-      border: 1px solid #86efac;
-      border-radius: 6px;
-      padding: 1rem 1.25rem;
-      font-family: var(--font-mono);
-      font-size: 0.875rem;
-      margin: 1rem 0;
-      color: #14532d;
-    }
-    .badge { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 0.15em 0.6em; border-radius: 9999px; text-transform: uppercase; background: var(--c-ok-bg); color: var(--c-ok); }
-    hr { border: none; border-top: 1px solid var(--c-border); margin: 1.5rem 0; }
-    footer { text-align: center; padding: 2rem; color: var(--c-text-muted); font-size: 0.85rem; border-top: 1px solid var(--c-border); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SDD Onboarding Kit — Spec Driven Development for Claude Code</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:           #0c111c;
+    --bg-soft:      #111827;
+    --card:         #131a28;
+    --card-border:  rgba(255,255,255,0.08);
+    --text:         #e8eaef;
+    --text-muted:   #9aa3b2;
+    --orange:       #f29a55;
+    --orange-soft:  rgba(242,154,85,0.12);
+    --green:        #2ee07e;
+    --green-soft:   rgba(46,224,126,0.10);
+    --radius:       16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 72px 0; }
+
+  /* Eyebrow */
+  .eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 18px;
+  }
+  .eyebrow.green { color: var(--green); }
+
+  /* Section headings */
+  h2 {
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+  h2 em { font-style: italic; color: var(--orange); }
+  h2 em.green { color: var(--green); }
+
+  h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+
+  p.lead { color: var(--text-muted); max-width: 760px; }
+
+  /* Hero */
+  .hero {
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    background:
+      radial-gradient(900px 500px at 85% -10%, rgba(242,154,85,0.10), transparent 60%),
+      radial-gradient(700px 450px at -10% 110%, rgba(46,224,126,0.07), transparent 60%),
+      var(--bg);
+    border-bottom: 1px solid var(--card-border);
+  }
+  .hero .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(46,224,126,0.4);
+    color: var(--green);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero .badge::before { content: "✳"; font-size: 12px; }
+  .hero h1 {
+    font-size: clamp(36px, 6vw, 64px);
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 900px;
+  }
+  .hero h1 .accent { color: var(--orange); font-style: italic; }
+  .hero .sub {
+    margin-top: 24px;
+    color: var(--text-muted);
+    font-size: 18px;
+    max-width: 680px;
+    line-height: 1.6;
+  }
+
+  /* Fact grid */
+  .factgrid {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 14px;
+  }
+  .fact {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+  }
+  .fact .k {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .fact .v { font-weight: 600; font-size: 15px; }
+  .fact .v small { display: block; font-weight: 400; color: var(--text-muted); font-size: 13px; margin-top: 2px; }
+
+  /* Cards */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 26px;
+  }
+  .card .icon {
+    width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 10px;
+    background: var(--orange-soft);
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  .card.green .icon { background: var(--green-soft); }
+  .card p { color: var(--text-muted); font-size: 14.5px; }
+
+  /* Checklist */
+  ul.checklist { list-style: none; }
+  ul.checklist li {
+    position: relative;
+    padding: 8px 0 8px 32px;
+    color: var(--text-muted);
+  }
+  ul.checklist li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-weight: 700;
+  }
+  ul.checklist.green li::before { content: "✓"; color: var(--green); }
+  ul.checklist li strong { color: var(--text); }
+
+  /* Note box */
+  .note {
+    margin-top: 28px;
+    background: var(--green-soft);
+    border: 1px solid rgba(46,224,126,0.25);
+    border-radius: var(--radius);
+    padding: 22px 26px;
+    color: var(--text-muted);
+    font-size: 14.5px;
+  }
+  .note strong { color: var(--green); }
+  .note.orange {
+    background: var(--orange-soft);
+    border-color: rgba(242,154,85,0.25);
+  }
+  .note.orange strong { color: var(--orange); }
+
+  /* Tables */
+  .tablewrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--card-border); }
+  table { width: 100%; border-collapse: collapse; background: var(--card); font-size: 14.5px; }
+  th, td { text-align: left; padding: 16px 20px; vertical-align: top; }
+  th {
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--orange);
+    border-bottom: 1px solid var(--card-border);
+    white-space: nowrap;
+  }
+  td { border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted); }
+  td:first-child { color: var(--text); font-weight: 600; }
+  td code {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.875em;
+    background: rgba(255,255,255,0.06);
+    color: var(--orange);
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* Steps (numbered) */
+  ol.steps { list-style: none; counter-reset: step; display: grid; gap: 12px; }
+  ol.steps li {
+    counter-increment: step;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 16px 20px 16px 64px;
+    position: relative;
+    color: var(--text-muted);
+    font-size: 15px;
+    transition: border-color 0.15s;
+  }
+  ol.steps li:hover { border-color: rgba(242,154,85,0.3); }
+  ol.steps li::before {
+    content: counter(step, decimal-leading-zero);
+    position: absolute;
+    left: 20px; top: 50%;
+    transform: translateY(-50%);
+    font-weight: 900;
+    color: var(--orange);
+    font-size: 17px;
+  }
+  ol.steps li strong { color: var(--text); }
+
+  /* Code block */
+  .prompt-box {
+    background: var(--bg);
+    border: 1px solid var(--card-border);
+    border-left: 3px solid var(--green);
+    border-radius: var(--radius);
+    padding: 20px 26px;
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 14px;
+    color: #c8d8e8;
+    margin: 28px 0;
+    line-height: 1.6;
+  }
+
+  code {
+    font-family: ui-monospace, Menlo, Consolas, monospace;
+    font-size: 0.875em;
+    background: rgba(255,255,255,0.06);
+    color: var(--orange);
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* Section separator */
+  .alt {
+    background: var(--bg-soft);
+    border-top: 1px solid var(--card-border);
+    border-bottom: 1px solid var(--card-border);
+  }
+
+  /* Stats */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 18px;
+    margin-top: 40px;
+  }
+  .stat { text-align: center; }
+  .stat .num { font-size: 48px; font-weight: 900; color: var(--orange); line-height: 1; }
+  .stat.green .num { color: var(--green); }
+  .stat .lbl { margin-top: 10px; color: var(--text-muted); font-size: 14px; }
+
+  /* Links */
+  a { color: var(--orange); text-decoration: none; }
+  a:hover { color: var(--green); text-decoration: underline; }
+
+  footer {
+    padding: 48px 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    border-top: 1px solid var(--card-border);
+  }
+  footer .names { color: var(--text); font-weight: 700; margin-top: 6px; }
+
+  @media (max-width: 640px) {
+    section { padding: 52px 0; }
+    .hero { min-height: auto; padding: 64px 0; }
+    .wrap { padding: 0 20px; }
+  }
+
+  @media print {
+    body { background: #fff; color: #111; }
+  }
+</style>
 </head>
 <body>
 
-  <div class="hero">
-    <h1>SDD Onboarding Kit for Claude Code</h1>
-    <p>Install a <strong>Spec Driven Development</strong> harness in any repository you work on with Claude Code.</p>
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <span class="badge">Spec Driven Development</span>
+    <h1>Structure how Claude Code<br>builds your software, <span class="accent">every time</span></h1>
+    <p class="sub">The SDD Onboarding Kit installs a spec-before-code harness in any repository — so Claude creates an approved specification before touching production code.</p>
+
+    <div class="factgrid">
+      <div class="fact"><div class="k">Works with</div><div class="v">Any repository <small>Language and framework agnostic</small></div></div>
+      <div class="fact"><div class="k">Default mode</div><div class="v">Local-first <small>No external MCPs or CLIs required</small></div></div>
+      <div class="fact"><div class="k">Human control</div><div class="v">Approval required <small>Before any code is written</small></div></div>
+      <div class="fact"><div class="k">License</div><div class="v">MIT <small>Free to use and adapt</small></div></div>
+    </div>
   </div>
+</header>
 
-  <div class="content">
+<!-- WHAT SDD DOES -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">The workflow</span>
+    <h2>Spec first. Code <em>second. Always.</em></h2>
+    <p class="lead">When the harness is installed, Claude Code follows a structured loop — creating and getting approval for a specification before a single line of production code is written.</p>
 
-    <section id="documentation">
-      <h2>Documentation</h2>
-      <p>Full operational documentation lives in <strong><a href="DOCUMENTATION.html">DOCUMENTATION.html</a></strong>. The documentation is layered:</p>
-      <ul>
-        <li><code>README.md</code> / this page — quick start, purpose, installation, default safety model;</li>
-        <li><code>DOCUMENTATION.html</code> — full operational documentation;</li>
-        <li><code>reference/</code> — deeper theory and policy material;</li>
-        <li><code>skills/</code> — reusable procedural instructions (installed as <code>.claude/skills/</code>);</li>
-        <li><code>agents/</code> — role-specific agents (installed as <code>.claude/agents/</code>).</li>
-      </ul>
-      <p><strong>English is canonical for all reusable kit files.</strong> Generated project-specific artifacts (specs, decisions, history) may use the target project's preferred language; see the language policy in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-      <p>The kit is designed to protect Claude Code's context window: generated <code>CLAUDE.md</code> files stay short and link out, long procedures live in skills, and durable knowledge lives in versioned artifacts instead of chat history. See <a href="reference/context-economy.md"><code>reference/context-economy.md</code></a>.</p>
-      <p>Onboarding also generates a concise <strong>project map</strong> (default <code>.claude/context/project-map.md</code>): directory tree, entrypoints, commands, and protected areas — so Claude knows where things live without loading many files.</p>
-    </section>
-
-    <hr>
-
-    <section id="what-sdd-does">
-      <h2>What SDD does</h2>
-      <p>When the harness is installed, Claude Code works like this:</p>
-      <ol class="step-list">
-        <li>The developer selects or describes a task.</li>
-        <li>Claude creates a spec (requirements, design, implementation tasks) before touching any code.</li>
-        <li>The developer reviews and approves the spec.</li>
-        <li>Claude implements only against the approved spec.</li>
-        <li>Claude runs tests and validation.</li>
-        <li>Claude reviews traceability between requirements, design, tasks, code and tests.</li>
-        <li>When the change affects documentation, a documenter updates the affected docs after review — a task is not complete while required documentation is stale.</li>
-        <li>The task is marked done or returned for correction.</li>
+    <div style="margin-top:40px;">
+      <ol class="steps">
+        <li><strong>Select a task.</strong> The developer picks or describes what to build.</li>
+        <li><strong>Spec is created.</strong> Claude writes requirements, design, and implementation tasks — no code yet.</li>
+        <li><strong>You review and approve</strong> the spec before anything is implemented.</li>
+        <li><strong>Claude implements</strong> strictly against the approved spec — no scope creep.</li>
+        <li><strong>Tests and validation</strong> run automatically.</li>
+        <li><strong>Traceability review</strong> verifies requirements, design, tasks, code and tests are aligned.</li>
+        <li><strong>Documentation is updated</strong> when the change affects docs — task stays open until docs are current.</li>
+        <li><strong>Task is marked done</strong> or returned for correction.</li>
       </ol>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <hr>
+<!-- HOW TO INSTALL -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow">Installation</span>
+    <h2>Up and running in <em>one prompt</em></h2>
+    <p class="lead">Copy this kit into your project folder, then open Claude Code and run:</p>
 
-    <section id="how-to-use">
-      <h2>How to use this kit</h2>
-      <p>Copy or add this folder to the project where you want to install SDD. For example:</p>
-      <pre><code>my-project/
-└── sdd-onboarding-kit/</code></pre>
-      <p>Then open Claude Code in <code>my-project/</code> and run:</p>
-      <div class="prompt-box">Read `sdd-onboarding-kit/instructions.md` and configure this repository to use Spec Driven Development. Ask me all necessary questions before making project-specific decisions.</div>
-      <p>Claude Code will inspect the repository, ask you the configuration questions from <code>questions.md</code>, and generate a complete project-specific SDD harness.</p>
-    </section>
+    <div class="prompt-box">Read `sdd-onboarding-kit/instructions.md` and configure this repository to use Spec Driven Development. Ask me all necessary questions before making project-specific decisions.</div>
 
-    <hr>
+    <p class="lead">Claude Code will inspect the repository, ask you the configuration questions from <code>questions.md</code>, and generate a complete project-specific SDD harness — adapted to your commands, stack, and preferences.</p>
 
-    <section id="what-gets-installed">
-      <h2>What gets installed?</h2>
-      <p><strong>Installed by default</strong> (every onboarding):</p>
-      <ul>
-        <li>A short, project-specific <code>CLAUDE.md</code> generated from the kit's template — links out, never duplicates skill bodies.</li>
-        <li><code>.claude/agents/</code>: leader, spec-author, implementer, reviewer, documenter.</li>
-        <li><code>.claude/skills/sdd-workflow/</code>: the core SDD skill with workflow, state machine, review checklist, and spec templates.</li>
-        <li><code>specs/</code> (with the spec CSS/JS), <code>tasks.json</code>, <code>history.html</code>, <code>decisions/answers.md</code>, and the project map.</li>
-        <li>Validation scripts adapted to the project.</li>
-      </ul>
-      <p><strong>Optional — only with your explicit selection:</strong></p>
-      <ul>
-        <li>Any of the ten skill packs (§14 of <code>questions.md</code>).</li>
-        <li>Hooks — shipped as examples, never enabled without approval.</li>
-        <li>MCPs — none configured by default; the browser-tester agent scopes Playwright to itself when chosen.</li>
-        <li>Decision-log files, git text templates, autonomy beyond read-only monitoring, paid deep-review modes.</li>
-      </ul>
-      <p>Nothing in the kit phones home, stores credentials, or enables external access by itself — the default install is fully local.</p>
-    </section>
+    <div class="note orange" style="margin-top:32px;">
+      <strong>Recommended defaults available.</strong> Accept the default profile to skip twenty configuration questions and get started immediately. You can always customise later.
+    </div>
+  </div>
+</section>
 
-    <hr>
+<!-- WHAT GETS INSTALLED -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">What you get</span>
+    <h2>A complete harness, <em>not generic rules</em></h2>
 
-    <section id="key-files">
-      <h2>Key files</h2>
+    <div class="cards" style="margin-top:36px;">
+      <div class="card">
+        <div class="icon">📋</div>
+        <h3>Project CLAUDE.md</h3>
+        <p>A short, project-specific file generated from the kit's template — links out, never duplicates skill bodies.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🤖</div>
+        <h3>Five subagents</h3>
+        <p>Leader, spec-author, implementer, reviewer, and documenter — installed as <code>.claude/agents/</code>.</p>
+      </div>
+      <div class="card">
+        <div class="icon">⚙️</div>
+        <h3>SDD workflow skill</h3>
+        <p>The core skill with full workflow, state machine, review checklist, and spec templates at <code>.claude/skills/sdd-workflow/</code>.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📁</div>
+        <h3>Spec artifacts</h3>
+        <p><code>specs/</code>, <code>tasks.json</code>, <code>history.html</code>, <code>decisions/answers.md</code>, and a project map.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔬</div>
+        <h3>Validation scripts</h3>
+        <p>Scripts adapted to your project for validating structure, environment, and tests.</p>
+      </div>
+      <div class="card green">
+        <div class="icon">🔌</div>
+        <h3>10 optional skill packs</h3>
+        <p>None installed by default. Choose what you need: context audit, git discipline, UI QA, failure learning, and more.</p>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:32px;">
+      <strong>Nothing phones home.</strong> The default install is fully local — no credentials stored, no external access enabled by default.
+    </div>
+  </div>
+</section>
+
+<!-- KEY FILES -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow">Kit structure</span>
+    <h2>Key files at a <em>glance</em></h2>
+
+    <div class="tablewrap" style="margin-top:36px;">
       <table>
         <thead>
-          <tr><th>File</th><th>Purpose</th></tr>
+          <tr><th>File / folder</th><th>Purpose</th></tr>
         </thead>
         <tbody>
           <tr><td><code>instructions.md</code></td><td>Step-by-step procedure Claude Code follows to install the harness</td></tr>
           <tr><td><code>questions.md</code></td><td>Project-specific decisions Claude must ask before writing files</td></tr>
           <tr><td><code>agents/</code></td><td>Subagent templates: leader, spec-author, implementer, reviewer, documenter</td></tr>
-          <tr><td><code>skills/sdd-workflow/</code></td><td>Full SDD workflow skill (copied to <code>.claude/skills/</code>)</td></tr>
-          <tr><td><code>skills/optional/</code></td><td>Optional skill packs, installed only when selected during onboarding</td></tr>
+          <tr><td><code>skills/sdd-workflow/</code></td><td>Full SDD workflow skill — copied to <code>.claude/skills/</code></td></tr>
+          <tr><td><code>skills/optional/</code></td><td>Optional skill packs — installed only when selected</td></tr>
           <tr><td><code>hooks/</code></td><td>Hook policies, settings snippets and example hook scripts</td></tr>
           <tr><td><code>mcps/</code></td><td>Criteria for deciding which MCPs to configure</td></tr>
           <tr><td><code>templates/</code></td><td>File templates Claude adapts to the target project</td></tr>
-          <tr><td><code>scripts/</code></td><td>Base scripts for validating structure, environment and tests</td></tr>
+          <tr><td><code>scripts/</code></td><td>Base validation scripts for structure, environment, and tests</td></tr>
           <tr><td><code>reference/</code></td><td>SDD theory, harness engineering, Claude Code primitives</td></tr>
-          <tr><td><code>output-project-structure.md</code></td><td>Expected structure of the target project after onboarding</td></tr>
-          <tr><td><code>usage-prompts.md</code></td><td>Ready-to-use prompts for daily SDD use</td></tr>
           <tr><td><code>DOCUMENTATION.html</code></td><td>Full documentation: installation, daily workflow, features</td></tr>
         </tbody>
       </table>
-    </section>
-
-    <hr>
-
-    <section id="optional-skills">
-      <h2>Optional skills</h2>
-      <p>Beyond the core <code>sdd-workflow</code> skill, the kit ships ten optional skill packs under <a href="skills/optional/README.md"><code>skills/optional/</code></a>: <code>context-audit</code>, <code>project-map</code>, <code>run-and-verify</code>, <code>dependency-freshness</code>, <code>git-discipline</code>, <code>decision-log</code>, <code>documentation-update</code>, <code>failure-learning</code>, <code>ui-qa</code>, and <code>spec-from-screenshot</code>. None is installed by default — onboarding asks which packs the project needs, and installed skills are listed in <code>CLAUDE.md</code> by name only (their instructions load when invoked). All packs are advisory or permission-gated. See the <code>Skill packs</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-      <p>The <code>run-and-verify</code> pack is special: onboarding <strong>generates a project-specific run/verify recipe</strong> — the project's real dev-server/test/lint/typecheck/build commands, required services, environment variable names (never secret values), and how to verify UI or API behavior. Unknown commands are recorded as TODOs, never invented, and the reviewer validates implementations through this recipe. See the <code>Run and verify skill</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-      <p>The kit also includes <strong>freshness checks for external APIs and dependencies</strong>: changes that touch external dependencies, SDKs, APIs, or framework configuration are verified against current documentation, with the evidence recorded in the spec, and the reviewer can block high-risk changes (auth, payments, migrations, cloud infrastructure, framework upgrades, security-sensitive code) that lack it. Purely internal changes are unaffected. See <a href="reference/dependency-freshness-policy.md"><code>reference/dependency-freshness-policy.md</code></a> and the <code>Dependency and API freshness</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="failure-learning">
-      <h2>Failure learning</h2>
-      <p>The optional <code>failure-learning</code> pack turns real mistakes (wrong assumptions, convention violations, repeated errors) into reusable lessons. Claude drafts a structured entry and <strong>proposes</strong> it; the developer chooses where it lives — project decision log (preferred), review/history only, or global memory. <strong>Claude never writes global memory without explicit user approval of the exact entry text</strong>, and never stores secrets or personal data in any memory layer. An optional advisory hook can suggest running the skill after repeated failures, but it never writes memory itself. See <a href="reference/memory-policy.md"><code>reference/memory-policy.md</code></a> and the <code>Memory policy</code> / <code>Failure learning</code> sections in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="decision-logs">
-      <h2>Project memory and decision logs</h2>
-      <p>Durable knowledge lives in versioned artifacts, not chat history. Onboarding always creates <code>decisions/answers.md</code> (the recorded onboarding answers); the optional <code>decision-log</code> pack adds <code>decisions/architecture-decisions.md</code>, <code>decisions/rejected-options.md</code>, and <code>decisions/workflow-decisions.md</code> — or uses the project's existing <code>docs/adr/</code>. When a spec or review settles something significant, Claude <strong>proposes</strong> an entry: trivial decisions are not logged, secrets never are, and nothing is written without approval. See the <code>Project memory and decision logs</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="hooks">
-      <h2>Hooks</h2>
-      <p>The kit ships example hooks under <code>hooks/examples/</code> that support the SDD workflow deterministically: blocking implementation before spec approval, validating spec files before status changes, suggesting targeted checks after edits, detecting spec drift against the approved task scope, pre-compact capture reminders, and failure-learning suggestions. <strong>All hooks are optional and disabled by default</strong> — they are examples until explicitly configured in <code>.claude/settings.json</code>, and every hook is classified (advisory / blocking / mutating / dangerous) in <code>hooks/hooks-policy.md</code>. The kit ships no mutating or dangerous hooks. See the <code>Hooks</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="browser-testing">
-      <h2>Optional browser testing</h2>
-      <p>For projects with a browser UI, onboarding can install a <strong>browser-tester subagent</strong> with the Playwright MCP scoped to that agent alone: the MCP server is declared inline in the agent's frontmatter, so browser tools exist only while the agent runs and never load into the main conversation. Specs gain optional UI acceptance criteria (routes, visual states, interaction flows, accessibility, responsive states), and the <code>ui-qa</code> skill routes verification through the agent. Non-UI projects are unaffected — nothing Playwright-related is installed by default, credentials are never stored, and production destructive actions are out of bounds. See <a href="mcps/playwright-policy.md"><code>mcps/playwright-policy.md</code></a> and the <code>Browser/UI testing with Playwright</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="cli-vs-mcp">
-      <h2>CLIs and MCPs</h2>
-      <p>The kit is <strong>local-first</strong>: it works fully with no external MCP and no external CLI. MCPs are optional and configured only on explicit approval. Where both could do a job, the kit prefers the narrower tool — a single permission-gated CLI call for one-off reads (PR metadata, deployment status), a scoped MCP for structured or repeated access — and any CLI command that mutates remote state requires explicit per-action permission. See <a href="reference/cli-vs-mcp-policy.md"><code>reference/cli-vs-mcp-policy.md</code></a> and the <code>CLI vs MCP</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="screenshots">
-      <h2>Screenshots as spec inputs</h2>
-      <p>Screenshots, mockups, and other visual evidence are first-class inputs for UI work: the optional <code>spec-from-screenshot</code> pack turns them into structured spec material (image inventory with provenance, observed vs expected behavior, UI acceptance criteria), and reviews compare the implemented UI against the same images. Two rules apply throughout: screenshots are evidence, not automatically complete requirements, and Claude asks when the visual intent is ambiguous. See the <code>Screenshots and visual evidence</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="deep-review">
-      <h2>High-risk changes get deeper review</h2>
-      <p>Some changes deserve more than the standard reviewer pass: security-sensitive code, auth, payments, database migrations, infrastructure, public APIs, large refactors, data-loss risks. For those, the kit recommends an escalation ladder — a security-focused pass, then independent adversarial reviewers, then (only if available and approved) paid deep-review modes. Deep review <strong>supplements</strong> the SDD reviewer, never replaces it, and the kit never assumes paid features are available. See <a href="reference/deep-review-policy.md"><code>reference/deep-review-policy.md</code></a> and the <code>Deep review policy</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="git-safety">
-      <h2>Git safety</h2>
-      <p>Every mutating git action is permission-gated. The optional <code>git-discipline</code> pack adds the working rules — inspect <code>git status</code> first, never overwrite user changes, no commit/push unless asked, no force-push without documented approval, no PR merges unless instructed — plus commit-message, PR-description, and release-note templates that tie git text to SDD tasks (PR descriptions are generated from the reviewer's <code>review.html</code>). The skill supports the SDD workflow; it never bypasses it. See the <code>Git discipline</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="autonomy">
-      <h2>Autonomy is opt-in</h2>
-      <p>Autonomous workflows (loops, goals, scheduled routines, background or headless runs) are <strong>controlled execution, not blanket permission</strong>. They are fine for monitoring CI, checking deployment status, and repeated read-only verification — always with explicit stop conditions — but they can never deploy, migrate, merge, push to protected branches, or mark a task <code>done</code>: SDD state transitions stay human-gated. See <a href="reference/autonomy-policy.md"><code>reference/autonomy-policy.md</code></a> and the <code>Autonomy policy</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="session-recovery">
-      <h2>Resumable work</h2>
-      <p>Work survives interruptions because state lives in artifacts, not in chat: <code>tasks.json</code>, specs, reviews, decision logs, and <code>history.html</code> are the source of truth. Claude Code's recap, rewind, and resume features are conveniences for reorienting — after any resume, rewind, or compaction, the kit's rule is to inspect the durable artifacts before continuing, and when conversation memory disagrees with an artifact, the artifact wins. See <a href="reference/session-recovery.md"><code>reference/session-recovery.md</code></a> and the <code>Session recovery</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="templates-policies">
-      <h2>Templates carry the policies</h2>
-      <p>The spec templates make the kit's policies visible where work actually happens: generated requirements ask about external dependencies, documentation expectations, and decision-log implications; designs carry freshness evidence, security/permissions, project-map references, and docs targets; reviews record the documentation decision, spec-drift check, high-risk/deep-review results, and propose-only decision/failure-learning entries; history entries capture docs updates and recorded decisions. Every optional section has a <code>None</code> convention, so simple tasks stay simple. See the <code>Templates and generated artifacts</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="recommended-defaults">
-      <h2>Recommended defaults</h2>
-      <p>Onboarding offers a safe default profile in a single question, so nobody has to answer twenty sections to get started: local-first (no external MCPs/CLIs required), human approval and reviewer required, documentation phase enabled, failure-learning proposals without automatic memory writes, Playwright disabled unless a frontend is detected and the developer opts in, external MCPs off unless opted in, autonomy limited to documented read-only monitoring, and git mutations requiring explicit permission. Accepting the profile reduces onboarding to the genuinely project-specific questions (commands, protected files, SDD scope). See <code>questions.md</code> and the <code>Onboarding questions and defaults</code> section in <a href="DOCUMENTATION.html">DOCUMENTATION.html</a>.</p>
-    </section>
-
-    <hr>
-
-    <section id="central-principle">
-      <h2>Central principle</h2>
-      <p>The onboarding produces a project-specific configuration. It does not copy generic rules without adapting them. If a decision is missing, Claude Code asks.</p>
-    </section>
-
-    <hr>
-
-    <section id="contributing">
-      <h2>Contributing</h2>
-      <p>Contributions are welcome. To propose a change:</p>
-      <ol>
-        <li>Fork the repository.</li>
-        <li>Create a branch from <code>main</code> with a descriptive name (e.g. <code>fix/hook-path-filter</code> or <code>feat/linear-mcp-notes</code>).</li>
-        <li>Make your changes. Keep PRs focused — one concern per PR.</li>
-        <li>Open a pull request against <code>main</code> with a clear description of what the change does and why.</li>
-        <li>Wait for review. Only the repository owner merges PRs.</li>
-      </ol>
-
-      <h3>Guidelines</h3>
-      <ul>
-        <li>Keep all files in English.</li>
-        <li>Template files under <code>templates/</code> use <code>{{PLACEHOLDER}}</code> syntax; keep that convention.</li>
-        <li>Hook scripts must be POSIX-compatible bash and degrade gracefully when <code>jq</code> is unavailable.</li>
-        <li>Agent files must follow the frontmatter format (<code>name</code>, <code>description</code>, <code>tools</code>).</li>
-      </ul>
-
-      <h3>Reporting issues</h3>
-      <p>Open a GitHub issue with a short description of the bug or request, steps to reproduce (if a bug), and the expected vs. actual behavior.</p>
-    </section>
-
-    <hr>
-
-    <section id="license">
-      <h2>License</h2>
-      <p>MIT — see <a href="LICENSE">LICENSE</a></p>
-    </section>
-
+    </div>
   </div>
+</section>
 
-  <footer>
-    SDD Onboarding Kit for Claude Code &nbsp;·&nbsp; <span class="badge">MIT</span>
-  </footer>
+<!-- OPTIONAL SKILLS -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow green">Optional packs</span>
+    <h2>Ten skills. <em class="green">None required.</em></h2>
+    <p class="lead">Every optional pack is advisory or permission-gated. Onboarding asks which packs the project needs — nothing is installed without your selection.</p>
+
+    <div class="cards" style="margin-top:36px;">
+      <div class="card">
+        <div class="icon">🗺️</div>
+        <h3>context-audit + project-map</h3>
+        <p>Keep Claude's context window lean. Audit what's loaded and maintain an accurate project map.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🚀</div>
+        <h3>run-and-verify</h3>
+        <p>Generates a project-specific recipe with your real dev-server, test, lint, and build commands — never invented.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔄</div>
+        <h3>dependency-freshness</h3>
+        <p>Verifies external API and SDK changes against current docs before implementation. Evidence recorded in the spec.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🌿</div>
+        <h3>git-discipline</h3>
+        <p>Commit messages, PR descriptions, and release notes tied to SDD tasks. Every mutating git action gated.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📝</div>
+        <h3>decision-log + documentation-update</h3>
+        <p>Durable decisions in versioned files. Documentation phase ensures docs are never stale at task close.</p>
+      </div>
+      <div class="card green">
+        <div class="icon">🧠</div>
+        <h3>failure-learning + ui-qa + spec-from-screenshot</h3>
+        <p>Turn mistakes into lessons, validate browser UIs with Playwright, and convert screenshots into structured specs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow green">Safety model</span>
+    <h2>Human-gated by <em class="green">design</em></h2>
+    <ul class="checklist green" style="margin-top:24px;">
+      <li><strong>Spec approval is required</strong> before any implementation begins — no exceptions.</li>
+      <li><strong>Hooks are optional and disabled by default</strong> — examples only until you explicitly enable them.</li>
+      <li><strong>Autonomy is opt-in:</strong> monitoring CI is fine; deploying, merging, or marking tasks done is never autonomous.</li>
+      <li><strong>Git mutations are permission-gated:</strong> no commit, push, or force-push without explicit instruction.</li>
+      <li><strong>No secrets are stored</strong> in any memory layer — the failure-learning pack proposes entries, never writes them.</li>
+      <li><strong>MCPs are off by default</strong> — none configured without your explicit approval.</li>
+      <li><strong>Playwright is scoped to its agent</strong> — browser tools never load into the main conversation.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- CONTRIBUTING -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Open source</span>
+    <h2>Contributions <em>welcome</em></h2>
+    <p class="lead">Fork, improve, and send a PR. Keep changes focused — one concern per pull request.</p>
+
+    <ul class="checklist" style="margin-top:24px;">
+      <li><strong>Keep all files in English.</strong></li>
+      <li><strong>Template files</strong> under <code>templates/</code> use <code>{{PLACEHOLDER}}</code> syntax.</li>
+      <li><strong>Hook scripts</strong> must be POSIX-compatible bash and degrade gracefully without <code>jq</code>.</li>
+      <li><strong>Agent files</strong> must follow the frontmatter format (<code>name</code>, <code>description</code>, <code>tools</code>).</li>
+    </ul>
+
+    <div class="stats">
+      <div class="stat"><div class="num">5</div><div class="lbl">Core subagents</div></div>
+      <div class="stat green"><div class="num">10</div><div class="lbl">Optional skill packs</div></div>
+      <div class="stat"><div class="num">MIT</div><div class="lbl">License</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>SDD Onboarding Kit for Claude Code · <a href="DOCUMENTATION.html">Full documentation</a> · <a href="LICENSE">MIT License</a></p>
+    <p class="names">Spec Driven Development — spec before code, every time</p>
+  </div>
+</footer>
 
 </body>
 </html>
