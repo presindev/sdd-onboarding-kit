@@ -120,6 +120,7 @@
         <li><a href="#deep-review-policy">27. Deep review policy</a></li>
         <li><a href="#visual-evidence">28. Screenshots and visual evidence</a></li>
         <li><a href="#git-discipline">29. Git discipline</a></li>
+        <li><a href="#session-recovery">30. Session recovery</a></li>
       </ul>
     </div>
 
@@ -1280,6 +1281,42 @@ mcpServers:
 
       <h3>Integration</h3>
       <p>The reviewer keeps <code>review.html</code> sections complete so PR text can be generated without re-deriving evidence (<code>agents/reviewer.md</code>). The git policy itself is recorded during onboarding (<code>questions.md</code> §8: branch naming, commit cadence, task references, whether Claude may commit/push at all) and lives in the project's <code>CLAUDE.md</code> — the skill reads it, never overrides it. Branch protection and merge gates remain the platform's job: the skill's rules are discipline on top of, not a substitute for, repository settings.</p>
+    </section>
+
+    <hr>
+
+    <section id="session-recovery">
+      <h2>30. Session recovery</h2>
+      <p>Sessions get interrupted, go stale, or go wrong. Claude Code ships recovery features for all three — and one rule keeps them safe in an SDD project: <strong>durable artifacts are the source of truth, never chat history.</strong> <code>tasks.json</code> holds task state, <code>specs/</code> holds requirements and design, <code>review.html</code> holds verdicts, decision logs hold settled decisions, <code>history.html</code> holds what already happened. A summary, restored checkpoint, or resumed conversation is a convenience for reorienting — anything it claims is verified against the artifacts before acting on it. Full guidance: <code>reference/session-recovery.md</code>.</p>
+
+      <h3>What exists</h3>
+      <p>Capability-level summary (names verified against the official docs in June 2026 — re-verify before relying on exact syntax): a recap command summarizes the session (and an automatic recap appears after time away); rewind/checkpoints restore the conversation, the code, or both to an earlier point — but track only Claude's direct file edits, <em>not</em> bash side effects, manual edits, or concurrent sessions (local undo, not version control — git stays authoritative); resume flags reopen the most recent session or offer a picker (sessions do not sync across machines); branching forks a conversation to try an alternative; compaction with focus instructions controls what survives summarization; Esc stops the current turn immediately; full transcripts stay on disk with limited retention.</p>
+
+      <h3>The four practices, with examples</h3>
+      <table>
+        <thead>
+          <tr><th>Situation</th><th>Practice</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Resuming after days away</strong></td><td>Read the recap to find where to look, then verify against the artifacts before doing anything: <code>tasks.json</code> for actual task status, the active spec for what is approved, the latest review for open findings, <code>history.html</code> for what was completed. If recap and artifacts disagree, the artifacts win.</td></tr>
+          <tr><td><strong>Claude went in a wrong direction for several turns</strong></td><td>Rewind to the fork — restored context is cleaner than corrected context. Then check what the rewind could <em>not</em> revert: bash side effects (deleted files, installed packages, run migrations) survive checkpoints. <code>git status</code>/<code>git diff</code> show what was actually restored; recover anything else through git.</td></tr>
+          <tr><td><strong>Execution drifting mid-task</strong></td><td>Stop the turn early (Esc) as soon as the direction is visibly wrong — drift compounds, and every in-chat correction pollutes context further. Reprompt with a reference to the governing artifact ("follow <code>specs/&lt;slug&gt;/design.html</code> section X"), not a long correction. If the session is cluttered with failed attempts, rewind past them or compact with focus instructions.</td></tr>
+          <tr><td><strong>Compacting between tasks</strong></td><td>Compact with focus instructions naming what must survive (decisions, task status, constraints, unresolved questions). Anything durable should already be in artifacts — the pre-compact capture hook (<a href="#hooks">§8</a>) reminds about exactly this, and the <code>CLAUDE.md</code> session-recovery rule covers reorientation afterwards.</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Resume checklist</h3>
+      <ol>
+        <li><code>tasks.json</code> — status of the task at hand, and anything marked <code>in_progress</code>.</li>
+        <li>The active spec under <code>specs/&lt;slug&gt;/</code> — as approved, not as remembered.</li>
+        <li>The latest <code>review.html</code> — unresolved blocking/non-blocking findings.</li>
+        <li><code>git status</code> + current diff — actual uncommitted changes, including anything a rewind could not revert.</li>
+        <li>Decision logs / <code>history.html</code> — decisions settled since the context you remember.</li>
+      </ol>
+      <p>When conversation memory and any artifact disagree, trust the artifact and say so explicitly before continuing. The generated project <code>CLAUDE.md</code> carries this as a standing rule (<code>templates/CLAUDE.md.template</code>, <code>Session recovery</code> section).</p>
+
+      <h3>SDD constraints</h3>
+      <p>Rewind and resume never change task state: transitions go through the normal workflow only (<a href="#task-lifecycle">§5</a>). Restored context does not revive expired approvals — if the spec changed after the restored checkpoint, the spec on disk is authoritative and approval status is whatever <code>tasks.json</code> says. Recovery features are session conveniences, not audit trails: the artifacts and git history remain the record.</p>
     </section>
 
   </main>
