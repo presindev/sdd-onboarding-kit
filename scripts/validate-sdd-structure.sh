@@ -53,11 +53,13 @@ fi
 # Check for unresolved {{PLACEHOLDER}} tokens in CLAUDE.md and .claude/.
 # The spec templates under .claude/skills/sdd-workflow/templates/ are exempt:
 # their placeholders are instantiated per feature, not during onboarding.
-if grep -R "{{[A-Z0-9_]*}}" CLAUDE.md .claude 2>/dev/null \
+# The literal {{PLACEHOLDER}} token is also exempt: skill docs use it as the
+# generic name for the placeholder convention, not as a real placeholder.
+unresolved=$(grep -Rn "{{[A-Z0-9_]*}}" CLAUDE.md .claude 2>/dev/null \
   | grep -v "^.claude/skills/sdd-workflow/templates/" \
-  | grep -q .; then
-  grep -R "{{[A-Z0-9_]*}}" CLAUDE.md .claude 2>/dev/null \
-    | grep -v "^.claude/skills/sdd-workflow/templates/" >&2
+  | grep -v "{{PLACEHOLDER}}" || true)
+if [[ -n "$unresolved" ]]; then
+  echo "$unresolved" >&2
   echo "Unresolved template placeholders found in CLAUDE.md or .claude/." >&2
   exit 1
 fi
